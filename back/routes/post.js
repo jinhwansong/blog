@@ -1,19 +1,21 @@
 const express = require("express")
+const router = express.Router()
 
-const router = express.Router();
 
-// 게시글을 보냄
-router.post("/", (req, res) => { //post api는 post("/post")
+
+// 게시글 보냄
+router.post("/",(req,res)=>{
     res.json({
-        id: 1,
-        content: "hi"
+        id:1,
+        content:"h1"
     })
 })
-// 게시글을 삭제
-router.delete("/", (req, res) => { //delete api는 delete("/post")
+
+// 게시글 삭제함
+router.delete("/", (req, res) => {
     res.json({
         id: 1,
-        content: "hi"
+        content: "h1"
     })
 })
 

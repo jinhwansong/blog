@@ -1,9 +1,7 @@
-
 import React from "react";
 import { Common } from "components";
 
-const Home = () => {
-
-  return <Common/>
+const Search = () => {
+  return <Common />;
 };
-export default Home;
+export default Search;

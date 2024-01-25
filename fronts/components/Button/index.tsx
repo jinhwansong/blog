@@ -6,7 +6,7 @@ interface IButton {
   color?: string;
   width?: string;
   border?: string;
-  children: string;
+  children?: string | number;
   bg?: string;
   radius?: string;
   height?: string;
@@ -28,24 +28,27 @@ const Button = (props: IButton) => {
         </St.ThemeButton>
       );
     }
-if (props.themes === "disabled") {
- return (
-   <St.Button
-     $color={props.color}
-     $width={props.width}
-     $border={props.border}
-     $radius={props.radius}
-     $bg={props.bg}
-     $height={props.height}
-     $font={props.font}
-     $hoverbg={props.hoverbg}
-     $hovercolor={props.hovercolor}
-     disabled={props.disabled}
-   >
-     {props.children}
-   </St.Button>
- );
-}
+    if (props.themes === "arr") {
+      return (
+        <St.Button
+          onClick={props.onButton || (() => {})}
+          type="button"
+          $color={props.color}
+          $width={props.width}
+          $border={props.border}
+          $radius={props.radius}
+          $bg={props.bg}
+          $height={props.height}
+          $font={props.font}
+          $hoverbg={props.hoverbg}
+          $hovercolor={props.hovercolor}
+          disabled={props.disabled}
+        >
+          {props.image}
+        </St.Button>
+      );
+    }
+
       return (
         <St.Button
           onClick={props.onButton || (() => {})}
@@ -59,6 +62,7 @@ if (props.themes === "disabled") {
           $hoverbg={props.hoverbg}
           $hovercolor={props.hovercolor}
           $font={props.font}
+          disabled={props.disabled}
         >
           {props.children}
         </St.Button>

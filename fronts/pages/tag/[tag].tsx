@@ -1,9 +1,8 @@
-
 import React from "react";
 import { Common } from "components";
 
-const Home = () => {
+const Tag = () => {
 
   return <Common/>
 };
-export default Home;
+export default Tag;

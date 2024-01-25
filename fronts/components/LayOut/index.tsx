@@ -8,11 +8,11 @@ interface ILayOut {
 
 const LayOut = ({children}: ILayOut)=>{
     return (
-      <div>
+      <>
         <Header />
         <St.Container>{children}</St.Container>
         <Footer/>
-      </div>
+      </>
     );
 }
 

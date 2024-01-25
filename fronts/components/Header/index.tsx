@@ -19,9 +19,12 @@ const Header = () => {
       <St.Header>
         <Link href={"/"}>로고</Link>
         {login ? (
+          <Link href={"/login"}>로그인</Link>
+        ) : (
           <St.GroupButton>
+            <Link href={"/write"}>
             <Button
-              onButton={() => writeButton()}
+              themes="disabled"
               font="1.2"
               height="3.5"
               width="8"
@@ -30,6 +33,7 @@ const Header = () => {
             >
               새 글 작성
             </Button>
+            </Link>
             <St.Profile onClick={() => setProfileTap((prev) => !prev)}>
               <div>
                 <img src="https://picsum.photos/250/250" />
@@ -43,6 +47,8 @@ const Header = () => {
                     font="1.2"
                     width="full"
                     bg="f7f7f7"
+                    hoverbg="blue"
+                    hovercolor="fff"
                   >
                     로그아웃
                   </Button>
@@ -50,8 +56,6 @@ const Header = () => {
               )}
             </St.Profile>
           </St.GroupButton>
-        ) : (
-          <Link href={"/login"}>로그인</Link>
         )}
       </St.Header>
     </St.HeaderWrap>

@@ -69,6 +69,9 @@ export const ProfileTap = styled.div`
     display: block;
     padding: 6px 18px 12px;
   }
+  > a:hover {
+    color: ${(props: any) => props.theme.blue};
+  }
   > a:first-child {
     padding: 12px 18px 6px;
   }

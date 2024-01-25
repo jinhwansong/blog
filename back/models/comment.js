@@ -1,21 +1,19 @@
-module.exports = (sequelize, DataTyes) => {
-    const Comment = sequelize.define("Comment", { // Mysql은 users 테이블 생성
-        // 사용자 댓글
+module.exports = (sequelize, DateTypes) => {
+    // user테이블 생성
+    const Comment = sequelize.define("Comment", {
         content: {
-             type: DataTyes.TEXT, // 무제한
+            type: DateTypes.TEXT,
             allowNull: false,
-        },
+        }
     }, {
-        charset: "utf8mb4",
-        collate: "utf8mb4_general_ci" // 한글저장
-    });
-    // 엑셀모양을 잡아준다.
+        charser: "utf8mb4",
+        collate: "utf8mb4_general_ci"
+    })
     Comment.associate = (db) => {
-        // 게시물에는 많은 댓글을 작성할수 있다.
-        db.Comment.belongsTo(db.Post)
-        // 작성자는 많은 게시물을 작성할수 있다.
+        // 유저는 댓글을 여러개 쓸수 잇다.
         db.Comment.belongsTo(db.User)
-
+        // 게시물은 많은 댓글을 갖을수 있다.
+        db.Comment.belongsTo(db.Post)
     }
     return Comment
 }

@@ -1,19 +1,22 @@
-module.exports = (sequelize, DataTyes) => {
-    const Hashtag = sequelize.define("Hashtag", { // Mysql은 users 테이블 생성
-        // 게시글에 들어있는 해시태그
-        name: {
-             type: DataTyes.STRING(20), // 20글자 미만
+module.exports = (sequelize, DateTypes) => {
+    // 해시태그테이블 생성
+    const Hashtag = sequelize.define("Hashtag", {
+        hashtag: {
+            type: DateTypes.TEXT,
             allowNull: false,
         },
     }, {
-        charset: "utf8mb4",
-        collate: "utf8mb4_general_ci" // 한글저장
-    });
-    // 엑셀모양을 잡아준다.
+        charser: "utf8",
+        collate: "utf8_general_ci"
+    })
     Hashtag.associate = (db) => {
-        // 여러 개시물에 해시태그를 넣을수 잇고 해시태그로 그 게시물을 불러올수 잇으니 다대다 관계이다.
-        db.Hashtag.belongsToMany(db.Post, {
+        // 하나의 해시태그는 여러개의 게시물에 속할수 잇다.
+        db.Hashtag.belongsToMany(db.Post,{
             through: "PostHashtag"
+        })
+        // 하나의 해시태그는 여러개의 카테고리에 속할수 잇다.
+        db.Hashtag.belongsToMany(db.Categore,{
+            through: "CategoreHashtag"
         })
     }
     return Hashtag

@@ -6,7 +6,6 @@ import { FaCheck } from "react-icons/fa";
 import { Button, Input, LayOut } from "components";
 
 const Signup = () => {
-  
   const [signUp, setSignUp] = useState({
     email: "",
     emailError: false,
@@ -31,7 +30,6 @@ const Signup = () => {
 
   const onSignUp = useCallback((e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    console.log("asd")
   }, []);
   const onChangeTerm = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {

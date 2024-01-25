@@ -42,6 +42,12 @@ export const Button = styled.button<{
   $hoverbg?: string;
   $hovercolor?: string;
 }>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  outline: 0;
+  transition: all 0.3s;
   font-size: ${(props) => {
     switch (props.$font) {
       case "1.2":
@@ -50,9 +56,7 @@ export const Button = styled.button<{
         return "1.4rem";
     }
   }};
-  cursor: pointer;
-  outline: 0;
-  transition: all 0.3s;
+
   height: ${(props) => {
     switch (props.$height) {
       case "5":
@@ -89,6 +93,10 @@ export const Button = styled.button<{
         return "auto";
       case "8":
         return "8rem";
+      case "5":
+        return "5rem";
+      case "4":
+        return "4rem";
       default:
         return "9rem";
     }
@@ -136,17 +144,41 @@ export const Button = styled.button<{
         case "f7f7f7":
           return props.theme.f7f7f7;
         default:
-          return "rgba(0,0,0,.7)";
+          return "";
       }
     }};
     color: ${(props) => {
       switch (props.$hovercolor) {
         case "black":
           return props.theme.black;
+        case "blue":
+          return props.theme.blue;
         case "fff":
           return props.theme.fff;
-        default:
+        case "white":
           return props.theme.white;
+        default:
+          return "";
+      }
+    }};
+  }
+  > svg {
+    font-size: 1.5rem;
+    color: ${(props: any) => props.theme.black};
+  }
+  &:hover > svg {
+    color: ${(props) => {
+      switch (props.$hovercolor) {
+        case "black":
+          return props.theme.black;
+        case "blue":
+          return props.theme.blue;
+        case "fff":
+          return props.theme.fff;
+        case "white":
+          return props.theme.white;
+        default:
+          return "";
       }
     }};
   }
