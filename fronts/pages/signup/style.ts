@@ -76,8 +76,5 @@ export const CheckLabels = styled(CheckLabel)`
   color: ${(props: any) => props.theme.gery};
 `;
 export const Checkbox = styled.input`
-  opacity: 0;
-  position: absolute;
-  top:0;
-  left:0;
+  display:none;
 `;

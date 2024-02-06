@@ -1,18 +1,20 @@
-// import { configureStore } from "@reduxjs/toolkit";
-// import { createWrapper } from "next-redux-wrapper";
-// import reducer from "./reducers";
+import { configureStore } from "@reduxjs/toolkit";
+import { createWrapper } from "next-redux-wrapper";
+import reducer from "./reducers";
 
-// const makeStore = ()=>{
-//     configureStore({
-//       reducer,
-//       devTools: true,
-//       middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
-//     });
-// }
+const makeStore = () =>
+  configureStore({
+    reducer,
+    devTools: true,
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware({ serializableCheck: false }),
+    // preloadedState: serverState, // SSR
+  });
 
-// export default createWrapper(makeStore,{
-//     debug:process.env.NODE_ENV !=="production"
-// });
-// export type AppStore = ReturnType<typeof makeStore>;
-// export type RootState = ReturnType<typeof reducer>;
-// export type AppDispatch = AppStore["dispatch"];
+
+export default createWrapper(makeStore, {
+  debug: process.env.NODE_ENV !== "production",
+});
+export type AppStore = ReturnType<typeof makeStore>;
+export type RootState = ReturnType<typeof reducer>;
+export type AppDispatch = AppStore["dispatch"];

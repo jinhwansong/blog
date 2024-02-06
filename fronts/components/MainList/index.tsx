@@ -1,70 +1,69 @@
-import React, { useCallback, useRef, useState } from "react";
-import Link from "next/link";
-import { IoHeartOutline, IoHeartSharp } from "react-icons/io5";
-
-import {Tag} from "components";
-import * as St from "./style";
+import React, { useCallback } from "react";
 import { useRouter } from "next/router";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "redux/store";
+import { like, unlike } from "redux/reducers/post";
+import { IoHeartOutline, IoHeartSharp } from "react-icons/io5";
+import { Content, Tag } from "components";
+import { ICommon } from "types";
+import * as St from "./style";
 
 
 interface IMainList {
   location: string;
+  post: ICommon[];
 }
 
-const MainList = ({ location }: IMainList) => {
-  const router = useRouter()
-  const likeRef = useRef<HTMLButtonElement>(null)
-  const tagRef = useRef<HTMLUListElement>(null);
-  const [like,setLike] = useState(false)
-  const onListPage = useCallback((e: React.MouseEvent<HTMLLIElement>) => {
-    e.preventDefault();
-    if (
-      likeRef.current &&
-      !likeRef.current.contains(e.target as Node) &&
-      tagRef.current &&
-      !tagRef.current.contains(e.target as Node)
-    )
-      router.push("/1");
+const MainList = ({ location, post }: IMainList) => {
+  const { me } = useSelector((state: RootState) => state.user);
+  const router = useRouter();
+  const dispatch = useDispatch<AppDispatch>()
+  const onListPage = useCallback((v:number) => {
+    router.push(`/${v}`);
+  },[router]);
+  // 좋아요
+  const onLikehandle = useCallback((e: React.MouseEvent<SVGElement>,id:number) => {
+    e.stopPropagation();
+    dispatch(like(id));
   }, []);
-  const onLikehandle = useCallback(
-    (e: React.MouseEvent<HTMLButtonElement>) => {
-      e.preventDefault();
-      setLike((prev) => !prev);
-    },
-    [like]
-  );
-  
+  // 싫어요
+  const onUnLikehandle = useCallback((e: React.MouseEvent<SVGElement>, id: number) => {
+    e.stopPropagation();
+    dispatch(unlike(id));
+  }, []);
+ 
   return (
     <St.MainList>
-      <li onClick={onListPage}>
-        <St.Image $width={location}>
-          <img src="https://picsum.photos/250/250" />
-        </St.Image>
-        <St.TapText>
-          <St.TapTitle $title={location}>
-            asdaasda asdasda sdasdasda sdasdasdasd asdasdasdasdasdasd asdasdas
-            dasdasdasd
-          </St.TapTitle>
-          {location !== "tap" && (
-            <St.TapDetail>
-              내용을 적어주세요 내용을 적어주세요 내용을 적어주세요 내용을
-              적어주세요 내용을 적어주세요 내용을 적어주세요
-            </St.TapDetail>
-          )}
-          <St.TapSpan>
+      {post?.map((v) => (
+        <li onClick={() => onListPage(v.id)} key={v.id}>
+          <St.Image $width={location}>
+            <img src={v.src} />
+          </St.Image>
+          <St.TapText>
+            <St.TapTitle $title={location}>{v.title}</St.TapTitle>
             {location !== "tap" && (
-              <>
-                <St.Like onClick={onLikehandle} ref={likeRef}>
-                  {like ? <IoHeartSharp /> : <IoHeartOutline />}
-                </St.Like>
-                <St.Date>2024.01.19</St.Date>
-              </>
+              <St.TapDetail dangerouslySetInnerHTML={{ __html: v.content }} />
             )}
+            <St.TapSpan>
+              {location !== "tap" && (
+                <>
+                  <St.Like>
+                    {v.Liked.find((v) => v.id === me?.id) ? (
+                      <IoHeartSharp onClick={(e) => onUnLikehandle(e, v.id)} />
+                    ) : (
+                      <IoHeartOutline onClick={(e) => onLikehandle(e, v.id)} />
+                    )}
+                  </St.Like>
 
-            <Tag ref={tagRef} />
-          </St.TapSpan>
-        </St.TapText>
-      </li>
+                  <St.Date>{v.nickName}</St.Date>
+                  <St.Date>{v.createdAt.slice(0, 10)}</St.Date>
+                </>
+              )}
+              <Tag />
+            </St.TapSpan>
+          </St.TapText>
+        </li>
+      ))}
     </St.MainList>
   );
 };

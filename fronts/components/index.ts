@@ -10,4 +10,5 @@ export { default as MainAside } from "./MainAside";
 export { default as Common } from "./Common";
 export { default as Pagination } from "./Pagination";
 export { default as Editor } from "./Editor";
-;
+export { default as Content } from "./Content";
+export { default as Myinfo } from "./Myinfo";

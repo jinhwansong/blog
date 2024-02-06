@@ -52,6 +52,8 @@ export const Button = styled.button<{
     switch (props.$font) {
       case "1.2":
         return "1.2rem";
+      case "1.6":
+        return "1.6rem";
       default:
         return "1.4rem";
     }
@@ -105,6 +107,8 @@ export const Button = styled.button<{
     switch (props.$color) {
       case "white":
         return props.theme.white;
+      case "red":
+        return props.theme.red;
       case "fff":
         return props.theme.fff;
       default:

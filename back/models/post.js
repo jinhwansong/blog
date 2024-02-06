@@ -18,7 +18,7 @@ module.exports = (sequelize, DateTypes) => {
         // 많은 게시물은 유저에 속해있다.
         db.Post.belongsTo(db.User)
         // 많은 게시물은 카테고리에 속해있다.
-        db.Post.belongsTo(db.Categore)
+        db.Post.belongsTo(db.Categore);
         // 게시물은 많은 댓글을 갖을수 있다.
         db.Post.hasMany(db.Comment)
         // 게시물은 많은 이미지를 갖을수 있다.

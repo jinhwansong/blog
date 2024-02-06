@@ -3,15 +3,15 @@ import styled from "styled-components";
 
 export const MainList = styled.ul`
   border-radius: 1.5rem;
-  padding: 16px;
-  cursor: pointer;
-  &:hover {
+  > li:hover {
     background: ${(props: any) => props.theme.f7f7f7};
   }
   > li {
     display: flex;
     align-items: center;
     gap: 1.5rem;
+    padding: 16px;
+    cursor: pointer;
   }
 `;
 export const Image = styled.div<{ $width: string }>`
@@ -43,24 +43,25 @@ export const TapTitle = styled.em<{ $title: string }>`
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: ${(props: any) =>
-    props.$title === "tap" ? "2" : "1"};
+    props.$title === "tap" ? "2" : "3"};
 `;
 export const TapDetail = styled.p`
-margin-top:0.5rem;
+  margin-top: 0.5rem;
   word-break: break-all;
-  line-height: 1.7;
+  line-height: 1.4;
   font-size: 1.4rem;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
+
 `;
 
 export const TapSpan = styled.div`
   display: flex;
   align-items: center;
-  margin-top: 1.2rem;
+  margin-top: 1rem;
   line-height: 1;
 `;
 export const Like = styled.button`
@@ -74,6 +75,7 @@ export const Like = styled.button`
   > svg {
     font-size: 1.6rem;
     color: ${(props: any) => props.theme.red};
+    cursor: pointer;
   }
 `;
 export const Date = styled.p`
@@ -84,3 +86,4 @@ export const Date = styled.p`
   margin:0 1rem 0 0.5rem;
   padding-right: 1rem;
 `;
+

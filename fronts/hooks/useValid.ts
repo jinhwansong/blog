@@ -1,8 +1,8 @@
 import React,{ useCallback } from "react";
 
 interface IuseValid {
-  email: string;
-  emailError: boolean;
+  email?: string;
+  emailError?: boolean;
   password: string;
   passwordError: boolean;
   passwordCheck?: string;
@@ -11,6 +11,8 @@ interface IuseValid {
   nameError?: boolean;
   nickName?: string;
   nickNameError?: boolean;
+  currentPassword?: string;
+  currentPasswordError?: boolean;
 }
 
 
@@ -25,12 +27,21 @@ const useValid = <T extends IuseValid>(
     },
     [signUp.emailError, signUp.email]
   );
+  const passwordValid = /^.*(?=^.{7,16}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/
+  const onChangeCurrentPassword = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const passwordError = passwordValid.test(signUp.currentPassword);
+      setSignUp((prev) => ({
+        ...prev,
+        currentPassword: e.target.value,
+        currentPasswordError: !passwordError,
+      }));
+    },
+    [signUp.passwordError, signUp.password]
+  );
   const onChangePassword = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      const passwordError =
-        /^.*(?=^.{7,16}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/.test(
-          signUp.password
-        );
+      const passwordError = passwordValid.test(signUp.password);
       setSignUp((prev) => ({
         ...prev,
         password: e.target.value,
@@ -65,6 +76,7 @@ const onChangeName = useCallback(
 const onChangeNickName = useCallback(
   (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+    
     handleChangeName(name, value);
   },
   [signUp.nickName]
@@ -88,6 +100,7 @@ const handleChangeName = useCallback(
     onChangePasswordCheck,
     onChangeNickName,
     onChangeName,
+    onChangeCurrentPassword,
   };
 };
 export default useValid

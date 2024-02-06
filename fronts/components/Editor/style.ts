@@ -2,8 +2,11 @@ import dynamic from "next/dynamic";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import styled from "styled-components";
 
-export const Write = styled.section`
+export const Form = styled.form`
   width: 80rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 `;
 
 export const TitleInput = styled.textarea`
@@ -22,7 +25,6 @@ export const TitleInput = styled.textarea`
 export const Keyword = styled.div`
   border-top: 1px solid ${(props: any) => props.theme.ddd};
   padding-top: 2rem;
-  margin-top: 1rem;
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
@@ -45,7 +47,6 @@ export const Categore = styled.div`
   position: relative;
   width: 17rem;
 
-  margin-bottom: 2rem;
   > button {
     width: 100%;
     padding: 1rem;
@@ -82,7 +83,8 @@ export const Categore = styled.div`
 
 
 export const ReactQuillstyle = styled(ReactQuill)<{ $color: boolean }>`
-  margin: 2rem 0;
+  font-size: 1.6rem;
+
   > .ql-toolbar.ql-snow,
   .ql-container.ql-snow {
     border: 1px solid ${(props: any) => (props.$color ? "#36393D" : "#ddd")};

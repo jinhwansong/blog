@@ -11,12 +11,13 @@ interface IButton {
   radius?: string;
   height?: string;
   font?: string;
-  onButton?: () => void;
+  onButton?: (e: React.MouseEvent<HTMLButtonElement>) => void;
   themes?: string;
   image?: React.JSX.Element;
   disabled?: boolean;
   hoverbg?: string;
   hovercolor?: string;
+  type?: "button" | "submit";
 }
 
 
@@ -52,7 +53,7 @@ const Button = (props: IButton) => {
       return (
         <St.Button
           onClick={props.onButton || (() => {})}
-          type="button"
+          type={props.type}
           $color={props.color}
           $width={props.width}
           $border={props.border}

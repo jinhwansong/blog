@@ -9,9 +9,6 @@ export const TagUl = styled.ul`
     padding: 6px 8px;
     overflow: hidden;
     border-radius: 0.5rem;
-  }
-  > li a {
-    display: block;
-    width: 100%;
+    cursor: pointer;
   }
 `;

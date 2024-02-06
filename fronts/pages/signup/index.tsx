@@ -1,12 +1,31 @@
-import React, {  useCallback, useState } from "react";
+import React, {  useCallback, useEffect, useState } from "react";
 import Head from "next/head";
-import * as St from "./style"
-import { useValid } from "hooks";
+import { useRouter } from "next/router";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "redux/store";
+import {
+  resetSignUpDone,
+  signUp,
+  chackId,
+  checkNick,
+} from "redux/reducers/user";
+
 import { FaCheck } from "react-icons/fa";
+import { useValid } from "hooks";
 import { Button, Input, LayOut } from "components";
+import * as St from "./style";
+
+
 
 const Signup = () => {
-  const [signUp, setSignUp] = useState({
+
+  const { signUpDone, me } = useSelector(
+    (state: RootState) => state.user
+  );
+  const email = ["naver.com", "gmail.com", "daum.net"];
+  const router = useRouter()
+  const dispatch = useDispatch<AppDispatch>();
+  const [signUps, setSignUps] = useState({
     email: "",
     emailError: false,
     password: "",
@@ -26,41 +45,86 @@ const Signup = () => {
     onChangePasswordCheck,
     onChangeNickName,
     onChangeName,
-  } = useValid(signUp, setSignUp);
-
-  const onSignUp = useCallback((e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-  }, []);
+  } = useValid(signUps, setSignUps);
+  
+  // 체크
   const onChangeTerm = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const { name, checked } = e.target;
       const term = checked
-        ? [...signUp.term, name]
-        : signUp.term.filter((v) => v !== name);
+        ? [...signUps.term, name]
+        : signUps.term.filter((v) => v !== name);
       
-      setSignUp((prev) => ({
+      setSignUps((prev) => ({
         ...prev,
         term,
         termAll: term.length === 3
       }));
     },
-    [signUp.term, signUp.termAll, signUp.term.length]
+    [signUps.term, signUps.termAll, signUps.term.length]
   );
-  
   const onChangeTermAll = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const { checked } = e.target;
-      setSignUp((prev) => ({ ...prev, termAll: checked,}));
+      setSignUps((prev) => ({ ...prev, termAll: checked,}));
       if (checked) {
-        setSignUp((prev) => ({
+        setSignUps((prev) => ({
           ...prev,
           term: ["term1", "term2", "term3"],
         }));
       }else{ 
-        setSignUp((prev) => ({...prev, term: []}))
+        setSignUps((prev) => ({...prev, term: []}))
       }
     },
-    [signUp.termAll, signUp.term]
+    [signUps.termAll, signUps.term]
+  );
+ 
+ useEffect(() => {
+   if (me && me.email) {
+     router.replace("/");
+   }
+ }, [me]);
+  useEffect(() => {
+    if (signUpDone) {
+      router.replace("/login");
+      dispatch(resetSignUpDone());
+    }
+  }, [signUpDone]);
+  // 회원가입
+  const onSignUp = useCallback(
+    (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      if (
+        signUps.email.split("@")[1] !== "naver.com" &&
+        signUps.email.split("@")[1] !== "daum.net" &&
+        signUps.email.split("@")[1] !== "gmail.com"
+      )
+        return alert("네이버,다음,구글 이메일만 사용이 가능합니다.");
+        if (!signUps.name || !signUps.name.trim()) return alert("이름을 작성해주세요");
+        if (!signUps.nickName || !signUps.nickName.trim()) return alert("닉네임을 작성해주세요");
+        if (!signUps.password || !signUps.password.trim())
+          return alert("비밀번호를 작성해주세요");
+          dispatch(
+            signUp({
+              email: signUps.email,
+              name: signUps.name,
+              nickName: signUps.nickName,
+              password: signUps.password,
+            })
+          );
+      
+    },
+    [signUps]
+  );
+
+  // 중복체크 
+  const onButton = useCallback(
+    (v: string) => {
+      if (v === "email") return dispatch(chackId({ email: signUps.email }));
+      if (v === "nickName")
+        return dispatch(checkNick({ nickName: signUps.nickName }));
+    },
+    [signUps.email, signUps.nickName]
   );
   return (
     <>
@@ -76,10 +140,13 @@ const Signup = () => {
               id="email"
               placeholder="이메일을 입력해주세요."
               type="email"
-              value={signUp.email}
+              value={signUps.email}
               onChange={onChangeEmail}
-              erorr={signUp.emailError}
+              erorr={signUps.emailError}
               erorrText="올바른 이메일을 입력해주세요."
+              cheack="cheack"
+              onButton={() => onButton("email")}
+              able={!email.includes(signUps.email.split("@")[1])}
             />
           </div>
           <div>
@@ -88,10 +155,10 @@ const Signup = () => {
               id="name"
               placeholder="이름을 입력해주세요."
               type="text"
-              value={signUp.name}
+              value={signUps.name}
               onChange={onChangeName}
-              erorr={signUp.nameError}
-              erorrText="이름에는 공백과 특수문자가 포함될 수 없고 2글자 이상 8글자
+              erorr={signUps.nameError}
+              erorrText="한글 영문을 조합해서 2글자 이상 8글자
                 미만으로 작성해주세요"
             />
           </div>
@@ -102,10 +169,15 @@ const Signup = () => {
               id="nickName"
               placeholder="닉네임을 입력해주세요."
               type="text"
-              value={signUp.nickName}
+              value={signUps.nickName}
               onChange={onChangeNickName}
-              erorr={signUp.nickNameError}
-              erorrText="닉네임에는 공백과 특수문자가 포함될 수 없고 2글자 이상 8글자
+              erorr={signUps.nickNameError}
+              onButton={() => onButton("nickName")}
+              able={
+                !(signUps.nickName.length < 8 && 2 <= signUps.nickName.length)
+              }
+              cheack="cheack"
+              erorrText="한글 영문을 조합해서 2글자 이상 8글자
                 미만으로 작성해주세요"
             />
           </div>
@@ -115,9 +187,9 @@ const Signup = () => {
               id="password"
               placeholder="비밀번호을 입력해주세요."
               type="password"
-              value={signUp.password}
+              value={signUps.password}
               onChange={onChangePassword}
-              erorr={signUp.passwordError}
+              erorr={signUps.passwordError}
               erorrText="올바르지 않은 비밀번호입니다."
             />
           </div>
@@ -127,9 +199,9 @@ const Signup = () => {
               id="passwordCheck"
               placeholder="비밀번호를 다시 한번 입력해주세요."
               type="password"
-              value={signUp.passwordCheck}
+              value={signUps.passwordCheck}
               onChange={onChangePasswordCheck}
-              erorr={signUp.passwordCheckError}
+              erorr={signUps.passwordCheckError}
               erorrText="비밀번호가 서로 일치하지 않습니다."
             />
             <St.PasswordText>
@@ -138,13 +210,13 @@ const Signup = () => {
             </St.PasswordText>
           </div>
           <div>
-            <St.CheckLabel htmlFor="term" $check={signUp.termAll}>
-              <span>{signUp.termAll && <FaCheck />}</span>
+            <St.CheckLabel htmlFor="term" $check={signUps.termAll}>
+              <span>{signUps.termAll && <FaCheck />}</span>
               전체 동의
             </St.CheckLabel>
             <St.Checkbox
               id="term"
-              checked={signUp.termAll}
+              checked={signUps.termAll}
               onChange={onChangeTermAll}
               name="term"
               type="checkbox"
@@ -153,14 +225,14 @@ const Signup = () => {
               <li>
                 <St.CheckLabels
                   htmlFor="term1"
-                  $check={signUp.term.includes("term1")}
+                  $check={signUps.term.includes("term1")}
                 >
-                  <span>{signUp.term.includes("term1") && <FaCheck />}</span>만
+                  <span>{signUps.term.includes("term1") && <FaCheck />}</span>만
                   14세 이상입니까(필수)
                 </St.CheckLabels>
                 <St.Checkbox
                   id="term1"
-                  checked={signUp.term.includes("term1") ? true : false}
+                  checked={signUps.term.includes("term1") ? true : false}
                   onChange={onChangeTerm}
                   name="term1"
                   type="checkbox"
@@ -169,14 +241,14 @@ const Signup = () => {
               <li>
                 <St.CheckLabels
                   htmlFor="term2"
-                  $check={signUp.term.includes("term2")}
+                  $check={signUps.term.includes("term2")}
                 >
-                  <span>{signUp.term.includes("term2") && <FaCheck />}</span>
+                  <span>{signUps.term.includes("term2") && <FaCheck />}</span>
                   회원가입 하시겠습니까(필수)
                 </St.CheckLabels>
                 <St.Checkbox
                   id="term2"
-                  checked={signUp.term.includes("term2") ? true : false}
+                  checked={signUps.term.includes("term2") ? true : false}
                   onChange={onChangeTerm}
                   name="term2"
                   type="checkbox"
@@ -185,14 +257,14 @@ const Signup = () => {
               <li>
                 <St.CheckLabels
                   htmlFor="term3"
-                  $check={signUp.term.includes("term3")}
+                  $check={signUps.term.includes("term3")}
                 >
-                  <span>{signUp.term.includes("term3") && <FaCheck />}</span>
+                  <span>{signUps.term.includes("term3") && <FaCheck />}</span>
                   회원가입 하시겠습니까
                 </St.CheckLabels>
                 <St.Checkbox
                   id="term3"
-                  checked={signUp.term.includes("term3") ? true : false}
+                  checked={signUps.term.includes("term3") ? true : false}
                   onChange={onChangeTerm}
                   name="term3"
                   type="checkbox"
@@ -208,78 +280,54 @@ const Signup = () => {
               font="1.2"
               radius="1"
               hoverbg={
-                signUp.email.length <= 1 ||
-                signUp.emailError ||
-                signUp.password.length <= 1 ||
-                signUp.passwordCheck.length <= 1 ||
-                signUp.name.length <= 1 ||
-                signUp.nickName.length <= 1 ||
-                signUp.passwordError ||
-                signUp.passwordCheckError ||
-                signUp.nameError ||
-                signUp.nickNameError ||
-                !signUp.termAll
+                signUps.emailError ||
+                signUps.passwordError ||
+                signUps.passwordCheckError ||
+                signUps.nameError ||
+                signUps.nickNameError ||
+                !signUps.termAll
                   ? "f7f7f7"
                   : "blue"
               }
               hovercolor={
-                signUp.email.length <= 1 ||
-                signUp.emailError ||
-                signUp.password.length <= 1 ||
-                signUp.passwordCheck.length <= 1 ||
-                signUp.name.length <= 1 ||
-                signUp.nickName.length <= 1 ||
-                signUp.passwordError ||
-                signUp.passwordCheckError ||
-                signUp.nameError ||
-                signUp.nickNameError ||
-                !signUp.termAll
+                signUps.emailError ||
+                signUps.passwordError ||
+                signUps.passwordCheckError ||
+                signUps.nameError ||
+                signUps.nickNameError ||
+                !signUps.termAll
                   ? "black"
                   : "fff"
               }
               color={
-                signUp.email.length <= 1 ||
-                signUp.emailError ||
-                signUp.password.length <= 1 ||
-                signUp.passwordCheck.length <= 1 ||
-                signUp.name.length <= 1 ||
-                signUp.nickName.length <= 1 ||
-                signUp.passwordError ||
-                signUp.passwordCheckError ||
-                signUp.nameError ||
-                signUp.nickNameError ||
-                !signUp.termAll
+                signUps.emailError ||
+                signUps.passwordError ||
+                signUps.passwordCheckError ||
+                signUps.nameError ||
+                signUps.nickNameError ||
+                !signUps.termAll
                   ? "black"
                   : "fff"
               }
               bg={
-                signUp.email.length <= 1 ||
-                signUp.emailError ||
-                signUp.password.length <= 1 ||
-                signUp.passwordCheck.length <= 1 ||
-                signUp.name.length <= 1 ||
-                signUp.nickName.length <= 1 ||
-                signUp.passwordError ||
-                signUp.passwordCheckError ||
-                signUp.nameError ||
-                signUp.nickNameError ||
-                !signUp.termAll
+                signUps.emailError ||
+                signUps.passwordError ||
+                signUps.passwordCheckError ||
+                signUps.nameError ||
+                signUps.nickNameError ||
+                !signUps.termAll
                   ? "f7f7f7"
                   : "blue"
               }
               disabled={
-                signUp.email.length <= 1 ||
-                signUp.password.length <= 1 ||
-                signUp.passwordCheck.length <= 1 ||
-                signUp.name.length <= 1 ||
-                signUp.nickName.length <= 1 ||
-                signUp.emailError ||
-                signUp.passwordError ||
-                signUp.passwordCheckError ||
-                signUp.nameError ||
-                signUp.nickNameError ||
-                !signUp.termAll
+                signUps.emailError ||
+                signUps.passwordError ||
+                signUps.passwordCheckError ||
+                signUps.nameError ||
+                signUps.nickNameError ||
+                !signUps.termAll
               }
+              type="submit"
             >
               가입하기
             </Button>

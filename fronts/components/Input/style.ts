@@ -9,9 +9,8 @@ export const Label = styled.label`
 `;
 export const Input = styled.input<{ $color: boolean }>`
   width: 100%;
-  height: 4.8rem;
+  height: 5rem;
   border-radius: 0.5rem;
-  margin-top: 0.5rem;
   color: ${(props: any) => props.theme.black};
   border: 1px solid
     ${(props: any) => (props.$color ? props.theme.red : props.theme.ddd)};
@@ -24,11 +23,19 @@ export const Input = styled.input<{ $color: boolean }>`
       ${(props: any) => (props.$color ? props.theme.red : props.theme.blue)};
   }
 `;
+export const Cheack = styled.div`
+  display: flex;
+  gap: 1rem;
+  align-items: flex-end;
+  > input {
+    width: calc(100% - 9rem);
+  }
+`;
 export const Error = styled.p`
   color: ${(props: any) => props.theme.red};
   line-height: 1;
-  font-size: 1.3rem;
-  margin-top: 0.8rem;
+  font-size: 1.4rem;
+  margin-top:1rem;
 `;
 
 

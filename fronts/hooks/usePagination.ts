@@ -2,13 +2,12 @@ import { useCallback, useState } from "react";
 
 interface IPagination {
   totalItems: number;
-  itemsPerPage: number;
 }
 
-const usePagination = ({ totalItems, itemsPerPage }: IPagination) => {
+const usePagination = ({ totalItems }: IPagination) => {
   const [currentPage, setCurrentPage] = useState(1);
   // 전체 페이지수
-  const totalPages = Math.ceil(totalItems / itemsPerPage);
+  const totalPages = Math.ceil(totalItems / 10);
   const onPrevPage = useCallback(() => {
     setCurrentPage((prev) => prev - 1);
   }, [currentPage]);

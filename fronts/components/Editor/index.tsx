@@ -1,12 +1,19 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useRouter } from "next/router";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "redux/store";
+import { categore, post, postDones } from "redux/reducers/post";
+import { formats, toolbarOptions } from "hooks/useEditor";
 import { Button, LayOut } from "components";
 import { useInput } from "hooks";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import * as St from "./style";
 import "react-quill/dist/quill.snow.css";
-import { formats, toolbarOptions } from "hooks/useEditor";
+
 
 const Editor = () => {
+  const dispatch = useDispatch<AppDispatch>()
+  const router = useRouter()
   const [title, onTitle] = useInput("");
   const [content, setContent] = useState("");
   const [keyword, onKeyword, setKeyword] = useInput("");
@@ -15,8 +22,7 @@ const Editor = () => {
     (e: React.KeyboardEvent<HTMLInputElement>) => {
       // e.nativeEvent.isComposing 한글일때 끊기지 말라고 쓰는거...
       if ((e.key === "Enter" || e.key === ",") && !e.nativeEvent.isComposing) {
-        if (keyword.trim() === "") return;
-        if (keywords.includes(keyword)) return alert("이미 추가된 키워드임");
+        if (keywords.includes(keyword)) return alert("이미 추가된 키워드입니다.");
         const newKeyword = keyword.split(",")[0];
         setKeywords((prev) => [...prev, newKeyword]);
         setKeyword("");
@@ -24,6 +30,13 @@ const Editor = () => {
     },
     [keyword, keywords]
   );
+   const { categore: name, postDone } = useSelector(
+     (state: RootState) => state.post
+   );
+   useEffect(() => {
+     dispatch(categore());
+   }, []);
+  // textArea 글자 수길이에 따른 높이조절
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   useEffect(() => {
     const textArea = () => {
@@ -40,33 +53,41 @@ const Editor = () => {
     };
   }, []);
 
-  const Categores = ["카테고리 없음", "진진", "진진s"];
   const cateforeRef = useRef<HTMLDivElement>(null);
-  const [categore, setCatefore] = useState({
+  const [categoreOpen, setCategoreOpen] = useState({
     Boolean: false,
-    categore: Categores[0],
+    categore: name[0]?.categore,
+    id: name[0]?.id,
   });
-  const onCategores = useCallback(
-    (v: string) => {
-      setCatefore({ ...categore, categore: v, Boolean: false });
-    },
-    [categore]
-  );
+
+  // 다른곳 클릭해도 클릭박스 닫는거
   useEffect(() => {
     const onCategore = (e: MouseEvent) => {
       if (
         cateforeRef.current &&
         !cateforeRef.current.contains(e.target as Node)
       )
-        setCatefore({ ...categore, Boolean: false });
+        setCategoreOpen({ ...categoreOpen, Boolean: false });
     };
     document.addEventListener("mousedown", onCategore);
     return () => {
       document.removeEventListener("mousedown", onCategore);
     };
-  }, [categore.Boolean]);
-
-
+  }, [categoreOpen.Boolean]);
+  console.log(postDone);
+  // 다크모드시 추가 css
+  const [theme, setTheme] = useState("");
+  const currentTheme = localStorage.getItem("theme");
+  useEffect(() => {
+    setTheme(currentTheme === "light" ? "dark" : "light");
+  }, [currentTheme]);
+  useEffect(() => {
+    if (postDone) {
+      router.replace("/login");
+      dispatch(postDones());
+    }
+  }, [postDone]);
+  // 모듈
   const modules = useMemo(
     () => ({
       toolbar: {
@@ -79,29 +100,48 @@ const Editor = () => {
     }),
     []
   );
-  const [theme, setTheme] = useState("");
-  const currentTheme = localStorage.getItem("theme");
-  useEffect(() => {
-    setTheme(currentTheme === "light" ? "dark" : "light");
-  }, [currentTheme]);
-  
+  const onWrite = useCallback(
+    (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+
+      dispatch(
+        post({ title: title, content: content, CategoreId: categoreOpen.id })
+      );
+    },
+    [title, content, categoreOpen.id]
+  );
+
   return (
     <LayOut>
-      <St.Write>
+      <St.Form onSubmit={onWrite}>
         <St.Categore ref={cateforeRef}>
           <button
+            type="button"
             onClick={() =>
-              setCatefore({ ...categore, Boolean: !categore.Boolean })
+              setCategoreOpen({
+                ...categoreOpen,
+                Boolean: !categoreOpen.Boolean,
+              })
             }
           >
-            {categore.categore}
-            {categore.Boolean ? <IoIosArrowUp /> : <IoIosArrowDown />}
+            {categoreOpen.categore}
+            {categoreOpen.Boolean ? <IoIosArrowUp /> : <IoIosArrowDown />}
           </button>
-          {categore.Boolean && (
+          {categoreOpen.Boolean && (
             <ul>
-              {Categores.map((v) => (
-                <li key={v} onClick={() => onCategores(v)}>
-                  {v}
+              {name.map((v) => (
+                <li
+                  key={v.id}
+                  onClick={() =>
+                    setCategoreOpen({
+                      ...categore,
+                      categore: v.categore,
+                      Boolean: !categoreOpen.Boolean,
+                      id: v.id,
+                    })
+                  }
+                >
+                  {v.categore}
                 </li>
               ))}
             </ul>
@@ -136,14 +176,14 @@ const Editor = () => {
         />
 
         <St.ButtonWrap>
-          <Button bg="f7f7f7" font="1.2" width="8">
+          <Button bg="f7f7f7" font="1.2" width="8" type="submit">
             취소
           </Button>
-          <Button bg="blue" font="1.2" color="fff" width="8">
+          <Button bg="blue" font="1.2" color="fff" width="8" type="submit">
             완료
           </Button>
         </St.ButtonWrap>
-      </St.Write>
+      </St.Form>
     </LayOut>
   );
 };

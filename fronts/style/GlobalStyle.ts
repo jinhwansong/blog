@@ -41,17 +41,16 @@ const GlobalStyle = createGlobalStyle`
         font-family: 'Pretendard';
         line-height: 1.7;
         font-size:62.5%;
-        
     }
     body {
-        color: ${(props) => props.theme.gery};
+        color:${(props: any) => props.theme.black};
         font-size:62.5%;
         font-weight:400;
         font-family: 'Pretendard';
         list-style: none;
         line-height: 1.7;
         background: ${(props) => props.theme.white};
-        transition: all 0.3s;
+        transition: background 0.3s;
     }
     input{
         color: ${(props) => props.theme.gery};
