@@ -1,22 +1,18 @@
 import {
+  AnyAction,
   createAsyncThunk,
   createSlice,
 } from "@reduxjs/toolkit";
 
-import {  baseAxios } from "utils/instance";
+import {  baseAxios, imageAxios } from "utils/instance";
 import * as I from "types";
+import { HYDRATE } from "next-redux-wrapper";
 
 
 
-interface UserInitialState {
+export interface UserInitialState {
   // 내상태
   me: null | I.User;
-  // 유저정보 불러오기
-  userInfo: null | I.User;
-  // 회원가입
-  userInfoLoding: boolean;
-  userInfoDone: boolean;
-  userInfoError: null | undefined | string;
 
   // 내 정보 불러오기
   myInfoLoding: boolean;
@@ -56,16 +52,14 @@ interface UserInitialState {
   changePasswordLoding: boolean;
   changePasswordDone: boolean;
   changePasswordError: null | unknown;
+  // 내정보 변경
+  changeInfoLoding: boolean;
+  changeInfoDone: boolean;
+  changeInfoError: null | unknown;
 }
 const initialState: UserInitialState = {
   // 내 상태
   me: null,
-  // 유저 정보 불러오기
-  userInfo: null,
-  // 유저 정보 불러오기
-  userInfoLoding: false,
-  userInfoDone: false,
-  userInfoError: null,
   // 내 정보 불러오기
   myInfoLoding: false,
   myInfoDone: false,
@@ -104,6 +98,10 @@ const initialState: UserInitialState = {
   changePasswordLoding: false,
   changePasswordDone: false,
   changePasswordError: null,
+  // 내정보 변경
+  changeInfoLoding: false,
+  changeInfoDone: false,
+  changeInfoError: null,
 };
 
 // 로그인
@@ -116,11 +114,7 @@ export const logOut = createAsyncThunk("user/logout", async () => {
   const response = await baseAxios.post("/user/logout");
   return response;
 });
-// 유저정보
-export const userInfo = createAsyncThunk("user/userinfo", async () => {
-  const response = await baseAxios.get("/user/info");
-  return response;
-});
+
 // 내정보
 export const myInfo = createAsyncThunk("user/myinfo", async () => {
   const response = await baseAxios.get("/user");
@@ -178,6 +172,12 @@ export const password = createAsyncThunk("user/password", async (data: I.User) =
   });
   return response;
 });
+// 프로필이미지 이름 보내줌
+export const profile = createAsyncThunk("user/profile", async (data: FormData) => {
+  const response = await imageAxios.patch("/user/profile", data);
+  return response;
+});
+
 
 
 const UserReducer = createSlice({
@@ -197,6 +197,12 @@ const UserReducer = createSlice({
 
   extraReducers: (builder) =>
     builder
+      // ssr 하이드레이트
+      .addCase(HYDRATE, (state, action: AnyAction) => ({
+        ...state,
+        ...action.payload.user,
+       
+      }))
       // 로그인
       .addCase(login.pending, (draft) => {
         draft.loginLoding = true;
@@ -228,21 +234,7 @@ const UserReducer = createSlice({
         draft.logOutLoding = false;
         draft.logOutError = action.error.message;
       })
-      // 유저정보
-      .addCase(userInfo.pending, (draft) => {
-        draft.userInfoLoding = true;
-        draft.userInfoError = null;
-        draft.userInfoDone = false;
-      })
-      .addCase(userInfo.fulfilled, (draft, action) => {
-        draft.userInfoLoding = false;
-        draft.userInfoDone = true;
-        draft.me = action.payload.data;
-      })
-      .addCase(userInfo.rejected, (draft, action) => {
-        draft.userInfoLoding = false;
-        draft.userInfoError = action.error.message;
-      })
+      
       // 내정보 새로고침시 계속 불러오기
       .addCase(myInfo.pending, (draft) => {
         draft.myInfoLoding = true;
@@ -351,6 +343,23 @@ const UserReducer = createSlice({
         draft.changePasswordLoding = false;
         draft.changePasswordDone = false;
         draft.changePasswordError = action.payload;
+      })
+      // 프로필이미지
+      .addCase(profile.pending, (draft) => {
+        draft.changeInfoLoding = true;
+        draft.changeInfoError = null;
+        draft.changeInfoDone = false;
+      })
+      .addCase(profile.fulfilled, (draft, action) => {
+        if (draft.me) {
+          draft.me.image = action.payload.data;
+        }
+        draft.changeInfoLoding = false;
+        draft.changeInfoDone = true;
+      })
+      .addCase(profile.rejected, (draft, action) => {
+        draft.changeInfoLoding = false;
+        draft.changeInfoError = action.payload;
       }),
 });
 export const { resetSignUpDone, resetCheackNickDone, resetCheackPasswordDone } =

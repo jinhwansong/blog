@@ -9,6 +9,11 @@ module.exports = (sequelize, DateTypes) => {
             type: DateTypes.TEXT,
             allowNull: false,
         },
+        view:{
+            type:DateTypes.INTEGER,
+            // 조회수 기본값 0으로 설정
+            defaultValue:0,
+        }
     }, {
         charset: "utf8mb4",
         collate: "utf8mb4_general_ci"
@@ -36,6 +41,7 @@ module.exports = (sequelize, DateTypes) => {
             // 좋아요 한 게시물 안하면 여기 안속하겠지.
             as: "Liked"
          })
+         db.Post.hasMany(db.PostView)
     }
     return Post
 }

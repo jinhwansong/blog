@@ -1,8 +1,15 @@
 import React from "react";
-import dynamic from "next/dynamic";
-const Editor = dynamic(() => import("../../components/Editor"), { ssr: false });
+import { Editor } from "components";
+import Head from "next/head";
 
 const modify = () => {
-  return <>{typeof window !== "undefined" && <Editor />}</>;
-};
+  return(
+  <>
+    <Head>
+      <meta charSet="utf-8" />
+      <title>PGI's Blog</title>
+    </Head>
+    <Editor types="write" />;
+  </>
+)};
 export default modify;

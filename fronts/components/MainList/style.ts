@@ -35,15 +35,13 @@ export const TapTitle = styled.em<{ $title: string }>`
   word-break: break-all;
   line-height: 1.4;
   font-weight: ${(props: any) => (props.$title === "tap" ? "400" : "600")};
-  color: ${(props: any) =>
-    props.$title === "tap" ? props.theme.gery : props.theme.black};
+  color: ${(props: any) => props.theme.black};
   font-size: ${(props: any) => (props.$title === "tap" ? "1.4rem" : "1.6rem")};
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: ${(props: any) =>
-    props.$title === "tap" ? "2" : "3"};
+  -webkit-line-clamp: ${(props: any) => (props.$title === "tap" ? "2" : "3")};
 `;
 export const TapDetail = styled.p`
   margin-top: 0.5rem;
@@ -72,10 +70,16 @@ export const Like = styled.button`
   align-items: center;
   justify-content: center;
   padding: 0;
+  font-size: 1.2rem;
+  color: ${(props: any) => props.theme.red};
+  cursor: pointer;
+  gap: 5px;
+  border-right: 1px solid ${(props: any) => props.theme.ddd};
+  margin-right: 1rem;
+  padding-right: 1rem;
+  line-height: 1;
   > svg {
-    font-size: 1.6rem;
-    color: ${(props: any) => props.theme.red};
-    cursor: pointer;
+    font-size: 1.4rem;
   }
 `;
 export const Date = styled.p`
@@ -83,7 +87,9 @@ export const Date = styled.p`
   font-size: 1.2rem;
   font-weight: 500;
   line-height: 1;
-  margin:0 1rem 0 0.5rem;
+  margin-right:1rem;
   padding-right: 1rem;
 `;
+
+
 

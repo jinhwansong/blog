@@ -2,13 +2,15 @@ import { configureStore } from "@reduxjs/toolkit";
 import { createWrapper } from "next-redux-wrapper";
 import reducer from "./reducers";
 
+
+
 const makeStore = () =>
   configureStore({
     reducer,
     devTools: true,
     middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware({ serializableCheck: false }),
-    // preloadedState: serverState, // SSR
+     getDefaultMiddleware({ serializableCheck: false }),
+    
   });
 
 

@@ -1,19 +1,36 @@
 import React, { useEffect } from "react";
-import dynamic from "next/dynamic";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "redux/store";
 import { postDetail } from "redux/reducers/post";
-const Editor = dynamic(() => import("../../../components/Editor"), { ssr: false });
+import { Editor } from "components";
 
 const modify = () => {
      const dispatch = useDispatch<AppDispatch>();
      const router = useRouter();
-     const { postDetailDone } = useSelector((state: RootState) => state.post);
-     useEffect(() => {
-       dispatch(postDetail(Number(router.query.id)));
-     }, []);
-     console.log(postDetailDone);
-  return <>{typeof window !== "undefined" && <Editor />}</>;
+     const id = Number(router.query.id);
+      useEffect(() => {
+        dispatch(postDetail(id));
+      }, []);
+    const { postDetailDone } = useSelector(
+      (state: RootState) => state.post
+    );
+
+  return (
+    <>
+      <Head>
+        <meta charSet="utf-8" />
+        <title>PGI's Blog</title>
+      </Head>
+      <Editor
+        types="modify"
+        titleModify={postDetailDone?.title}
+        contentModify={postDetailDone?.content}
+        idModify={postDetailDone?.CategoreId}
+        nameModify={postDetailDone?.categore}
+      />
+    </>
+  );
 };
 export default modify;

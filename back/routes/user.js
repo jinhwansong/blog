@@ -1,17 +1,32 @@
 const express = require("express")
-const {
-    User, Post
-} = require('../models');
 const passport = require("passport")
 const bcrypt = require("bcrypt")
+const multer = require("multer");
+const path = require("path")
+const fs = require("fs")
 const {
     isLoggedIn, isNotLoggedIn
-} = require("./middlewares")
+} = require("./middlewares");
+
+const {
+    User,
+    Post
+} = require('../models');
 const router = express.Router()
 
 
 //req - 프론트에서 데이터 준거
 //res - 응답값
+
+try {
+    // uploads폴더가 잇는지 확인
+    fs.accessSync("uploads")
+} catch (error) {
+    //없으면 uploads생성
+    fs.mkdirSync("uploads")
+}
+
+
 
 // 회원가입
 router.post("/", isNotLoggedIn, async (req, res, next) => {
@@ -79,7 +94,7 @@ router.post("/login", isNotLoggedIn, (req, res, next) => {
         }
         if(info){
             // 401인증되지 않는
-            return res.status(401).send(info.reason)
+            return res.status(401).send("로그인 되어있습니다.")
         }
         // 여기에 있는 user에 대한 정보를 passport.serializeUser의 user에 넘긴다.
         return req.login(user,async(loginErr)=>{
@@ -92,7 +107,7 @@ router.post("/login", isNotLoggedIn, (req, res, next) => {
             const fullUserInfo = await User.findOne({
                 where:{id:user.id},
                 // 원하는 정보만 받을때
-                attributes:["nickName","image","email"],
+                attributes: ["nickName", "image", "email", "id", "name", "image"],
                 // 원치 않은 정보 빼고
                 // attributes:{
                 //     exclude:["password"]
@@ -109,17 +124,12 @@ router.post("/login", isNotLoggedIn, (req, res, next) => {
 })
 // 로그아웃 
 router.post("/logout", isLoggedIn,(req, res) => {
-    req.logout((err) => {
-        if (err) {
-            console.error(err)
-            return res.status(500).send("로그아웃 중 오류가 발생했습니다.")
-        }
+    req.logout(() => {
         req.session.destroy((err) => {
             if (err) {
-                console.error(err)
-                return res.status(500).send("로그아웃 중 오류가 발생했습니다.")
+                 res.status(500).send("로그아웃 중 오류가 발생했습니다.")
             }
-            res.send('로그아웃 하셨습니다');
+            res.status(200).send('로그아웃 하셨습니다');
         })
     });
 })
@@ -145,6 +155,56 @@ router.get("/", async (req, res, next) => {
         next(error)
    }
 })
+
+const upload = multer({
+    // 일단 컴퓨터 스토리지에 올림
+    storage: multer.diskStorage({
+        // 나중에 s3로 변경할 예정
+        destination(req, file, done) {
+            done(null, "uploads")
+        },
+        // 파일 이름
+        filename(req, file, done) {
+            // 중복되는 파일이름을 곂치지 안게 하기 위해 
+            // 업로드 시간을 파일 이름에 붙여서 업로드 시킨다.
+
+            // 확장자 추출 ex) png
+            const ext = path.extname(file.originalname)
+            // 파일 이름 ex) pg
+            const basename = path.basename(file.originalname, ext)
+            // 저장시에 pg1234253524.png
+            done(null, basename + "_" + new Date().getTime() + ext)
+        }
+    }),
+    // 최대 20mb
+    limits: {
+        fileSize: 20 * 1024 * 1024
+    }
+})
+
+// 프로필 이미지 수정 여기서는 이름을 저장한다.
+router.patch("/profile", isLoggedIn, upload.array("profile"), async (req, res, next) => {
+    try {
+        const filenames = req.files[0].filename;
+        if (filenames.length > 30) {
+            return res.status(403).send("글자수를 줄여주세요")
+        }
+        await User.update({
+             image: filenames,
+        }, {
+            where: {
+                id: req.user.id
+            }
+        })
+        
+        res.status(201).json(req.files[0].filename)
+    } catch (error) {
+        console.error(error)
+        next(error)
+    }
+})
+
+
 
 // 닉네임 수정
 router.patch("/nickname", isLoggedIn, async (req, res, next) => {

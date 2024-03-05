@@ -4,9 +4,13 @@ const session = require("express-session")
 const cookieParser = require("cookie-parser")
 const passport = require("passport")
 const dotenv = require("dotenv")
+const path = require("path")
 const postRouter = require("./routes/post")
 const postsRouter = require("./routes/posts")
 const userRouter = require("./routes/user")
+const searchRouter = require("./routes/search")
+const hashtagRouter = require("./routes/hashtag")
+
 const passportConfig = require("./passport")
 const db = require("./models")
 
@@ -29,6 +33,9 @@ app.use(cors({
     origin: "http://localhost:3000",
     credentials: true,
 }))
+
+// 
+app.use("/",express.static(path.join(__dirname,"uploads")))
 app.use(express.json()) 
 app.use(express.urlencoded({
     extended: true
@@ -41,6 +48,11 @@ app.use(session({
     resave:false,
     // 세션키라고 생각하자... 해킹당하면 ㅈ되는겨
     secret: process.env.COOKIE_SECET,
+    cookie:{
+        httpOnly:true,
+        secure:false,
+        path:"/"
+    }
 }))
 app.use(passport.initialize())
 app.use(passport.session())
@@ -49,6 +61,9 @@ app.use(passport.session())
 app.use("/post", postRouter)
 app.use("/posts", postsRouter)
 app.use("/user", userRouter)
+app.use("/search", searchRouter)
+app.use("/hashtag", hashtagRouter)
+
 
 app.listen(3065, () => {
     console.log("서버 실행중!!")

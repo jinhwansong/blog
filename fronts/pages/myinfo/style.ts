@@ -7,7 +7,16 @@ export const MyInfo = styled.section`
     align-items: center;
     gap:3rem;
 `
-export const MyInfoImg = styled.article``;
+export const MyInfoImg = styled.article`
+  width: 9.5rem;
+  height: 9.5rem;
+  border: 1px solid ${(props: any) => props.theme.ddd};
+  border-radius: 9.5rem;
+  overflow: hidden;
+  >input{
+    display: none;
+  }
+`;
 export const MyInfoSec = styled.article`
   border: 1px solid ${(props: any) => props.theme.ddd};
   padding:3rem 3rem;

@@ -3,7 +3,7 @@ import * as St from "./style"
 
 
 interface IContent {
-  content: string ;
+  content: string | undefined;
 }
 
 const Content = ({ content }: IContent) => (

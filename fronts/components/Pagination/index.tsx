@@ -1,17 +1,18 @@
-import React, {useState } from "react";
-
+import React from "react";
 import {Button} from "components";
 import { usePagination } from "hooks";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 import * as St from "./style";
 
+interface IPagination {
+  count: number;
+  currentPage: number;
+  onPrevPage: () => void;
+  onNextPage: () => void;
+  onPage: (page: number) => void;
+}
 
-// totalItems: number;
-
-const Pagination = () => {
-  const totalItems = 32
-  const { currentPage, totalPages, onPrevPage, onNextPage, onPage } =
-    usePagination({ totalItems });
+const Pagination = ({ currentPage,count, onPrevPage, onNextPage, onPage }: IPagination) => {
   return (
     <St.Pagination>
       <Button
@@ -27,7 +28,7 @@ const Pagination = () => {
         type="button"
       />
 
-      {Array.from({ length: totalPages }, (_, index) => (
+      {Array.from({ length: count }, (_, index) => (
         <Button
           onButton={() => onPage(index + 1)}
           disabled={currentPage === index + 1}
@@ -47,7 +48,7 @@ const Pagination = () => {
         themes="arr"
         image={<MdKeyboardArrowRight />}
         onButton={() => onNextPage()}
-        disabled={currentPage === totalPages}
+        disabled={currentPage === count}
         width="4"
         font="1.2"
         bg="f7f7f7"

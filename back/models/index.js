@@ -15,6 +15,7 @@ db.Hashtag = require("./hashtag")(sequelize, Sequelize)
 db.Image = require('./image')(sequelize, Sequelize)
 db.Post = require('./post')(sequelize, Sequelize)
 db.User = require('./user')(sequelize, Sequelize)
+db.PostView = require('./postView')(sequelize, Sequelize)
 
 
 // db관계짜주는거

@@ -1,10 +1,10 @@
 import React, { useCallback } from "react";
 import { useRouter } from "next/router";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "redux/store";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "redux/store";
 import { like, unlike } from "redux/reducers/post";
 import { IoHeartOutline, IoHeartSharp } from "react-icons/io5";
-import { Content, Tag } from "components";
+import { Tag } from "components";
 import { ICommon } from "types";
 import * as St from "./style";
 
@@ -15,7 +15,6 @@ interface IMainList {
 }
 
 const MainList = ({ location, post }: IMainList) => {
-  const { me } = useSelector((state: RootState) => state.user);
   const router = useRouter();
   const dispatch = useDispatch<AppDispatch>()
   const onListPage = useCallback((v:number) => {
@@ -31,13 +30,21 @@ const MainList = ({ location, post }: IMainList) => {
     e.stopPropagation();
     dispatch(unlike(id));
   }, []);
- 
   return (
     <St.MainList>
       {post?.map((v) => (
         <li onClick={() => onListPage(v.id)} key={v.id}>
           <St.Image $width={location}>
-            <img src={v.src} />
+            <img
+              src={
+                v.src !== ""
+                  ? `${process.env.NEXT_PUBLIC_SERVER_URL}/${v.src}`
+                  : "https://picsum.photos/95/95"
+              }
+              alt="프로필 이미지"
+              width={95}
+              height={95}
+            />
           </St.Image>
           <St.TapText>
             <St.TapTitle $title={location}>{v.title}</St.TapTitle>
@@ -47,19 +54,20 @@ const MainList = ({ location, post }: IMainList) => {
             <St.TapSpan>
               {location !== "tap" && (
                 <>
+                  <St.Date>{v.nickname}</St.Date>
                   <St.Like>
-                    {v.Liked.find((v) => v.id === me?.id) ? (
+                    {v.like === 1 ? (
                       <IoHeartSharp onClick={(e) => onUnLikehandle(e, v.id)} />
                     ) : (
                       <IoHeartOutline onClick={(e) => onLikehandle(e, v.id)} />
                     )}
+                    <p>{v.count}</p>
                   </St.Like>
 
-                  <St.Date>{v.nickName}</St.Date>
                   <St.Date>{v.createdAt.slice(0, 10)}</St.Date>
                 </>
               )}
-              <Tag />
+              <Tag tag={v.hashtag} />
             </St.TapSpan>
           </St.TapText>
         </li>

@@ -27,12 +27,11 @@ const app = ({Component, ...rest}:AppProps)=>{
       setTheme(newTheme);
       localStorage.setItem("theme", newTheme);
     }, [theme]);
-
     return (
       <>
         <Head>
           <meta charSet="utf-8" />
-          <title>진환이 포폴</title>
+          <title>PGI's Blog</title>
         </Head>
         <Provider store={store}>
           <ThemeProvider theme={theme === "light" ? darkTheme : lightTheme}>

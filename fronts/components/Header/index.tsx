@@ -4,7 +4,6 @@ import { useRouter } from "next/router";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "redux/store";
 import { logOut, myInfo } from "redux/reducers/user";
-
 import { Button } from "components";
 import * as St from "./style";
 
@@ -14,14 +13,14 @@ const Header = () => {
     const {me} = useSelector((state:RootState)=>state.user)
     const router = useRouter()
     const [profileTap, setProfileTap] = useState(false);
-   useEffect(() => {
-     dispatch(myInfo());
-   }, []);
+
     const logOutButton = useCallback(() => {
       dispatch(logOut());
       router.replace("/")
     }, []);
-    
+    useEffect(()=>{
+      dispatch(myInfo());
+    },[])
   return (
     <St.HeaderWrap>
       <St.Header>
@@ -43,7 +42,18 @@ const Header = () => {
             </Link>
             <St.Profile onClick={() => setProfileTap((prev) => !prev)}>
               <div>
-                <img src="https://picsum.photos/250/250" />
+                <img
+                  src={
+                    me?.image
+                      ? `${process.env.NEXT_PUBLIC_SERVER_URL}/${
+                          me && me.image
+                        }`
+                      : "https://picsum.photos/95/95"
+                  }
+                  alt="프로필 이미지"
+                  width={95}
+                  height={95}
+                />
               </div>
               {profileTap && (
                 <St.ProfileTap>

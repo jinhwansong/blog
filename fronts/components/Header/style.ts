@@ -4,12 +4,16 @@ export const HeaderWrap = styled.header`
   border-bottom: 1px solid ${(props: any) => props.theme.ddd};
 `;
 export const Header = styled.nav`
-  width: 120rem;
+  width: 100rem;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
   height: 6.4rem;
+  @media screen and (max-width: 1024px) {
+    width: 100%;
+    padding:0 2rem;
+  }
 `;
 export const GroupButton = styled.div`
     display: flex;

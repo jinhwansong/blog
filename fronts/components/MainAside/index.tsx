@@ -1,34 +1,46 @@
-import React, { useCallback, useEffect,useState } from "react";
+import React, { useCallback,useState } from "react";
 import { FcSearch, FcAbout, FcIdea, FcAnswers } from "react-icons/fc";
-
 import { useRouter } from "next/router";
 import { useParams } from "next/navigation";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "redux/store";
-import { categore } from "redux/reducers/post";
+import { useSelector } from "react-redux";
+import {  AppDispatch, RootState } from "redux/store";
 import { usePagination, useInput } from "hooks";
 import { Button, MainList, Tag } from "components";
-import { ICommon } from "types";
 import * as St from "./style";
+import { useDispatch } from "react-redux";
+import { recentPost } from "redux/reducers/post";
 
 
-const MainAside = ({ post }: { post: ICommon[] }) => {
+const MainAside = () => {
    const router = useRouter();
    const param = useParams();
-   const dispatch = useDispatch<AppDispatch>();
+   const dispatch = useDispatch<AppDispatch>()
   const [search, onChangeSearch, setSearch] = useInput("");
-  const readTap = [{ name: "최근 7일" }, { name: "최근 1달" }];
-  const [tap, setTap] = useState("최근 7일");
- 
-  const { categore: name } = useSelector((state: RootState) => state.post);
+  const readTap = [
+    { name: "최근 7일", time: 7 },
+    { name: "최근 1달", time: 30 },
+  ];
+  const [tap, setTap] = useState({
+    name: "최근 7일",
+    time: 7,
+  });
+
+  // 카테고리
+  const { categore: name, recentPostDone:post } = useSelector(
+    (state: RootState) => state.post
+  );
   const onCategore = useCallback((name: string, totalItems: number) => {
-    const { currentPage } = usePagination({ totalItems });
+    const { currentPage } = usePagination(totalItems);
     router.push(`/categore=${name}&page=${currentPage}`);
   }, []);
-  useEffect(() => {
-    dispatch(categore());
-  }, []);
-
+  const onDate = useCallback(
+    (name: string, time: number) => {
+      setTap({ ...tap, name: name, time: time });
+      dispatch(recentPost(time));
+    },
+    [tap]
+  );
+  
   return (
     <St.Aside>
       <div>
@@ -57,13 +69,6 @@ const MainAside = ({ post }: { post: ICommon[] }) => {
             검색
           </Button>
         </St.ButtonWrap>
-        <St.Tag>
-          <St.Title>
-            <FcAbout />
-            <p>많이 검색된 기술태그</p>
-          </St.Title>
-          <Tag />
-        </St.Tag>
       </div>
       <div>
         <St.Title>
@@ -91,13 +96,13 @@ const MainAside = ({ post }: { post: ICommon[] }) => {
 
         <St.TapWrap>
           {readTap.map((v, index) => (
-            <li key={index} onClick={() => setTap(v.name)}>
+            <li key={index} onClick={() => onDate(v.name, v.time)}>
               <Button
                 font="1.2"
-                hoverbg={tap === v.name ? "blue" : "f7f7f7"}
-                hovercolor={tap === v.name ? "fff" : "black"}
-                color={tap === v.name ? "fff" : ""}
-                bg={tap === v.name ? "blue" : "f7f7f7"}
+                hoverbg={tap.name === v.name ? "blue" : "f7f7f7"}
+                hovercolor={tap.name === v.name ? "fff" : "black"}
+                color={tap.name === v.name ? "fff" : ""}
+                bg={tap.name === v.name ? "blue" : "f7f7f7"}
                 width="8"
                 type="button"
               >
@@ -106,8 +111,8 @@ const MainAside = ({ post }: { post: ICommon[] }) => {
             </li>
           ))}
         </St.TapWrap>
-        {tap === "최근 7일" && <MainList location="tap" post={post} />}
-        {tap === "최근 1달" && <MainList location="tap" post={post} />}
+        {tap.name === "최근 7일" && <MainList location="tap" post={post} />}
+        {tap.name === "최근 1달" && <MainList location="tap" post={post} />}
       </div>
     </St.Aside>
   );

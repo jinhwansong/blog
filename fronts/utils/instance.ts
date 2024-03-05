@@ -5,7 +5,11 @@ export const baseAxios = axios.create({
   withCredentials: true,
   headers: { "Content-type": "application/json" },
 });
-
+export const imageAxios = axios.create({
+  baseURL: `${process.env.NEXT_PUBLIC_SERVER_URL}`,
+  withCredentials: true,
+  headers: { "Content-type": "multipart/form-data" },
+});
 
 baseAxios.interceptors.request.use(
   (config) => {
@@ -77,6 +81,12 @@ baseAxios.interceptors.response.use(
             alert(errorMessage);
             return Promise.reject(errorMessage);
           case "게시글이 존재하지 않습니다.":
+            alert(errorMessage);
+            return Promise.reject(errorMessage);
+          case "본인게시물이 아닙니다.":
+            alert(errorMessage);
+            return Promise.reject(errorMessage);
+          case "다른 사용자의 글은 수정할 수 없습니다.":
             alert(errorMessage);
             return Promise.reject(errorMessage);
           default:

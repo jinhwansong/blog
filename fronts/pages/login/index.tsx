@@ -2,9 +2,12 @@ import React, { useCallback, useEffect, useState } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { GetServerSideProps } from "next";
+import axios from "axios";
 import { AppDispatch, RootState } from "redux/store";
 import { useSelector, useDispatch } from "react-redux";
-import { login } from "redux/reducers/user";
+import wrapper from "../../redux/store";
+import { myInfo, login } from "redux/reducers/user";
 import { Input, LayOut, Button } from "components";
 import {useValid} from "hooks";
 import * as St from "./style";
@@ -103,4 +106,23 @@ const Login = ()=>{
       </>
     );
 }
+
+
+// ssr 
+export const getServerSideProps:GetServerSideProps =
+ wrapper.getServerSideProps((store) => async({ req })=>{
+  // 리퀘스트에서 가만히 있는게 아니라 성공으로 가게 하기 위해서.
+  const cookie = req ? req.headers.cookie: "";
+  axios.defaults.headers.Cookie = ""
+  if(req && cookie){
+    axios.defaults.headers.Cookie = cookie;
+  }
+  // 
+  await store.dispatch(myInfo());
+  return {
+    props:{},
+  }
+})
+
+
 export default Login;

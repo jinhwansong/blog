@@ -1,13 +1,17 @@
 import React, {  useCallback, useEffect, useState } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import { GetServerSideProps } from "next";
+import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "redux/store";
+import wrapper from "../../redux/store";
 import {
   resetSignUpDone,
   signUp,
   chackId,
   checkNick,
+  myInfo,
 } from "redux/reducers/user";
 
 import { FaCheck } from "react-icons/fa";
@@ -337,4 +341,22 @@ const Signup = () => {
     </>
   );
 };
+
+
+// ssr 
+export const getServerSideProps:GetServerSideProps =
+ wrapper.getServerSideProps((store) => async({ req })=>{
+  // 리퀘스트에서 가만히 있는게 아니라 성공으로 가게 하기 위해서.
+  const cookie = req ? req.headers.cookie: "";
+  axios.defaults.headers.Cookie = ""
+  if(req && cookie){
+    axios.defaults.headers.Cookie = cookie;
+  }
+  // 
+  await store.dispatch(myInfo());
+  return {
+    props:{},
+  }
+})
+
 export default Signup;

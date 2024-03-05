@@ -8,10 +8,12 @@ export const Main = styled.main`
   > div {
     flex: 1;
   }
+  @media screen and (max-width: 1024px) {
+    flex-wrap: wrap;
+  }
 `;
 
 export const Contener = styled.section`
-  
   border: 1px solid ${(props: any) => props.theme.ddd};
   background: ${(props: any) => props.theme.blacks};
   border-radius: 1rem;
@@ -20,4 +22,7 @@ export const Contener = styled.section`
   flex-direction: column;
   gap: 2rem;
   min-height: 90rem;
+  @media screen and (max-width: 1024px) {
+    min-height: 50rem;
+  }
 `;

@@ -12,6 +12,10 @@ export const Aside = styled.aside`
     border-radius: 1rem;
     padding: 3rem;
   }
+  @media screen and (max-width: 1024px) {
+    width: 100%;
+    
+  }
 `;
 export const Title = styled.h3`
   font-size: 1.6rem;

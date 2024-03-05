@@ -65,7 +65,6 @@ const Myinfo = (props: IMyinfo) => {
   const { cheackNickDone, cheackPasswordDone } = useSelector(
     (state: RootState) => state.user
   );
-  console.log(cheackPasswordDone);
   const onButton = useCallback((v:string)=>{
     if (props.title === "닉네임 변경") return dispatch(checkNick({ nickName: v }));
     if (props.title === "비밀번호 변경")
