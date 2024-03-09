@@ -190,11 +190,11 @@ const Editor = ({
       if (types === "modify") {
         dispatch(
           postModify({
-            title: title,
-            content: content,
+            title,
+            content,
             CategoreId: categoreOpen.id,
             id: Number(router.query.id),
-            keywords: keywords,
+            keywords,
             image: imagePaths,
           })
         );
@@ -202,10 +202,10 @@ const Editor = ({
       if (types === "write") {
         dispatch(
           post({
-            title: title,
-            content: content,
+            title,
+            content,
             CategoreId: categoreOpen.id,
-            keywords: keywords,
+            keywords,
             image: imagePaths,
           })
         );
@@ -215,8 +215,12 @@ const Editor = ({
   );
   // 취소
   const onExit = useCallback(() => {
-    if (types === "modify") {return router.replace(`/${router.query.id}`);}
-    if (types === "write") {return router.replace("/");}
+    if (types === "modify") {
+      return router.replace(`/${router.query.id}`);
+    }
+    if (types === "write") {
+      return router.replace("/");
+    }
   }, []);
   return (
     <LayOut>
@@ -232,9 +236,7 @@ const Editor = ({
               setCategoreOpen({
                 ...categoreOpen,
                 Boolean: !categoreOpen.Boolean,
-              })
-            }
-          >
+              })}>
             {categoreOpen.categore}
             {categoreOpen.Boolean ? <IoIosArrowUp /> : <IoIosArrowDown />}
           </button>
@@ -249,9 +251,7 @@ const Editor = ({
                       categore: v.categore,
                       Boolean: !categoreOpen.Boolean,
                       id: v.id,
-                    })
-                  }
-                >
+                    })}>
                   전체 코드 (계속) JavaScript
                   {v.categore}
                 </li>

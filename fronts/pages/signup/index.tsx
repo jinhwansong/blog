@@ -125,9 +125,12 @@ const Signup = () => {
   // 중복체크
   const onButton = useCallback(
     (v: string) => {
-      if (v === "email") return dispatch(chackId({ email: signUps.email }));
-      if (v === "nickName")
+      if (v === "email") {
+        return dispatch(chackId({ email: signUps.email }));
+      }
+      if (v === "nickName") {
         return dispatch(checkNick({ nickName: signUps.nickName }));
+      }
     },
     [signUps.email, signUps.nickName]
   );

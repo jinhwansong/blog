@@ -88,9 +88,12 @@ const Myinfo: React.FC<IMyinfo> = ({
     (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       if (title === "닉네임 변경") {
-        if (!change.nickName || !change.nickName.trim())
+        if (!change.nickName || !change.nickName.trim()) {
           return alert("닉네임을 작성해주세요");
-        if (cheackNickDone === false) return alert("중복체크를 해주세요");
+        }
+        if (cheackNickDone === false) {
+          return alert("중복체크를 해주세요");
+        }
         dispatch(changeNick({ nickName: change.nickName }));
         dispatch(resetCheackNickDone());
         alert("닉네임이 변경되었습니다.");
@@ -151,7 +154,7 @@ const Myinfo: React.FC<IMyinfo> = ({
               value={change.nickName}
               error={change.nickNameError}
               able={
-                !(change.nickName.length < 8 &&  change.nickName.length >= 2)
+                !(change.nickName.length < 8 && change.nickName.length >= 2)
               }
               onButton={() => onButton(change.nickName)}
             />
