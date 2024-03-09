@@ -7,23 +7,24 @@ import { searchs } from "redux/reducers/post";
 import { Common } from "components";
 import { usePagination } from "hooks";
 
-
-
 const Search = () => {
-   const router = useRouter();
-    const { searchDone: post } = useSelector((state: RootState) => state.post);
+  const router = useRouter();
+  const { searchDone: post } = useSelector((state: RootState) => state.post);
   const { currentPage, totalPages, onPrevPage, onNextPage, onPage } =
     usePagination(post.count);
   const dispatch = useDispatch<AppDispatch>();
- 
+
   useEffect(() => {
-    dispatch(searchs({ search:router.query.Search as string,page:currentPage }));
+    dispatch(
+      searchs({ search: router.query.Search as string, page: currentPage })
+    );
   }, [currentPage]);
+
   return (
     <>
       <Head>
         <meta charSet="utf-8" />
-        <title>PGI's Blog | 검색</title>
+        <title>PGI Blog | 검색</title>
       </Head>
       <Common
         posts={post.posts}
@@ -36,4 +37,5 @@ const Search = () => {
     </>
   );
 };
+
 export default Search;

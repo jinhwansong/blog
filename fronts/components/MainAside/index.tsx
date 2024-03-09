@@ -1,56 +1,49 @@
-import React, { useCallback,useState } from "react";
+import React, { useCallback, useState } from "react";
 import { FcSearch, FcIdea, FcAnswers } from "react-icons/fc";
 import { useRouter } from "next/router";
-import { useSelector,useDispatch } from "react-redux";
-import {  AppDispatch, RootState } from "redux/store";
+import { useSelector, useDispatch } from "react-redux";
+import { AppDispatch, RootState } from "redux/store";
 import { categores, recentPost, searchs } from "redux/reducers/post";
 import { useInput } from "hooks";
 import { Button, MainList } from "components";
+import { Categore } from "types";
 import * as St from "./style";
 
-
-
-
 const MainAside = () => {
-   const router = useRouter();
-   const dispatch = useDispatch<AppDispatch>()
+  const router = useRouter();
+  const dispatch = useDispatch<AppDispatch>();
   const [search, onChangeSearch, setSearch] = useInput("");
   const readTap = [
     { name: "최근 7일", time: 7 },
     { name: "최근 1달", time: 30 },
   ];
+
   const [tap, setTap] = useState({
     name: "최근 7일",
     time: 7,
   });
 
-  // 카테고리
-  const { categore: name, recentPostDone:post } = useSelector(
-    (state: RootState) => state.post
-  );
+  const { category: name, recentPostDone: post } = useSelector((state: RootState) => state.post);
   const onCategore = useCallback((name: string) => {
     dispatch(categores({ categore: name, page: 1 }));
     router.push(`/categore/${name}`);
   }, []);
-  const onDate = useCallback(
-    (name: string, time: number) => {
-      setTap({ ...tap, name: name, time: time });
-      dispatch(recentPost(time));
-    },
-    [tap]
-  );
- 
-  const onSearch = useCallback(
-    (e: React.MouseEvent<HTMLButtonElement>, search: string) => {
-      e.stopPropagation();
-      if (!search || !search.trim()) return alert("검색어를 적어주세요");
-      dispatch(searchs({ search, page: 1 }));
-      router.push(`/search/${search}`);
-      setSearch("")
-    },
-    [router]
-  );
 
+  const onDate = useCallback((name: string, time: number) => {
+    setTap({ ...tap, name, time });
+    dispatch(recentPost(time));
+  }, [tap]);
+
+  const onSearch = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    if (!search || !search.trim()) {
+      alert("검색어를 적어주세요");
+      return;
+    }
+    dispatch(searchs({ search, page: 1 }));
+    router.push(`/search/${search}`);
+    setSearch("");
+  }, [router]);
 
   return (
     <St.Aside>
@@ -82,7 +75,7 @@ const MainAside = () => {
             color="fff"
             width="50%"
             type="button"
-            onButton={(e) => onSearch(e, search)}
+            onButton={(e) => onSearch(e)}
           >
             검색
           </Button>
@@ -94,7 +87,7 @@ const MainAside = () => {
           <p>카테고리</p>
         </St.Title>
         <St.Categore>
-          {name?.map((v) => (
+          {name?.map((v: Categore) => (
             <St.CategoreLi
               onClick={() => onCategore(v.categore)}
               $color={(router.query.categore as string) === v.categore}
@@ -114,7 +107,11 @@ const MainAside = () => {
 
         <St.TapWrap>
           {readTap.map((v, index) => (
-            <li key={index} onClick={() => onDate(v.name, v.time)}>
+            <li
+              key={index}
+              onClick={() => onDate(v.name, v.time)}
+              role="presentation"
+            >
               <Button
                 font="1.2"
                 hoverbg={tap.name === v.name ? "blue" : "f7f7f7"}
@@ -129,8 +126,8 @@ const MainAside = () => {
             </li>
           ))}
         </St.TapWrap>
-        {tap.name === "최근 7일" && <MainList location="tap" post={post} />}
-        {tap.name === "최근 1달" && <MainList location="tap" post={post} />}
+        {tap.name === "최근 7일" && <MainList loc="tap" post={post} />}
+        {tap.name === "최근 1달" && <MainList loc="tap" post={post} />}
       </div>
     </St.Aside>
   );

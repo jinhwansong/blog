@@ -1,25 +1,36 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "redux/store";
 import ReactQuill from "react-quill";
-import { categore, imageUpload, post, postDones, postModify, postModifys } from "redux/reducers/post";
-import { formats, toolbarOptions } from "hooks/useEditor";
-import { Button, LayOut, QuillSSR } from "components";
-import { useInput } from "hooks";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import {
+  categore,
+  imageUpload,
+  post,
+  postDones,
+  postModify,
+  postModifys,
+} from "redux/reducers/post";
+import { Button, LayOut, QuillSSR } from "components";
+import { formats, toolbarOptions } from "hooks/useEditor";
+import { useInput } from "hooks";
+import { Categore } from "types";
 import * as St from "./style";
-
-
 
 interface IEditor {
   titleModify?: string;
   contentModify?: string;
   idModify?: number;
   nameModify?: string;
-  types:string
+  types: string;
 }
-
 
 const Editor = ({
   titleModify,
@@ -36,12 +47,11 @@ const Editor = ({
   const [keywords, setKeywords] = useState<string[]>([]);
   const changeKeywordInput = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
-      // e.nativeEvent.isComposing 한글일때 끊기지 말라고 쓰는거...
-      
       if ((e.key === "Enter" || e.key === ",") && !e.nativeEvent.isComposing) {
         e.preventDefault();
-        if (keywords.includes(keyword))
+        if (keywords.includes(keyword)) {
           return alert("이미 추가된 키워드입니다.");
+        }
         const newKeyword = keyword.split(",")[0];
         setKeywords((prev) => [...prev, newKeyword]);
         setKeyword("");
@@ -67,11 +77,13 @@ const Editor = ({
         textAreaRef.current.style.height = `${textAreaRef.current.scrollHeight}px`;
       }
     };
-    if (textAreaRef.current !== null)
+    if (textAreaRef.current !== null) {
       textAreaRef.current?.addEventListener("input", textArea);
+    }
     return () => {
-      if (textAreaRef.current !== null)
+      if (textAreaRef.current !== null) {
         textAreaRef.current?.removeEventListener("input", textArea);
+      }
     };
   }, []);
 
@@ -88,8 +100,9 @@ const Editor = ({
       if (
         cateforeRef.current &&
         !cateforeRef.current.contains(e.target as Node)
-      )
+      ) {
         setCategoreOpen({ ...categoreOpen, Boolean: false });
+      }
     };
     document.addEventListener("mousedown", onCategore);
     return () => {
@@ -101,9 +114,9 @@ const Editor = ({
 
   useEffect(() => {
     const currentTheme = localStorage.getItem("theme");
-    setTheme(currentTheme === "light" ? "dark" : "light" );
+    setTheme(currentTheme === "light" ? "dark" : "light");
   });
-  
+
   useEffect(() => {
     // 게시물 보낼때
     if (postDone) {
@@ -116,7 +129,8 @@ const Editor = ({
       dispatch(postDones());
     }
   }, [postDone, postModifyDone]);
-  // quill에 접근하기 위한거 
+
+  // quill에 접근하기 위한거
   const quillRef = useRef<ReactQuill>(null);
   // 이미지용
   const imageHandler = useCallback(() => {
@@ -137,7 +151,6 @@ const Editor = ({
         imageformData.append("image", f);
       });
       await dispatch(imageUpload(imageformData));
-
     };
   }, []);
   useEffect(() => {
@@ -145,9 +158,9 @@ const Editor = ({
     const editor = quillRef.current?.getEditor();
     // 현재 에디터 커서 위치값 가져오기
     const range = quillRef.current?.selection?.index;
-    imagePaths.forEach((path, index) => {
+    imagePaths.forEach((path:string, index:number) => {
       const imgUrl = `${process.env.NEXT_PUBLIC_SERVER_URL}/${path}`;
-      editor?.insertEmbed(range + index, "image", imgUrl);
+      editor?.insertEmbed(range as number + index, "image", imgUrl);
     });
   }, [imagePaths]);
   // 모듈
@@ -167,30 +180,32 @@ const Editor = ({
   const onWrite = useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-      if (!title || !title.trim()) return alert("제목을 적어주세요");
-      if (!content || !content.trim()) return alert("내용을 적어주세요");
-      
-      if (types === "modify") {
+      if (!title || !title.trim()) {
+        return alert("제목을 적어주세요");
+      }
+      if (!content || !content.trim()) {
+        return alert("내용을 적어주세요");
+      }
 
+      if (types === "modify") {
         dispatch(
           postModify({
-            title: title,
-            content: content,
+            title,
+            content,
             CategoreId: categoreOpen.id,
             id: Number(router.query.id),
-            keywords: keywords,
+            keywords,
             image: imagePaths,
           })
         );
       }
       if (types === "write") {
-
         dispatch(
           post({
-            title: title,
-            content: content,
+            title,
+            content,
             CategoreId: categoreOpen.id,
-            keywords: keywords,
+            keywords,
             image: imagePaths,
           })
         );
@@ -200,8 +215,12 @@ const Editor = ({
   );
   // 취소
   const onExit = useCallback(() => {
-    if (types === "modify") return router.replace(`/${router.query.id}`);
-    if (types === "write") return router.replace("/");
+    if (types === "modify") {
+      return router.replace(`/${router.query.id}`);
+    }
+    if (types === "write") {
+      return router.replace("/");
+    }
   }, []);
   return (
     <LayOut>
@@ -217,25 +236,24 @@ const Editor = ({
               setCategoreOpen({
                 ...categoreOpen,
                 Boolean: !categoreOpen.Boolean,
-              })
-            }
+              })}
           >
             {categoreOpen.categore}
             {categoreOpen.Boolean ? <IoIosArrowUp /> : <IoIosArrowDown />}
           </button>
           {categoreOpen.Boolean && (
             <ul>
-              {name.map((v) => (
+              {name.map((v: Categore) => (
                 <li
                   key={v.id}
+                  role="presentation"
                   onClick={() =>
                     setCategoreOpen({
                       ...categore,
                       categore: v.categore,
                       Boolean: !categoreOpen.Boolean,
                       id: v.id,
-                    })
-                  }
+                    })}
                 >
                   {v.categore}
                 </li>
@@ -270,7 +288,6 @@ const Editor = ({
           formats={formats}
           forwardedRef={quillRef}
         />
-
         <St.ButtonWrap>
           <Button
             bg="f7f7f7"
@@ -290,4 +307,3 @@ const Editor = ({
   );
 };
 export default Editor;
-

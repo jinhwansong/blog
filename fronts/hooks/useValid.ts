@@ -22,7 +22,7 @@ const useValid = <T extends IuseValid>(
 ) => {
   const onChangeEmail = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      const emailError = !signUp.email.includes("@");
+      const emailError = signUp.email && !signUp.email.includes("@");
       setSignUp((prev) => ({ ...prev, email: e.target.value, emailError }));
     },
     [signUp.emailError, signUp.email]
@@ -30,7 +30,7 @@ const useValid = <T extends IuseValid>(
   const passwordValid = /^.*(?=^.{7,16}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/
   const onChangeCurrentPassword = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      const passwordError = passwordValid.test(signUp.currentPassword);
+      const passwordError = passwordValid.test(signUp.currentPassword as string);
       setSignUp((prev) => ({
         ...prev,
         currentPassword: e.target.value,

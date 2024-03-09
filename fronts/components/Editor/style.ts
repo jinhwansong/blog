@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const Form = styled.form<{ $color: boolean }>`
   width: 80rem;
@@ -20,21 +20,21 @@ export const Form = styled.form<{ $color: boolean }>`
     height: 50rem;
   }
   > .quill .ql-snow .ql-picker-options {
-    background: ${(props: any) => (props.$color ? "#16181B" : "#fff")};
+    background: ${(props: any) => (props.$color ? '#16181B' : '#fff')};
   }
   > .quill .ql-snow .ql-picker {
-    color: ${(props: any) => (props.$color ? "#fff" : "#222")};
+    color: ${(props: any) => (props.$color ? '#fff' : '#222')};
   }
   > .quill .ql-snow .ql-stroke {
-    stroke: ${(props: any) => (props.$color ? "#fff" : "#222")};
+    stroke: ${(props: any) => (props.$color ? '#fff' : '#222')};
   }
   > .quill .ql-snow .ql-fill,
   > .quill .ql-snow .ql-stroke.ql-fill {
-    fill: ${(props: any) => (props.$color ? "#fff" : "#222")};
+    fill: ${(props: any) => (props.$color ? '#fff' : '#222')};
   }
   > .quill .ql-toolbar.ql-snow .ql-picker.ql-expanded .ql-picker-options,
   > .quill .ql-toolbar.ql-snow .ql-picker.ql-expanded .ql-picker-label {
-    border: 1px solid ${(props: any) => (props.$color ? "#36393D" : "#ddd")};
+    border: 1px solid ${(props: any) => (props.$color ? '#36393D' : '#ddd')};
   }
 `;
 
@@ -51,6 +51,7 @@ export const TitleInput = styled.textarea`
   color: ${(props: any) => props.theme.black};
   background:none;
 `;
+
 export const Keyword = styled.div`
   border-top: 1px solid ${(props: any) => props.theme.ddd};
   padding-top: 2rem;
@@ -72,6 +73,7 @@ export const Keyword = styled.div`
     background: none;
   }
 `;
+
 export const Categore = styled.div`
   position: relative;
   width: 17rem;
@@ -110,10 +112,8 @@ export const Categore = styled.div`
   }
 `;
 
-
-
-export const ButtonWrap= styled.div`
-display: flex;
-justify-content: flex-end;
-gap:1rem;
-`
+export const ButtonWrap = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  gap:1rem;
+`;

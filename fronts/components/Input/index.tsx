@@ -1,5 +1,5 @@
-import React from "react"
-import Button from "components/Button";
+import React from "react";
+import { Button } from "components";
 import * as St from "./style";
 
 interface IInput {
@@ -8,66 +8,71 @@ interface IInput {
   placeholder: string;
   id?: string;
   value: string;
-  erorr: boolean;
-  erorrText: string;
+  error: boolean;
+  errorText: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  cheack?: string;
+  check?: string;
   able?: boolean;
   onButton?: () => void;
 }
 
-const Input = (props: IInput) => {
-  if (props.cheack === "cheack" || props.cheack === "info") {
-    return (
-      <>
-        {props.cheack !== "info" && (
-          <St.Label htmlFor={props.id}>{props.label}</St.Label>
-        )}
+const Input = ({
+  label,
+  type,
+  placeholder,
+  id,
+  value,
+  error,
+  errorText,
+  onChange,
+  check,
+  able,
+  onButton,
+}: IInput) => {
+  const handleButtonClick = () => onButton?.();
 
-        <St.Cheack>
+  return (
+    <>
+      {check !== "info" && label && <St.Label htmlFor={id}>{label}</St.Label>}
+      {check === "check" || check === "info" ? (
+        <St.Check>
           <St.Input
-            placeholder={props.placeholder}
-            type={props.type}
-            name={props.id}
-            value={props.value}
-            onChange={props.onChange}
-            $color={props.erorr}
+            placeholder={placeholder}
+            type={type}
+            name={id}
+            value={value}
+            onChange={onChange}
+            $color={error}
           />
           <Button
             font="1.2"
             width="8"
             height="5"
             type="button"
-            disabled={props.able}
-            onButton={() => props.onButton()}
-            hoverbg={props.able ? "f7f7f7" : "blue"}
-            hovercolor={props.able ? "black" : "fff"}
-            color={props.able ? "black" : "fff"}
-            bg={props.able ? "f7f7f7" : "blue"}
+            disabled={able}
+            onButton={handleButtonClick}
+            hoverbg={able ? "f7f7f7" : "blue"}
+            hovercolor={able ? "black" : "fff"}
+            color={able ? "black" : "fff"}
+            bg={able ? "f7f7f7" : "blue"}
           >
-            {props.type === "password" ? "비밀번호 확인":"중복확인"}
+            {type === "password" ? "비밀번호 확인" : "중복확인"}
           </Button>
-        </St.Cheack>
-        {props.erorr && <St.Error>{props.erorrText}</St.Error>}
-      </>
-    );
-  }
-    return (
-      <>
-        {props.cheack !== "info" && (
-          <St.Label htmlFor={props.id}>{props.label}</St.Label>
-        )}
-
+        </St.Check>
+      ) : (
         <St.Input
-          placeholder={props.placeholder}
-          type={props.type}
-          name={props.id}
-          value={props.value}
-          onChange={props.onChange}
-          $color={props.erorr}
+          placeholder={placeholder}
+          type={type}
+          name={id}
+          value={value}
+          onChange={onChange}
+          $color={error}
         />
-        {props.erorr && <St.Error>{props.erorrText}</St.Error>}
-      </>
-    );
+      )}
+
+      {error && <St.Error>{errorText}</St.Error>}
+    </>
+  );
 };
-export default Input
+
+export default Input;

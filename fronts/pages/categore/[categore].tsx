@@ -14,15 +14,13 @@ const Categore = () => {
     usePagination(post.count);
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
-    dispatch(
-      categores({ categore: router.query.categore as string, page: currentPage })
-    );
+    dispatch(categores({ categore: router.query.categore as string, page: currentPage }));
   }, [currentPage]);
  return (
    <>
      <Head>
        <meta charSet="utf-8" />
-       <title>PGI's Blog | 카테고리</title>
+       <title>PGI Blog | 카테고리</title>
      </Head>
      <Common
        posts={post.posts}

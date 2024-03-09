@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const ThemeButton = styled.button`
   width: 12rem;
@@ -13,23 +13,21 @@ export const ThemeButton = styled.button`
   background: none;
   border: 0;
   cursor: pointer;
-  background: ${(props: any) => props.theme.f7f7f7};
+  background: ${(props) => props.theme.f7f7f7};
   gap: 0.5rem;
   > p {
     font-size: 1.3rem;
-    color: ${(props: any) => props.theme.black};
+    color: ${(props) => props.theme.black};
   }
   > svg {
     font-size: 2rem;
-    color: ${(props: any) => props.theme.black};
+    color: ${(props) => props.theme.black};
     transition: transform 0.3s ease-in-out;
   }
   &:hover > svg {
     transform: rotate(360deg);
   }
 `;
-
-
 
 export const Button = styled.button<{
   $color?: string;
@@ -38,7 +36,7 @@ export const Button = styled.button<{
   $radius?: string;
   $bg?: string;
   $height?: string;
-  $font?: string;
+  $fonts?: string;
   $hoverbg?: string;
   $hovercolor?: string;
 }>`
@@ -48,8 +46,9 @@ export const Button = styled.button<{
   cursor: pointer;
   outline: 0;
   transition: all 0.3s;
+
   font-size: ${(props) => {
-    switch (props.$font) {
+    switch (props.$fonts) {
       case "1.2":
         return "1.2rem";
       case "1.6":
@@ -103,6 +102,7 @@ export const Button = styled.button<{
         return "9rem";
     }
   }};
+
   color: ${(props) => {
     switch (props.$color) {
       case "white":
@@ -115,6 +115,7 @@ export const Button = styled.button<{
         return props.theme.black;
     }
   }};
+
   background: ${(props) => {
     switch (props.$bg) {
       case "f7f7f7":
@@ -129,6 +130,7 @@ export const Button = styled.button<{
         return "transparent";
     }
   }};
+
   border: 1px solid
     ${(props) => {
       switch (props.$border) {
@@ -140,6 +142,7 @@ export const Button = styled.button<{
           return "transparent";
       }
     }};
+
   &:hover {
     background: ${(props) => {
       switch (props.$hoverbg) {
@@ -166,25 +169,26 @@ export const Button = styled.button<{
       }
     }};
   }
-  > svg {
-    font-size: 1.5rem;
-    color: ${(props: any) => props.theme.black};
-  }
-  &:hover > svg {
-    color: ${(props) => {
-      switch (props.$hovercolor) {
-        case "black":
-          return props.theme.black;
-        case "blue":
-          return props.theme.blue;
-        case "fff":
-          return props.theme.fff;
-        case "white":
-          return props.theme.white;
-        default:
-          return "";
-      }
-    }};
-  }
-`;
 
+    > svg {
+      font-size: 1.5rem;
+      color: ${(props) => props.theme.black};
+    }
+
+    &:hover > svg {
+      color: ${(props) => {
+        switch (props.$hovercolor) {
+          case "black":
+            return props.theme.black;
+          case "blue":
+            return props.theme.blue;
+          case "fff":
+            return props.theme.fff;
+          case "white":
+            return props.theme.white;
+          default:
+            return props.theme.white;
+        }
+      }};
+    }
+`;

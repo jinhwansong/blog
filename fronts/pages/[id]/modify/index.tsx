@@ -7,21 +7,21 @@ import { postDetail } from "redux/reducers/post";
 import { Editor } from "components";
 
 const modify = () => {
-     const dispatch = useDispatch<AppDispatch>();
-     const router = useRouter();
-     const id = Number(router.query.id);
-      useEffect(() => {
-        dispatch(postDetail(id));
-      }, []);
-    const { postDetailDone } = useSelector(
-      (state: RootState) => state.post
-    );
+  const dispatch = useDispatch<AppDispatch>();
+  const router = useRouter();
+  const id = Number(router.query.id);
+
+  useEffect(() => {
+    dispatch(postDetail(id));
+  }, []);
+
+  const { postDetailDone } = useSelector((state: RootState) => state.post);
 
   return (
     <>
       <Head>
         <meta charSet="utf-8" />
-        <title>PGI's Blog</title>
+        <title>PGI Blog</title>
       </Head>
       <Editor
         types="modify"
@@ -33,4 +33,5 @@ const modify = () => {
     </>
   );
 };
+
 export default modify;

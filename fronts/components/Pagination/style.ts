@@ -6,4 +6,4 @@ export const Pagination = styled.div`
     justify-content: center;
     gap:1rem;
     margin-top:3rem;
-`
+`;

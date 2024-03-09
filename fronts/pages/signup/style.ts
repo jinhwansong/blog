@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
-
-export const Form = styled.form`
+export const Container = styled.form`
   justify-content: center;
   width: 40rem;
   display: flex;
@@ -17,17 +16,16 @@ export const Title = styled.h3`
 
 export const Label = styled.label`
   font-size: 1.4rem;
-  font-weight:600;
+  font-weight: 600;
   color: ${(props: any) => props.theme.gery};
   margin-bottom: 0.8rem;
 `;
 
-
 export const PasswordText = styled.p`
   font-size: 1.3rem;
   color: ${(props: any) => props.theme.gery};
-  line-height:1.8rem;
-  margin-top:0.8rem;
+  line-height: 1.8rem;
+  margin-top: 0.8rem;
 `;
 export const Error = styled.p`
   color: ${(props: any) => props.theme.red};
@@ -35,7 +33,6 @@ export const Error = styled.p`
   font-size: 1.3rem;
   margin-top: 0.8rem;
 `;
-
 
 export const CheckLabel = styled.label<{ $check: boolean }>`
   font-size: 1.4rem;
@@ -76,5 +73,7 @@ export const CheckLabels = styled(CheckLabel)`
   color: ${(props: any) => props.theme.gery};
 `;
 export const Checkbox = styled.input`
-  display:none;
+  display: none;
 `;
+export const InputWrap = styled.div``;
+export const TermWrap = styled.div``;

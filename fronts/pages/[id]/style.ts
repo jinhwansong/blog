@@ -8,8 +8,7 @@ export const Title = styled.strong`
   line-height: 1.5;
   letter-spacing: -0.004em;
   font-weight: 800;
-  color: ${(props:any)=>props.theme.black};
-
+  color: ${(props:any) => props.theme.black};
   word-break: keep-all;
   display: block;
 `;
@@ -41,4 +40,4 @@ export const Button = styled.div`
 `;
 export const WrapTop = styled.div`
   margin-bottom:5rem;
-`
+`;

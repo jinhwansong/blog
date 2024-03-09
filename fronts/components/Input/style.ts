@@ -1,6 +1,5 @@
 import styled from "styled-components";
 
-
 export const Label = styled.label`
   font-size: 1.4rem;
   font-weight: 600;
@@ -23,7 +22,7 @@ export const Input = styled.input<{ $color: boolean }>`
       ${(props: any) => (props.$color ? props.theme.red : props.theme.blue)};
   }
 `;
-export const Cheack = styled.div`
+export const Check = styled.div`
   display: flex;
   gap: 1rem;
   align-items: flex-end;
@@ -37,5 +36,3 @@ export const Error = styled.p`
   font-size: 1.4rem;
   margin-top:1rem;
 `;
-
-

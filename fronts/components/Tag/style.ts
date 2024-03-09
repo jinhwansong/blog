@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
-
-export const TagUl = styled.ul`
+const TagUl = styled.ul`
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
@@ -13,3 +12,5 @@ export const TagUl = styled.ul`
     cursor: pointer;
   }
 `;
+
+export default TagUl;

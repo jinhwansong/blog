@@ -6,14 +6,12 @@ interface ILayOut {
   children: React.ReactNode;
 }
 
-const LayOut = ({children}: ILayOut)=>{
-    return (
-      <>
-        <Header />
-        <St.Container>{children}</St.Container>
-        <Footer/>
-      </>
-    );
-}
+const LayOut = ({ children }: ILayOut) => (
+  <>
+    <Header />
+    <St.Container>{children}</St.Container>
+    <Footer />
+  </>
+);
 
 export default LayOut;

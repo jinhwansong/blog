@@ -8,33 +8,35 @@ import { Tag } from "components";
 import { ICommon } from "types";
 import * as St from "./style";
 
-
 interface IMainList {
-  location: string;
+  loc: string;
   post: ICommon[];
 }
 
-const MainList = ({ location, post }: IMainList) => {
+const MainList = ({ loc, post }: IMainList) => {
   const router = useRouter();
-  const dispatch = useDispatch<AppDispatch>()
+  const dispatch = useDispatch<AppDispatch>();
   const onListPage = useCallback((v:number) => {
     router.push(`/${v}`);
-  },[router]);
+  }, [router]);
+
   // 좋아요
-  const onLikehandle = useCallback((e: React.MouseEvent<SVGElement>,id:number) => {
+  const onLikehandle = useCallback((e: React.MouseEvent<SVGElement>, id:number) => {
     e.stopPropagation();
     dispatch(like(id));
   }, []);
+
   // 싫어요
   const onUnLikehandle = useCallback((e: React.MouseEvent<SVGElement>, id: number) => {
     e.stopPropagation();
     dispatch(unlike(id));
   }, []);
+
   return (
     <St.MainList>
       {post?.map((v) => (
-        <li onClick={() => onListPage(v.id)} key={v.id}>
-          <St.Image $width={location}>
+        <li onClick={() => onListPage(v.id)} key={v.id} role="presentation">
+          <St.Image $width={loc}>
             <img
               src={
                 v.src !== ""
@@ -47,12 +49,12 @@ const MainList = ({ location, post }: IMainList) => {
             />
           </St.Image>
           <St.TapText>
-            <St.TapTitle $title={location}>{v.title}</St.TapTitle>
-            {location !== "tap" && (
+            <St.TapTitle $title={loc}>{v.title}</St.TapTitle>
+            {loc !== "tap" && (
               <St.TapDetail dangerouslySetInnerHTML={{ __html: v.content }} />
             )}
             <St.TapSpan>
-              {location !== "tap" && (
+              {loc !== "tap" && (
                 <>
                   <St.Date>{v.nickname}</St.Date>
                   <St.Like>

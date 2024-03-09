@@ -7,23 +7,21 @@ import { hashtags } from "redux/reducers/post";
 import { Common } from "components";
 import { usePagination } from "hooks";
 
-
 const hashtag = () => {
-   const router = useRouter();
-  const {hashtagDone:post} = useSelector((state:RootState)=>state.post)
+  const router = useRouter();
+  const { hashtagDone: post } = useSelector((state:RootState) => state.post);
   const { currentPage, totalPages, onPrevPage, onNextPage, onPage } =
     usePagination(post.count);
   const dispatch = useDispatch<AppDispatch>();
-   useEffect(() => {
-     dispatch(hashtags({hashtag:router.query.hashtag as string ,page: currentPage }));
-   }, [currentPage]);
-
+  useEffect(() => {
+    dispatch(hashtags({ hashtag: router.query.hashtag as string, page: currentPage }));
+  }, [currentPage]);
 
   return (
     <>
       <Head>
         <meta charSet="utf-8" />
-        <title>PGI's Blog | 해시태그</title>
+        <title>PGI Blog | 해시태그</title>
       </Head>
       <Common
         posts={post.posts}

@@ -3,8 +3,6 @@ import { MainAside, LayOut, MainList, Pagination } from "components";
 import { ICommones } from "types";
 import * as St from "./style";
 
-
-
 const Common = ({
   posts,
   currentPage,
@@ -18,7 +16,7 @@ const Common = ({
       <MainAside />
       <div>
         <St.Contener>
-          <MainList location="list" post={posts} />
+          <MainList loc="list" post={posts} />
         </St.Contener>
         <Pagination
           count={count}
@@ -31,4 +29,5 @@ const Common = ({
     </St.Main>
   </LayOut>
 );
+
 export default Common;

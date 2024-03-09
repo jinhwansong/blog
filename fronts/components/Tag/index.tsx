@@ -3,34 +3,30 @@ import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "redux/store";
 import { hashtags } from "redux/reducers/post";
-import * as St from "./style";
-
-
-
+import TagUl from "./style";
 
 interface ITag {
-  tag: string[] | undefined;
+  tag: string[];
 }
 
+const Tag = ({ tag }: ITag) => {
+  const router = useRouter();
+  const dispatch = useDispatch<AppDispatch>();
+  const onTag = useCallback((e: React.MouseEvent<HTMLLIElement>, hashtag: string) => {
+    e.stopPropagation();
+    dispatch(hashtags({ hashtag, page: 1 }));
+    router.push(`/hashtag/${hashtag}`);
+  }, [dispatch, router]);
 
-const tag = ({ tag }: ITag) => {
-  const router = useRouter()
-  const dispatch = useDispatch<AppDispatch>()
-  const onTag = useCallback(
-    (e:React.MouseEvent<HTMLLIElement>,hashtag: string) => {
-      e.stopPropagation();
-      dispatch(hashtags({ hashtag ,page:1}));
-      router.push(`/hashtag/${hashtag}`);
-    },
-    [router]
-  );
   return (
-    <St.TagUl>
-      {tag?.map((tag,i) => (
-        <li onClick={(e) => onTag(e,tag)} key={i}>{tag}</li>
+    <TagUl>
+      {tag?.map((tag: string) => (
+        <li onClick={(e) => onTag(e, tag)} key={tag} role="presentation">
+          {tag}
+        </li>
       ))}
-    </St.TagUl>
+    </TagUl>
   );
 };
 
-export default tag;
+export default Tag;
