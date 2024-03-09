@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const ThemeButton = styled.button`
   width: 12rem;
@@ -50,66 +50,66 @@ export const Button = styled.button<{
   transition: all 0.3s;
   font-size: ${(props) => {
     switch (props.$font) {
-      case "1.2":
-        return "1.2rem";
-      case "1.6":
-        return "1.6rem";
+      case '1.2':
+        return '1.2rem';
+      case '1.6':
+        return '1.6rem';
       default:
-        return "1.4rem";
+        return '1.4rem';
     }
   }};
 
   height: ${(props) => {
     switch (props.$height) {
-      case "5":
-        return "5rem";
-      case "3.5":
-        return "3.5rem";
-      case "auto":
-        return "auto";
+      case '5':
+        return '5rem';
+      case '3.5':
+        return '3.5rem';
+      case 'auto':
+        return 'auto';
       default:
-        return "4rem";
+        return '4rem';
     }
   }};
 
   border-radius: ${(props) => {
     switch (props.$radius) {
-      case "100":
-        return "100rem";
-      case "0":
-        return "0";
-      case "1":
-        return "1rem";
+      case '100':
+        return '100rem';
+      case '0':
+        return '0';
+      case '1':
+        return '1rem';
       default:
-        return "0.5rem";
+        return '0.5rem';
     }
   }};
 
   width: ${(props) => {
     switch (props.$width) {
-      case "full":
-        return "100%";
-      case "50%":
-        return "50%";
-      case "auto":
-        return "auto";
-      case "8":
-        return "8rem";
-      case "5":
-        return "5rem";
-      case "4":
-        return "4rem";
+      case 'full':
+        return '100%';
+      case '50%':
+        return '50%';
+      case 'auto':
+        return 'auto';
+      case '8':
+        return '8rem';
+      case '5':
+        return '5rem';
+      case '4':
+        return '4rem';
       default:
-        return "9rem";
+        return '9rem';
     }
   }};
   color: ${(props) => {
     switch (props.$color) {
-      case "white":
+      case 'white':
         return props.theme.white;
-      case "red":
+      case 'red':
         return props.theme.red;
-      case "fff":
+      case 'fff':
         return props.theme.fff;
       default:
         return props.theme.black;
@@ -117,52 +117,52 @@ export const Button = styled.button<{
   }};
   background: ${(props) => {
     switch (props.$bg) {
-      case "f7f7f7":
+      case 'f7f7f7':
         return props.theme.f7f7f7;
-      case "black":
+      case 'black':
         return props.theme.black;
-      case "white":
+      case 'white':
         return props.theme.white;
-      case "blue":
+      case 'blue':
         return props.theme.blue;
       default:
-        return "transparent";
+        return 'transparent';
     }
   }};
   border: 1px solid
     ${(props) => {
       switch (props.$border) {
-        case "ddd":
+        case 'ddd':
           return props.theme.ddd;
-        case "white":
+        case 'white':
           return props.theme.white;
         default:
-          return "transparent";
+          return 'transparent';
       }
     }};
   &:hover {
     background: ${(props) => {
       switch (props.$hoverbg) {
-        case "blue":
-          return "rgba(51, 102, 255,.95)";
-        case "f7f7f7":
+        case 'blue':
+          return 'rgba(51, 102, 255,.95)';
+        case 'f7f7f7':
           return props.theme.f7f7f7;
         default:
-          return "";
+          return '';
       }
     }};
     color: ${(props) => {
       switch (props.$hovercolor) {
-        case "black":
+        case 'black':
           return props.theme.black;
-        case "blue":
+        case 'blue':
           return props.theme.blue;
-        case "fff":
+        case 'fff':
           return props.theme.fff;
-        case "white":
+        case 'white':
           return props.theme.white;
         default:
-          return "";
+          return '';
       }
     }};
   }
@@ -173,16 +173,16 @@ export const Button = styled.button<{
   &:hover > svg {
     color: ${(props) => {
       switch (props.$hovercolor) {
-        case "black":
+        case 'black':
           return props.theme.black;
-        case "blue":
+        case 'blue':
           return props.theme.blue;
-        case "fff":
+        case 'fff':
           return props.theme.fff;
-        case "white":
+        case 'white':
           return props.theme.white;
         default:
-          return "";
+          return props.theme.white;
       }
     }};
   }
