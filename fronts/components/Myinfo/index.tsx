@@ -144,7 +144,9 @@ const Myinfo = (props: IMyinfo) => {
                   placeholder="기존 비밀번호를 입력해주세요."
                   type="password"
                   erorrText="올바르지 않은 비밀번호입니다."
-                  onChange={props.onChangeCurrentPassword}
+                  onChange={
+                    (e)=>props.onChangeCurrentPassword?.(e)
+                  }
                   value={props.change.currentPassword}
                   erorr={!props.change.currentPasswordError}
                   cheack="info"
@@ -167,7 +169,7 @@ const Myinfo = (props: IMyinfo) => {
                   placeholder="비밀번호를 다시 한번 입력해주세요."
                   type="password"
                   erorrText="비밀번호가 서로 일치하지 않습니다."
-                  onChange={props.onChangePasswordCheck}
+                  onChange={(e)=>props.onChangePasswordCheck?.(e)}
                   value={props.change.passwordCheck}
                   erorr={props.change.passwordCheckError}
                 />

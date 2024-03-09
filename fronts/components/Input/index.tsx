@@ -39,7 +39,7 @@ const Input = (props: IInput) => {
             height="5"
             type="button"
             disabled={props.able}
-            onButton={() => props.onButton()}
+            onButton={() => props.onButton?.()}
             hoverbg={props.able ? "f7f7f7" : "blue"}
             hovercolor={props.able ? "black" : "fff"}
             color={props.able ? "black" : "fff"}

@@ -9,6 +9,7 @@ import { Button, LayOut, QuillSSR } from "components";
 import { useInput } from "hooks";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import * as St from "./style";
+import { Categore } from "types";
 
 
 
@@ -145,9 +146,9 @@ const Editor = ({
     const editor = quillRef.current?.getEditor();
     // 현재 에디터 커서 위치값 가져오기
     const range = quillRef.current?.selection?.index;
-    imagePaths.forEach((path, index) => {
+    imagePaths.forEach((path:string, index:number) => {
       const imgUrl = `${process.env.NEXT_PUBLIC_SERVER_URL}/${path}`;
-      editor?.insertEmbed(range + index, "image", imgUrl);
+      editor?.insertEmbed(range as number + index, "image", imgUrl);
     });
   }, [imagePaths]);
   // 모듈
@@ -225,7 +226,7 @@ const Editor = ({
           </button>
           {categoreOpen.Boolean && (
             <ul>
-              {name.map((v) => (
+              {name.map((v:Categore) => (
                 <li
                   key={v.id}
                   onClick={() =>
