@@ -36,6 +36,11 @@
     "quotes": ["off"],
     "no-alert": "off",
     "no-confusing-arrow": 0,
-    "implicit-arrow-linebreak":"off"
+    "implicit-arrow-linebreak":"off",
+    "no-undef":"off",
+    "no-shadow":"off",
+    "jsx-a11y/click-events-have-key-event":"off",
+    "jsx-a11y/no-noninteractive-element-interactions":"off",
+    "react/function-component-definition":"off"
   }
 }

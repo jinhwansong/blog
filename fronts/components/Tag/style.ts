@@ -13,4 +13,4 @@ const TagUl = styled.ul`
   }
 `;
 
-export default TagUl
+export default TagUl;
