@@ -94,4 +94,3 @@ export const CategoreLi = styled.li<{ $color: boolean }>`
     color: ${(props) => (props.$color ? props.theme.blue : props.theme.gray)};
   }
 `;
-

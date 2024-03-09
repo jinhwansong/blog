@@ -8,7 +8,6 @@ import { Tag } from "components";
 import { ICommon } from "types";
 import * as St from "./style";
 
-
 interface IMainList {
   location: string;
   post: ICommon[];
@@ -22,7 +21,7 @@ const MainList = ({ location, post }: IMainList) => {
   }, [router]);
 
   // 좋아요
-  const onLikehandle = useCallback((e: React.MouseEvent<SVGElement>,id:number) => {
+  const onLikehandle = useCallback((e: React.MouseEvent<SVGElement>, id:number) => {
     e.stopPropagation();
     dispatch(like(id));
   }, []);
@@ -32,6 +31,7 @@ const MainList = ({ location, post }: IMainList) => {
     e.stopPropagation();
     dispatch(unlike(id));
   }, []);
+
   return (
     <St.MainList>
       {post?.map((v) => (

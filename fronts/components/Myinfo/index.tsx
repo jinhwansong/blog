@@ -1,21 +1,21 @@
-import React, { useCallback} from "react";
-import { useDispatch } from "react-redux";
+import React, { useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "redux/store";
 import { Input, Button } from "components";
 import { IoIosClose } from "react-icons/io";
-import { changeNick, checkNick, checkPassword, password, resetCheackNickDone, resetCheackPasswordDone } from "redux/reducers/user";
+import {
+  changeNick,
+  checkNick,
+  checkPassword,
+  password,
+  resetCheackNickDone,
+  resetCheackPasswordDone,
+} from "redux/reducers/user";
 import * as St from "./style";
-import { useSelector } from "react-redux";
-
 
 interface IMyinfo {
   title: string;
-  setPopup: React.Dispatch<
-    React.SetStateAction<{
-      name: string;
-      open: boolean;
-    }>
-  >;
+  setPopup: React.Dispatch<React.SetStateAction<{ name: string; open: boolean }>>;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onChangePasswordCheck?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onChangeCurrentPassword?: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -43,7 +43,7 @@ interface IMyinfo {
   };
 }
 
-const Myinfo = ({
+const Myinfo: React.FC<IMyinfo> = ({
   title,
   setPopup,
   setChange,
@@ -51,7 +51,7 @@ const Myinfo = ({
   onChange,
   onChangeCurrentPassword,
   onChangePasswordCheck,
-}: IMyinfo) => {
+}) => {
   const onClose = useCallback(() => {
     setPopup({ open: false, name: "" });
     setChange({
@@ -66,15 +66,19 @@ const Myinfo = ({
       nickNameError: false,
     });
   }, []);
+
   const dispatch = useDispatch<AppDispatch>();
+
   const { cheackNickDone, cheackPasswordDone } = useSelector(
     (state: RootState) => state.user
   );
+
   const onButton = useCallback((v: string) => {
     if (title === "닉네임 변경") return dispatch(checkNick({ nickName: v }));
     if (title === "비밀번호 변경")
       return dispatch(checkPassword({ password: v }));
   }, []);
+
   const onInfo = useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
@@ -111,6 +115,7 @@ const Myinfo = ({
       change.currentPassword,
     ]
   );
+
   return (
     <St.MyInfoPopup>
       <St.Popup>

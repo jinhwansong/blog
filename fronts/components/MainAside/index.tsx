@@ -1,25 +1,23 @@
-import React, { useCallback,useState } from "react";
+import React, { useCallback, useState } from "react";
 import { FcSearch, FcIdea, FcAnswers } from "react-icons/fc";
 import { useRouter } from "next/router";
-import { useSelector,useDispatch } from "react-redux";
-import {  AppDispatch, RootState } from "redux/store";
+import { useSelector, useDispatch } from "react-redux";
+import { AppDispatch, RootState } from "redux/store";
 import { categores, recentPost, searchs } from "redux/reducers/post";
 import { useInput } from "hooks";
 import { Button, MainList } from "components";
-import * as St from "./style";
 import { Categore } from "types";
-
-
-
+import * as St from "./style";
 
 const MainAside = () => {
-   const router = useRouter();
-   const dispatch = useDispatch<AppDispatch>()
+  const router = useRouter();
+  const dispatch = useDispatch<AppDispatch>();
   const [search, onChangeSearch, setSearch] = useInput("");
   const readTap = [
     { name: "최근 7일", time: 7 },
     { name: "최근 1달", time: 30 },
   ];
+
   const [tap, setTap] = useState({
     name: "최근 7일",
     time: 7,
@@ -33,24 +31,18 @@ const MainAside = () => {
     dispatch(categores({ categore: name, page: 1 }));
     router.push(`/categore/${name}`);
   }, []);
-  const onDate = useCallback(
-    (name: string, time: number) => {
+  const onDate = useCallback((name: string, time: number) => {
       setTap({ ...tap, name: name, time: time });
       dispatch(recentPost(time));
-    },
-    [tap]
-  );
+    }, [tap]);
  
-  const onSearch = useCallback(
-    (e: React.MouseEvent<HTMLButtonElement>, search: string) => {
+  const onSearch = useCallback((e: React.MouseEvent<HTMLButtonElement>, search: string) => {
       e.stopPropagation();
       if (!search || !search.trim()) return alert("검색어를 적어주세요");
       dispatch(searchs({ search, page: 1 }));
       router.push(`/search/${search}`);
       setSearch("")
-    },
-    [router]
-  );
+    }, [router]);
 
 
   return (

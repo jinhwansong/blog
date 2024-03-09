@@ -1,6 +1,5 @@
 import styled from "styled-components";
 
-
 export const MainList = styled.ul`
   border-radius: 1.5rem;
   > li:hover {
@@ -90,6 +89,3 @@ export const Date = styled.p`
   margin-right:1rem;
   padding-right: 1rem;
 `;
-
-
-

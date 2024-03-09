@@ -12,12 +12,11 @@ interface ITag {
 const Tag = ({ tag }: ITag) => {
   const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
-  const onTag = useCallback(
-    (e: React.MouseEvent<HTMLLIElement>, hashtag: string) => {
-      e.stopPropagation();
-      dispatch(hashtags({ hashtag, page: 1 }));
-      router.push(`/hashtag/${hashtag}`);
-    }, [dispatch, router]);
+  const onTag = useCallback((e: React.MouseEvent<HTMLLIElement>, hashtag: string) => {
+    e.stopPropagation();
+    dispatch(hashtags({ hashtag, page: 1 }));
+    router.push(`/hashtag/${hashtag}`);
+  }, [dispatch, router]);
 
   return (
     <TagUl>
