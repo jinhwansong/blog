@@ -1,12 +1,13 @@
 import styled from "styled-components";
 
 export const MyInfo = styled.section`
-    width:80rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap:3rem;
-`
+  width:80rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap:3rem;
+`;
+
 export const MyInfoImg = styled.article`
   width: 9.5rem;
   height: 9.5rem;
@@ -24,10 +25,10 @@ export const MyInfoSec = styled.article`
   width:100%;
 `;
 export const MyInfoTit = styled.strong`
-    font-size:2rem;
-    font-weight:600;
-    color:${(props:any)=>props.theme.black};
-    line-height:1;
+  font-size:2rem;
+  font-weight:600;
+  color:${(props:any)=>props.theme.black};
+  line-height:1;
 `;
 export const MyInfop = styled.p`
   font-size: 1.6rem;

@@ -7,27 +7,28 @@ import { logOut, myInfo } from "redux/reducers/user";
 import { Button } from "components";
 import * as St from "./style";
 
-
 const Header = () => {
   const dispatch = useDispatch<AppDispatch>();
-    const {me} = useSelector((state:RootState)=>state.user)
-    const router = useRouter()
-    const [profileTap, setProfileTap] = useState(false);
+  const { me } = useSelector((state: RootState) => state.user);
+  const router = useRouter();
+  const [profileTap, setProfileTap] = useState(false);
 
-    const logOutButton = useCallback(() => {
-      dispatch(logOut());
-      router.replace("/")
-    }, []);
-    useEffect(()=>{
-      dispatch(myInfo());
-    },[])
+  const logOutButton = useCallback(() => {
+    dispatch(logOut());
+    router.replace("/");
+  }, []);
+
+  useEffect(() => {
+    dispatch(myInfo());
+  }, []);
+
   return (
     <St.HeaderWrap>
       <St.Header>
-        <Link href={"/"}>로고</Link>
+        <Link href="/">로고</Link>
         {me && me.email ? (
           <St.GroupButton>
-            <Link href={"/write"}>
+            <Link href="/write">
               <Button
                 themes="disabled"
                 font="1.2"
@@ -45,9 +46,7 @@ const Header = () => {
                 <img
                   src={
                     me?.image
-                      ? `${process.env.NEXT_PUBLIC_SERVER_URL}/${
-                          me && me.image
-                        }`
+                      ? `${process.env.NEXT_PUBLIC_SERVER_URL}/${me.image}`
                       : "https://picsum.photos/95/95"
                   }
                   alt="프로필 이미지"
@@ -57,8 +56,8 @@ const Header = () => {
               </div>
               {profileTap && (
                 <St.ProfileTap>
-                  <Link href={"/myinfo"}>내 정보 수정</Link>
-                  <Link href={"/myblog"}>나의 활동</Link>
+                  <Link href="/myinfo">내 정보 수정</Link>
+                  <Link href="/myblog">나의 활동</Link>
                   <Button
                     onButton={() => logOutButton()}
                     font="1.2"
@@ -75,7 +74,7 @@ const Header = () => {
             </St.Profile>
           </St.GroupButton>
         ) : (
-          <Link href={"/login"}>
+          <Link href="/login">
             <Button
               width="8"
               font="1.2"
@@ -94,4 +93,5 @@ const Header = () => {
     </St.HeaderWrap>
   );
 };
+
 export default Header;

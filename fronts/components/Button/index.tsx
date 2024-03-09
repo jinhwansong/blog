@@ -1,6 +1,5 @@
 import React from "react";
-import * as St from "./style"
-
+import * as St from "./style";
 
 interface IButton {
   color?: string;
@@ -13,60 +12,77 @@ interface IButton {
   font?: string;
   onButton?: (e: React.MouseEvent<HTMLButtonElement>) => void;
   themes?: string;
-  image?: React.JSX.Element;
+  image?: React.ReactNode; // Corrected type for image
   disabled?: boolean;
   hoverbg?: string;
   hovercolor?: string;
   type?: "button" | "submit";
 }
 
+const Button = ({
+  color,
+  width,
+  border,
+  children,
+  bg,
+  radius,
+  height,
+  font,
+  onButton,
+  themes,
+  image,
+  disabled,
+  hoverbg,
+  hovercolor,
+  type = "button", // Set default type
+}: IButton) => {
+  // Destructuring props for clarity
+  if (themes === "themes") {
+    return (
+      <St.ThemeButton onClick={onButton || (() => {})} type={type}>
+        {image} <p>{children}</p>
+      </St.ThemeButton>
+    );
+  }
+  if (themes === "arr") {
+    return (
+      <St.Button
+        onClick={onButton || (() => {})}
+        type={type}
+        $color={color}
+        $width={width}
+        $border={border}
+        $radius={radius}
+        $bg={bg}
+        $height={height}
+        $fonts={font}
+        $hoverbg={hoverbg}
+        $hovercolor={hovercolor}
+        disabled={disabled}
+      >
+        {image}
+      </St.Button>
+    );
+  }
 
-const Button = (props: IButton) => {
-    if (props.themes === "themes") {
-      return (
-        <St.ThemeButton onClick={props.onButton || (() => {})} type="button">
-          {props.image} <p>{props.children}</p>
-        </St.ThemeButton>
-      );
-    }
-    if (props.themes === "arr") {
-      return (
-        <St.Button
-          onClick={props.onButton || (() => {})}
-          type="button"
-          $color={props.color}
-          $width={props.width}
-          $border={props.border}
-          $radius={props.radius}
-          $bg={props.bg}
-          $height={props.height}
-          $font={props.font}
-          $hoverbg={props.hoverbg}
-          $hovercolor={props.hovercolor}
-          disabled={props.disabled}
-        >
-          {props.image}
-        </St.Button>
-      );
-    }
-
-      return (
-        <St.Button
-          onClick={props.onButton || (() => {})}
-          type={props.type}
-          $color={props.color}
-          $width={props.width}
-          $border={props.border}
-          $radius={props.radius}
-          $bg={props.bg}
-          $height={props.height}
-          $hoverbg={props.hoverbg}
-          $hovercolor={props.hovercolor}
-          $font={props.font}
-          disabled={props.disabled}
-        >
-          {props.children}
-        </St.Button>
-      );
+  return (
+    <St.Button
+      onClick={onButton || (() => {})}
+      type={type}
+      $color={color}
+      $width={width}
+      $border={border}
+      $radius={radius}
+      $bg={bg}
+      $height={height}
+      $hoverbg={hoverbg}
+      $hovercolor={hovercolor}
+      $fonts={font}
+      disabled={disabled}
+    >
+      {children}
+    </St.Button>
+  );
 };
+
 export default Button;

@@ -45,6 +45,7 @@
     "react/no-array-index-key":"off",
     "import/prefer-default-export":"off",
     "no-unused-vars":"off",
-    "react/require-default-props":"off"
+    "react/require-default-props":"off",
+    "operator-linebreak":"off"
   }
 }

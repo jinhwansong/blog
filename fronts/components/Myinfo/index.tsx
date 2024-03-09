@@ -15,7 +15,9 @@ import * as St from "./style";
 
 interface IMyinfo {
   title: string;
-  setPopup: React.Dispatch<React.SetStateAction<{ names: string; opens: boolean }>>;
+  setPopup: React.Dispatch<
+    React.SetStateAction<{ names: string; opens: boolean }>
+  >;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onChangePasswordCheck?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onChangeCurrentPassword?: (e: React.ChangeEvent<HTMLInputElement>) => void;
