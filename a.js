@@ -83,11 +83,28 @@
 // const n = 10
 // console.log(solution(n))
 
-function solution(x, n) {
-    var answer = [];
-    const a = Array(n).fill(x).map((v, i) => (i + 1)*v)
-    return a;
+// function solution(x, n) {
+//     var answer = [];
+//     const a = Array(n).fill(x).map((v, i) => (i + 1)*v)
+//     return a;
+// }
+// const x = 2
+// const n = 5
+// console.log(solution(x, n))
+
+
+// function solution(n) {
+//     var answer = String(n).split("").reverse().map((v)=>v *1 )
+//     return answer;
+// }
+// const n = 12345
+// console.log(solution(n))
+
+
+
+function solution(n) {
+    var answer = true;
+    return answer;
 }
-const x = 2
-const n = 5
-console.log(solution(x, n))
+const n = 10
+console.log(solution(n))

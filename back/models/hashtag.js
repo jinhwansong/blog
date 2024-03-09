@@ -14,10 +14,6 @@ module.exports = (sequelize, DateTypes) => {
         db.Hashtag.belongsToMany(db.Post,{
             through: "PostHashtag"
         })
-        // 하나의 해시태그는 여러개의 카테고리에 속할수 잇다.
-        db.Hashtag.belongsToMany(db.Categore,{
-            through: "CategoreHashtag"
-        })
     }
     return Hashtag
 }

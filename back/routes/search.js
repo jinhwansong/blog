@@ -41,9 +41,6 @@ router.get("/:search", async (req, res, next) => {
             include: [{
                 model: Hashtag,
                 attributes: ["hashtag"],
-                through: {
-                    attributes: [] 
-                },
                
             }, {
                 model: Image,

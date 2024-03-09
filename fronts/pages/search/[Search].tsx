@@ -1,17 +1,23 @@
 import React, { useEffect } from "react";
-import { posts } from "redux/reducers/post";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "redux/store";
+import Head from "next/head";
+import { useRouter } from "next/router";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "redux/store";
+import { searchs } from "redux/reducers/post";
 import { Common } from "components";
 import { usePagination } from "hooks";
-import Head from "next/head";
+
+
 
 const Search = () => {
+   const router = useRouter();
+    const { searchDone: post } = useSelector((state: RootState) => state.post);
   const { currentPage, totalPages, onPrevPage, onNextPage, onPage } =
     usePagination(post.count);
   const dispatch = useDispatch<AppDispatch>();
+ 
   useEffect(() => {
-    dispatch(posts(currentPage));
+    dispatch(searchs({ search:router.query.Search as string,page:currentPage }));
   }, [currentPage]);
   return (
     <>

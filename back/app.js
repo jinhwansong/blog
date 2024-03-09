@@ -5,11 +5,14 @@ const cookieParser = require("cookie-parser")
 const passport = require("passport")
 const dotenv = require("dotenv")
 const path = require("path")
+
 const postRouter = require("./routes/post")
 const postsRouter = require("./routes/posts")
 const userRouter = require("./routes/user")
 const searchRouter = require("./routes/search")
 const hashtagRouter = require("./routes/hashtag")
+const categoreRouter = require("./routes/categore")
+
 
 const passportConfig = require("./passport")
 const db = require("./models")
@@ -63,7 +66,7 @@ app.use("/posts", postsRouter)
 app.use("/user", userRouter)
 app.use("/search", searchRouter)
 app.use("/hashtag", hashtagRouter)
-
+app.use("/categore", categoreRouter)
 
 app.listen(3065, () => {
     console.log("서버 실행중!!")

@@ -23,5 +23,6 @@ yarn-debug.log*
 yarn-error.log*
 
 .next
-
+node_modules
 .env
+Nomad.pem

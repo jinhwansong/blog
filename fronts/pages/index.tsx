@@ -22,6 +22,8 @@ const Home = () => {
    useEffect(() => {
     dispatch(posts(currentPage));
   }, [currentPage]);
+
+
   return (
     <>
       <Head>

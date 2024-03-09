@@ -6,7 +6,6 @@ const router = express.Router()
 const {
     Post,
     Comment,
-    Categore,
     Image,
     Hashtag,
 } = require("../models")
@@ -66,33 +65,7 @@ router.post("/", isLoggedIn, async (req, res, next) => {
 })
 
 
-// 카테고리 정보를 넘겨줌
-router.get("/categore",async(req,res,next)=>{
-    try {
-        const categore = await Categore.findAll({
-            
-            include: [{
-                model: Post,
-                // 게시물 정보는 가져오지 않음
-                attributes: [], 
-                // 모든 카테고리를 조회
-                required: false 
-            }], 
-            attributes: [
-                "categore",
-                "id",
-                // 게시물 개수를 COUNT 함수로 계산하여 별칭 "postCount"로 반환
-                [Sequelize.fn("COUNT", Sequelize.col("Posts.id")), "count"] 
-            ],
-            // 카테고리별로 그룹화하여 결과 반환
-            group: ["categore.id"] 
-        })
-        res.status(201).json(categore)
-    } catch (error) {
-        console.error(error)
-        next(error)
-    }
-})
+
 
 // 댓글 작성
 router.post("/:postId/comment", isLoggedIn, async (req, res, next) => {

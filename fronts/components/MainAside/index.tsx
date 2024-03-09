@@ -1,19 +1,18 @@
 import React, { useCallback,useState } from "react";
-import { FcSearch, FcAbout, FcIdea, FcAnswers } from "react-icons/fc";
+import { FcSearch, FcIdea, FcAnswers } from "react-icons/fc";
 import { useRouter } from "next/router";
-import { useParams } from "next/navigation";
-import { useSelector } from "react-redux";
+import { useSelector,useDispatch } from "react-redux";
 import {  AppDispatch, RootState } from "redux/store";
-import { usePagination, useInput } from "hooks";
-import { Button, MainList, Tag } from "components";
+import { categores, recentPost, searchs } from "redux/reducers/post";
+import { useInput } from "hooks";
+import { Button, MainList } from "components";
 import * as St from "./style";
-import { useDispatch } from "react-redux";
-import { recentPost } from "redux/reducers/post";
+
+
 
 
 const MainAside = () => {
    const router = useRouter();
-   const param = useParams();
    const dispatch = useDispatch<AppDispatch>()
   const [search, onChangeSearch, setSearch] = useInput("");
   const readTap = [
@@ -29,9 +28,9 @@ const MainAside = () => {
   const { categore: name, recentPostDone:post } = useSelector(
     (state: RootState) => state.post
   );
-  const onCategore = useCallback((name: string, totalItems: number) => {
-    const { currentPage } = usePagination(totalItems);
-    router.push(`/categore=${name}&page=${currentPage}`);
+  const onCategore = useCallback((name: string) => {
+    dispatch(categores({ categore: name, page: 1 }));
+    router.push(`/categore/${name}`);
   }, []);
   const onDate = useCallback(
     (name: string, time: number) => {
@@ -40,7 +39,19 @@ const MainAside = () => {
     },
     [tap]
   );
-  
+ 
+  const onSearch = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement>, search: string) => {
+      e.stopPropagation();
+      if (!search || !search.trim()) return alert("검색어를 적어주세요");
+      dispatch(searchs({ search, page: 1 }));
+      router.push(`/search/${search}`);
+      setSearch("")
+    },
+    [router]
+  );
+
+
   return (
     <St.Aside>
       <div>
@@ -65,7 +76,14 @@ const MainAside = () => {
           >
             초기화
           </Button>
-          <Button bg="blue" font="1.2" color="fff" width="50%" type="button">
+          <Button
+            bg="blue"
+            font="1.2"
+            color="fff"
+            width="50%"
+            type="button"
+            onButton={(e) => onSearch(e, search)}
+          >
             검색
           </Button>
         </St.ButtonWrap>
@@ -78,8 +96,8 @@ const MainAside = () => {
         <St.Categore>
           {name?.map((v) => (
             <St.CategoreLi
-              onClick={() => onCategore(v.categore, v.count)}
-              $color={param.name === v.categore}
+              onClick={() => onCategore(v.categore)}
+              $color={(router.query.categore as string) === v.categore}
               key={v.id}
             >
               <p>{v.categore}</p>

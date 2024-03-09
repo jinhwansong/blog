@@ -21,6 +21,11 @@ export interface PostInitialState {
   searchLoding: boolean;
   searchDone: I.ICommons;
   searchError: null | undefined | string;
+  // 카테고리 불러오기
+  categoresLoding: boolean;
+  categoresDone: I.ICommons;
+  categoresError: null | undefined | string;
+
   // 게시글 상세
   postDetailLoding: boolean;
   postDetailDone: I.ICommon | null;
@@ -87,6 +92,14 @@ const initialState: PostInitialState = {
   },
   searchError: null,
 
+  // 카테고리 불러오기
+  categoresLoding: false,
+  categoresDone: {
+    count: 0,
+    posts: [],
+  },
+  categoresError: null,
+
   // 게시글 상세
   postDetailLoding: false,
   postDetailDone: null,
@@ -148,7 +161,11 @@ export const searchs = createAsyncThunk("search", async (data: I.Search) => {
   return response;
 });
 
-
+// 카테고리 불러오기
+export const categores = createAsyncThunk("categores", async (data: I.Categores) => {
+  const response = await baseAxios.get(`/categore/${data.categore}?page=${data.page}`);
+  return response;
+});
 
 // 게시글 불러오기
 export const postDetail = createAsyncThunk("postdetail",async(data:number)=>{
@@ -179,7 +196,7 @@ export const imageUpload = createAsyncThunk("imageUpload", async (data: FormData
 
 // 카테고리 목록
 export const categore = createAsyncThunk("categore", async () => {
-  const response = await baseAxios.get("/post/categore");
+  const response = await baseAxios.get("/categore");
   return response;
 });
 // 좋아요
@@ -286,6 +303,19 @@ const postReducer = createSlice({
       .addCase(searchs.rejected, (draft, action) => {
         draft.searchLoding = false;
         draft.searchError = action.error.message;
+      })
+      // 검색한 카테고리 받기
+      .addCase(categores.pending, (draft) => {
+        draft.categoresLoding = true;
+        draft.categoresError = null;
+      })
+      .addCase(categores.fulfilled, (draft, action) => {
+        draft.categoresLoding = false;
+        draft.categoresDone = action.payload.data;
+      })
+      .addCase(categores.rejected, (draft, action) => {
+        draft.categoresLoding = false;
+        draft.categoresError = action.error.message;
       })
       // 게시글상세 받기
       .addCase(postDetail.pending, (draft) => {

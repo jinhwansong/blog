@@ -51,6 +51,12 @@ export interface Hashtag {
   hashtag: string;
   page: number;
 }
+export interface Categores {
+  categore: string;
+  page: number;
+}
+;
+
 export interface Search {
   search: string;
   page: number;
