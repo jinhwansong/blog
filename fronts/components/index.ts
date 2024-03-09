@@ -5,7 +5,6 @@ export { default as Footer } from "./Footer";
 export { default as Input } from "./Input";
 export { default as MainList } from "./MainList";
 export { default as Tag } from "./Tag";
-export { default as Categore } from "./Categore";
 export { default as MainAside } from "./MainAside";
 export { default as Common } from "./Common";
 export { default as Pagination } from "./Pagination";

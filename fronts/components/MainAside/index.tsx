@@ -7,6 +7,7 @@ import { categores, recentPost, searchs } from "redux/reducers/post";
 import { useInput } from "hooks";
 import { Button, MainList } from "components";
 import * as St from "./style";
+import { Categore } from "types";
 
 
 
@@ -94,7 +95,7 @@ const MainAside = () => {
           <p>카테고리</p>
         </St.Title>
         <St.Categore>
-          {name?.map((v) => (
+          {name?.map((v: Categore) => (
             <St.CategoreLi
               onClick={() => onCategore(v.categore)}
               $color={(router.query.categore as string) === v.categore}
