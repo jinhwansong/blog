@@ -7,15 +7,15 @@ import { postDetail } from "redux/reducers/post";
 import { Editor } from "components";
 
 const modify = () => {
-     const dispatch = useDispatch<AppDispatch>();
-     const router = useRouter();
-     const id = Number(router.query.id);
-      useEffect(() => {
-        dispatch(postDetail(id));
-      }, []);
-    const { postDetailDone } = useSelector(
-      (state: RootState) => state.post
-    );
+  const dispatch = useDispatch<AppDispatch>();
+  const router = useRouter();
+  const id = Number(router.query.id);
+
+  useEffect(() => {
+    dispatch(postDetail(id));
+  }, []);
+
+  const { postDetailDone } = useSelector((state: RootState) => state.post);
 
   return (
     <>
@@ -33,4 +33,5 @@ const modify = () => {
     </>
   );
 };
+
 export default modify;

@@ -34,6 +34,8 @@
     "import/no-unresolved": "off",
     "import/extensions": "off",
     "quotes": ["off"],
-    "no-alert": "off"
+    "no-alert": "off",
+    "no-confusing-arrow": 0,
+    "implicit-arrow-linebreak":"off"
   }
 }
