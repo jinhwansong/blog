@@ -46,6 +46,10 @@
     "import/prefer-default-export":"off",
     "no-unused-vars":"off",
     "react/require-default-props":"off",
-    "operator-linebreak":"off"
+    "operator-linebreak":"off",
+    "indent":"off",
+    "nonblock-statement-body-position":"off",
+    "consistent-return":"off",
+    "no-useless-escape":"off"
   }
 }

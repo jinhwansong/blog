@@ -33,7 +33,7 @@ const App: React.FC<AppProps> = ({ Component, ...rest }) => {
     <>
       <Head>
         <meta charSet="utf-8" />
-        <title>PGI's Blog</title>
+        <title>PGI Blog</title>
       </Head>
       <Provider store={store}>
         <ThemeProvider theme={theme === "light" ? darkTheme : lightTheme}>

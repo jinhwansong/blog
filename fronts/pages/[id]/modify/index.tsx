@@ -21,7 +21,7 @@ const modify = () => {
     <>
       <Head>
         <meta charSet="utf-8" />
-        <title>PGI's Blog</title>
+        <title>PGI Blog</title>
       </Head>
       <Editor
         types="modify"

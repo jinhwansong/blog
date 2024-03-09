@@ -170,25 +170,25 @@ export const Button = styled.button<{
     }};
   }
 
-  > svg {
-    font-size: 1.5rem;
-    color: ${(props) => props.theme.black};
-  }
+    > svg {
+      font-size: 1.5rem;
+      color: ${(props) => props.theme.black};
+    }
 
-  &:hover > svg {
-    color: ${(props) => {
-      switch (props.$hovercolor) {
-        case "black":
-          return props.theme.black;
-        case "blue":
-          return props.theme.blue;
-        case "fff":
-          return props.theme.fff;
-        case "white":
-          return props.theme.white;
-        default:
-          return props.theme.white;
-      }
-    }};
-  }
+    &:hover > svg {
+      color: ${(props) => {
+        switch (props.$hovercolor) {
+          case "black":
+            return props.theme.black;
+          case "blue":
+            return props.theme.blue;
+          case "fff":
+            return props.theme.fff;
+          case "white":
+            return props.theme.white;
+          default:
+            return props.theme.white;
+        }
+      }};
+    }
 `;

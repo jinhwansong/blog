@@ -11,9 +11,6 @@ import { LayOut, Myinfo } from "components";
 import wrapper from "../../redux/store";
 import * as St from "./style";
 
-
-
-
 const myinfo = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { me } = useSelector((state: RootState) => state.user);
@@ -21,7 +18,6 @@ const myinfo = () => {
     names: "",
     opens: false,
   });
-
   const [change, setChange] = useState({
     currentPassword: "",
     currentPasswordError: false,
@@ -165,17 +161,17 @@ const myinfo = () => {
 
 // ssr 
 export const getServerSideProps:GetServerSideProps =
- wrapper.getServerSideProps((store) => async({ req })=>{
-  // 리퀘스트에서 가만히 있는게 아니라 성공으로 가게 하기 위해서.
-  const cookie = req ? req.headers.cookie: "";
-  axios.defaults.headers.Cookie = ""
-  if(req && cookie){
-    axios.defaults.headers.Cookie = cookie;
-  }
-  await store.dispatch(myInfo());
-  return {
-    props:{},
-  }
-})
+  wrapper.getServerSideProps((store) => async({ req })=>{
+    // 리퀘스트에서 가만히 있는게 아니라 성공으로 가게 하기 위해서.
+    const cookie = req ? req.headers.cookie: "";
+    axios.defaults.headers.Cookie = "";
+    if(req && cookie){
+      axios.defaults.headers.Cookie = cookie;
+    }
+    await store.dispatch(myInfo());
+    return {
+      props:{},
+    };
+});
 
-export default myinfo
+export default myinfo;

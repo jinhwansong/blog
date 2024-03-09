@@ -22,7 +22,7 @@ const Categore = () => {
    <>
      <Head>
        <meta charSet="utf-8" />
-       <title>PGI's Blog | 카테고리</title>
+       <title>PGI Blog | 카테고리</title>
      </Head>
      <Common
        posts={post.posts}

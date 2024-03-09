@@ -6,19 +6,15 @@ import { GetServerSideProps } from "next";
 import axios from "axios";
 import { AppDispatch, RootState } from "redux/store";
 import { useSelector, useDispatch } from "react-redux";
-import wrapper from "../../redux/store";
 import { myInfo, login } from "redux/reducers/user";
 import { Input, LayOut, Button } from "components";
-import {useValid} from "hooks";
+import { useValid } from "hooks";
 import * as St from "./style";
+import wrapper from "../../redux/store";
 
-
-
-
-
-const Login = ()=>{
+const Login = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { loginDone,me} = useSelector((state:RootState)=>state.user);
+  const { loginDone, me} = useSelector((state:RootState)=> state.user);
   const router = useRouter()
   const [inLogin, setInLogin] = useState({
     email: "",
@@ -65,8 +61,8 @@ const Login = ()=>{
                   type="email"
                   value={inLogin.email}
                   onChange={onChangeEmail}
-                  erorr={inLogin.emailError}
-                  erorrText="올바른 이메일을 입력해주세요."
+                  error={inLogin.emailError}
+                  errorText="올바른 이메일을 입력해주세요."
                 />
               </div>
               <div>
@@ -77,8 +73,8 @@ const Login = ()=>{
                   type="password"
                   value={inLogin.password}
                   onChange={onChangePassword}
-                  erorr={inLogin.passwordError}
-                  erorrText="올바르지 않은 비밀번호입니다."
+                  error={inLogin.passwordError}
+                  errorText="올바르지 않은 비밀번호입니다."
                 />
               </div>
               <div>
@@ -98,7 +94,7 @@ const Login = ()=>{
               </div>
             </St.Form>
             <St.Other>
-              <Link href={"/"}>비밀번호 재설정</Link> <p>|</p>{" "}
+              <Link href={"/"}>비밀번호 재설정</Link> <p>|</p>
               <Link href={"/signup"}>회원가입</Link>
             </St.Other>
           </St.LoginWrap>
@@ -107,22 +103,18 @@ const Login = ()=>{
     );
 }
 
-
 // ssr 
 export const getServerSideProps:GetServerSideProps =
- wrapper.getServerSideProps((store) => async({ req })=>{
-  // 리퀘스트에서 가만히 있는게 아니라 성공으로 가게 하기 위해서.
-  const cookie = req ? req.headers.cookie: "";
-  axios.defaults.headers.Cookie = ""
-  if(req && cookie){
-    axios.defaults.headers.Cookie = cookie;
-  }
-  // 
-  await store.dispatch(myInfo());
-  return {
-    props:{},
-  }
+  wrapper.getServerSideProps((store) => async({ req })=>{
+    const cookie = req ? req.headers.cookie: "";
+    axios.defaults.headers.Cookie = ""
+    if(req && cookie){
+      axios.defaults.headers.Cookie = cookie;
+    }
+    await store.dispatch(myInfo());
+    return {
+      props:{},
+    }
 })
-
 
 export default Login;

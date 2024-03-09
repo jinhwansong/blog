@@ -12,7 +12,7 @@ interface IButton {
   font?: string;
   onButton?: (e: React.MouseEvent<HTMLButtonElement>) => void;
   themes?: string;
-  image?: React.ReactNode; // Corrected type for image
+  image?: React.ReactNode;
   disabled?: boolean;
   hoverbg?: string;
   hovercolor?: string;
