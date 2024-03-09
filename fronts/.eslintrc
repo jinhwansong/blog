@@ -30,6 +30,9 @@
     "object-curly-newline": "off",
     "linebreak-style": "off",
     "no-param-reassign": "off",
-    "max-len": "off"
+    "max-len": "off",
+    "import/no-unresolved": "off",
+    "import/extensions": "off",
+    "quotes": ["off"]
   }
 }
