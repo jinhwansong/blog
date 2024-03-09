@@ -154,9 +154,9 @@ const Editor = ({
     const editor = quillRef.current?.getEditor();
     // 현재 에디터 커서 위치값 가져오기
     const range = quillRef.current?.selection?.index;
-    imagePaths.forEach((path: string, index: number) => {
-      const imgUrl = `<span class="math-inline">\{process\.env\.NEXT\_PUBLIC\_SERVER\_URL\}/</span>{path}`;
-      editor?.insertEmbed((range as number) + index, "image", imgUrl);
+    imagePaths.forEach((path:string, index:number) => {
+      const imgUrl = `${process.env.NEXT_PUBLIC_SERVER_URL}/${path}`;
+      editor?.insertEmbed(range as number + index, "image", imgUrl);
     });
   }, [imagePaths]);
   // 모듈
@@ -176,8 +176,8 @@ const Editor = ({
   const onWrite = useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-      if (!title || !title.trim()) return alert("제목을 적어주세요");
-      if (!content || !content.trim()) return alert("내용을 적어주세요");
+      if (!title || !title.trim()){ return alert("제목을 적어주세요");}
+      if (!content || !content.trim()) {return alert("내용을 적어주세요");}
 
       if (types === "modify") {
         dispatch(
@@ -207,8 +207,8 @@ const Editor = ({
   );
   // 취소
   const onExit = useCallback(() => {
-    if (types === "modify") return router.replace(`/${router.query.id}`);
-    if (types === "write") return router.replace("/");
+    if (types === "modify") {return router.replace(`/${router.query.id}`);}
+    if (types === "write") {return router.replace("/");}
   }, []);
   return (
     <LayOut>

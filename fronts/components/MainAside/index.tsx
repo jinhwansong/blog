@@ -23,35 +23,27 @@ const MainAside = () => {
     time: 7,
   });
 
-  const { category: name, recentPostDone: post } = useSelector(
-    (state: RootState) => state.post
-  );
+  const { category: name, recentPostDone: post } = useSelector((state: RootState) => state.post);
   const onCategore = useCallback((name: string) => {
     dispatch(categores({ categore: name, page: 1 }));
     router.push(`/categore/${name}`);
   }, []);
 
-  const onDate = useCallback(
-    (name: string, time: number) => {
-      setTap({ ...tap, name, time });
-      dispatch(recentPost(time));
-    },
-    [tap]
-  );
+  const onDate = useCallback((name: string, time: number) => {
+    setTap({ ...tap, name, time });
+    dispatch(recentPost(time));
+  },[tap]);
 
-  const onSearch = useCallback(
-    (e: React.MouseEvent<HTMLButtonElement>) => {
-      e.stopPropagation();
-      if (!search || !search.trim()) {
-        alert("검색어를 적어주세요");
-        return;
-      }
-      dispatch(searchs({ search, page: 1 }));
-      router.push(`/search/${search}`);
-      setSearch("");
-    },
-    [router]
-  );
+  const onSearch = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    if (!search || !search.trim()) {
+      alert("검색어를 적어주세요");
+      return;
+    }
+    dispatch(searchs({ search, page: 1 }));
+    router.push(`/search/${search}`);
+    setSearch("");
+  }, [router]);
 
   return (
     <St.Aside>

@@ -94,15 +94,25 @@ const Myinfo: React.FC<IMyinfo> = ({
         setPopup({ opens: false, names: "" });
       }
       if (title === "비밀번호 변경") {
-        if (!change.currentPassword || !change.currentPassword.trim())
+        if (!change.currentPassword || !change.currentPassword.trim()) {
           return alert("기존 비밀번호를 작성해주세요");
-        if (cheackPasswordDone === false) return alert("중복체크를 해주세요");
-        if (!change.password || !change.password.trim())
+        }
+
+        if (cheackPasswordDone === false) {
+          return alert("중복체크를 해주세요");
+        }
+        if (!change.password || !change.password.trim()) {
           return alert("비밀번호를 작성해주세요");
-        if (!change.passwordCheck || !change.passwordCheck.trim())
+        }
+
+        if (!change.passwordCheck || !change.passwordCheck.trim()) {
           return alert("비밀번호를 다시 한번 입력해주세요.");
-        if (change.passwordCheck !== change.password)
+        }
+
+        if (change.passwordCheck !== change.password) {
           return alert("비밀번호가 일치하지 않습니다.");
+        }
+
         dispatch(password({ password: change.password }));
         dispatch(resetCheackPasswordDone());
         setPopup({ opens: false, names: "" });

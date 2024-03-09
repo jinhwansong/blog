@@ -37,9 +37,12 @@ const Login = () => {
   const onLogin = useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-      if (inLogin.email.trim() === "") return alert("이메일을 작성해 주세요");
-      if (inLogin.password.trim() === "")
+      if (inLogin.email.trim() === "") {
+        return alert("이메일을 작성해 주세요");
+      }
+      if (inLogin.password.trim() === "") {
         return alert("비밀번호를 작성해 주세요");
+      }
       dispatch(login({ email: inLogin.email, password: inLogin.password }));
     },
     [inLogin.email, inLogin.password]

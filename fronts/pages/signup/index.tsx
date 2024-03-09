@@ -83,7 +83,6 @@ const Signup = () => {
     }
   }, [me, router]);
 
-
   useEffect(() => {
     if (signUpDone) {
       router.replace("/login");
@@ -211,130 +210,130 @@ const Signup = () => {
           />
         </St.InputWrap>
         <div>
-            <St.CheckLabel htmlFor="term" $check={signUps.termAll}>
-              <span>{signUps.termAll && <FaCheck />}</span>
-              전체 동의
-            </St.CheckLabel>
-            <St.Checkbox
-              id="term"
-              checked={signUps.termAll}
-              onChange={onChangeTermAll}
-              name="term"
-              type="checkbox"
-            />
-            <St.CheckboxUl>
-              <li>
-                <St.CheckLabels
-                  htmlFor="term1"
-                  $check={signUps.term.includes("term1")}
-                >
-                  <span>{signUps.term.includes("term1") && <FaCheck />}</span>만
-                  14세 이상입니까(필수)
-                </St.CheckLabels>
-                <St.Checkbox
-                  id="term1"
-                  checked={signUps.term.includes("term1") ? true : false}
-                  onChange={onChangeTerm}
-                  name="term1"
-                  type="checkbox"
-                />
-              </li>
-              <li>
-                <St.CheckLabels
-                  htmlFor="term2"
-                  $check={signUps.term.includes("term2")}
-                >
-                  <span>{signUps.term.includes("term2") && <FaCheck />}</span>
-                  회원가입 하시겠습니까(필수)
-                </St.CheckLabels>
-                <St.Checkbox
-                  id="term2"
-                  checked={signUps.term.includes("term2") ? true : false}
-                  onChange={onChangeTerm}
-                  name="term2"
-                  type="checkbox"
-                />
-              </li>
-              <li>
-                <St.CheckLabels
-                  htmlFor="term3"
-                  $check={signUps.term.includes("term3")}
-                >
-                  <span>{signUps.term.includes("term3") && <FaCheck />}</span>
-                  회원가입 하시겠습니까
-                </St.CheckLabels>
-                <St.Checkbox
-                  id="term3"
-                  checked={signUps.term.includes("term3") ? true : false}
-                  onChange={onChangeTerm}
-                  name="term3"
-                  type="checkbox"
-                />
-              </li>
-            </St.CheckboxUl>
-          </div>
-          <div>
-            <Button
-              themes="disabled"
-              width="full"
-              height="5"
-              font="1.2"
-              radius="1"
-              hoverbg={
-                signUps.emailError ||
-                signUps.passwordError ||
-                signUps.passwordCheckError ||
-                signUps.nameError ||
-                signUps.nickNameError ||
-                !signUps.termAll
-                  ? "f7f7f7"
-                  : "blue"
-              }
-              hovercolor={
-                signUps.emailError ||
-                signUps.passwordError ||
-                signUps.passwordCheckError ||
-                signUps.nameError ||
-                signUps.nickNameError ||
-                !signUps.termAll
-                  ? "black"
-                  : "fff"
-              }
-              color={
-                signUps.emailError ||
-                signUps.passwordError ||
-                signUps.passwordCheckError ||
-                signUps.nameError ||
-                signUps.nickNameError ||
-                !signUps.termAll
-                  ? "black"
-                  : "fff"
-              }
-              bg={
-                signUps.emailError ||
-                signUps.passwordError ||
-                signUps.passwordCheckError ||
-                signUps.nameError ||
-                signUps.nickNameError ||
-                !signUps.termAll
-                  ? "f7f7f7"
-                  : "blue"
-              }
-              disabled={
-                signUps.emailError ||
-                signUps.passwordError ||
-                signUps.passwordCheckError ||
-                signUps.nameError ||
-                signUps.nickNameError ||
-                !signUps.termAll
-              }
-              type="submit"
-            >
-              가입하기
-            </Button>
-          </div>
-        </St.Container>
-      </LayOut>
+          <St.CheckLabel htmlFor="term" $check={signUps.termAll}>
+            <span>{signUps.termAll && <FaCheck />}</span>
+            전체 동의
+          </St.CheckLabel>
+          <St.Checkbox
+            id="term"
+            checked={signUps.termAll}
+            onChange={onChangeTermAll}
+            name="term"
+            type="checkbox"
+          />
+          <St.CheckboxUl>
+            <li>
+              <St.CheckLabels
+                htmlFor="term1"
+                $check={signUps.term.includes("term1")}
+              >
+                <span>{signUps.term.includes("term1") && <FaCheck />}</span>만
+                14세 이상입니까(필수)
+              </St.CheckLabels>
+              <St.Checkbox
+                id="term1"
+                checked={signUps.term.includes("term1") ? true : false}
+                onChange={onChangeTerm}
+                name="term1"
+                type="checkbox"
+              />
+            </li>
+            <li>
+              <St.CheckLabels
+                htmlFor="term2"
+                $check={signUps.term.includes("term2")}
+              >
+                <span>{signUps.term.includes("term2") && <FaCheck />}</span>
+                회원가입 하시겠습니까(필수)
+              </St.CheckLabels>
+              <St.Checkbox
+                id="term2"
+                checked={signUps.term.includes("term2") ? true : false}
+                onChange={onChangeTerm}
+                name="term2"
+                type="checkbox"
+              />
+            </li>
+            <li>
+              <St.CheckLabels
+                htmlFor="term3"
+                $check={signUps.term.includes("term3")}
+              >
+                <span>{signUps.term.includes("term3") && <FaCheck />}</span>
+                회원가입 하시겠습니까
+              </St.CheckLabels>
+              <St.Checkbox
+                id="term3"
+                checked={signUps.term.includes("term3") ? true : false}
+                onChange={onChangeTerm}
+                name="term3"
+                type="checkbox"
+              />
+            </li>
+          </St.CheckboxUl>
+        </div>
+        <div>
+          <Button
+            themes="disabled"
+            width="full"
+            height="5"
+            font="1.2"
+            radius="1"
+            hoverbg={
+              signUps.emailError ||
+              signUps.passwordError ||
+              signUps.passwordCheckError ||
+              signUps.nameError ||
+              signUps.nickNameError ||
+              !signUps.termAll
+                ? "f7f7f7"
+                : "blue"
+            }
+            hovercolor={
+              signUps.emailError ||
+              signUps.passwordError ||
+              signUps.passwordCheckError ||
+              signUps.nameError ||
+              signUps.nickNameError ||
+              !signUps.termAll
+                ? "black"
+                : "fff"
+            }
+            color={
+              signUps.emailError ||
+              signUps.passwordError ||
+              signUps.passwordCheckError ||
+              signUps.nameError ||
+              signUps.nickNameError ||
+              !signUps.termAll
+                ? "black"
+                : "fff"
+            }
+            bg={
+              signUps.emailError ||
+              signUps.passwordError ||
+              signUps.passwordCheckError ||
+              signUps.nameError ||
+              signUps.nickNameError ||
+              !signUps.termAll
+                ? "f7f7f7"
+                : "blue"
+            }
+            disabled={
+              signUps.emailError ||
+              signUps.passwordError ||
+              signUps.passwordCheckError ||
+              signUps.nameError ||
+              signUps.nickNameError ||
+              !signUps.termAll
+            }
+            type="submit"
+          >
+            가입하기
+          </Button>
+        </div>
+      </St.Container>
+    </LayOut>
   );
 };
 
@@ -347,7 +346,7 @@ export const getServerSideProps: GetServerSideProps =
     if (req && cookie) {
       axios.defaults.headers.Cookie = cookie;
     }
-    //
+
     await store.dispatch(myInfo());
     return {
       props: {},

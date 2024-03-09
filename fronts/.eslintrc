@@ -50,6 +50,9 @@
     "indent":"off",
     "nonblock-statement-body-position":"off",
     "consistent-return":"off",
-    "no-useless-escape":"off"
+    "no-useless-escape":"off",
+    "react/jsx-curly-brace-presence":"off",
+    "comma-dangle":"off",
+    "key-spacing":"off"
   }
 }

@@ -75,7 +75,7 @@ const myinfo = () => {
           <St.MyInfoImg onClick={onProfile}>
             <img
               src={
-                me?.image
+                me?.image 
                   ? `${process.env.NEXT_PUBLIC_SERVER_URL}/${me && me.image}`
                   : "https://picsum.photos/95/95"
               }
