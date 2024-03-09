@@ -16,9 +16,8 @@ const Categore = ()=>{
     const dispatch = useDispatch<AppDispatch>()
     const { categore: name } = useSelector((state: RootState) => state.post);
     
-    const onCategore = useCallback((name: string, totalItems: number) => {
-      const { currentPage } = usePagination({ totalItems });
-      router.push(`/categore=${name}&page=${currentPage}`);
+    const onCategore = useCallback((name: string) => {
+      router.push(`/categore/${name}`);
     }, []);
     useEffect(()=>{
       dispatch(categore());
@@ -28,7 +27,7 @@ const Categore = ()=>{
       <St.Categore>
         {name.map((v) => (
           <St.CategoreLi
-            onClick={() => onCategore(v.categore, v.count)}
+            onClick={() => onCategore(v.categore)}
             $color={param.name === v.categore}
             key={v.id}
           >
