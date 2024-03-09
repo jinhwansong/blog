@@ -3,7 +3,6 @@ import styled from "styled-components";
 export const MyInfoPopup = styled.div`
   position: fixed;
   background: rgba(0, 0, 0, 0.7);
-
   width: 100%;
   height: 100%;
   top: 0;
@@ -49,4 +48,4 @@ export const Button = styled.div`
   display: flex;
   gap: 0.5rem;
   justify-content: flex-end;
-`
+`;

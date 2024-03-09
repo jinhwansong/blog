@@ -16,15 +16,17 @@ interface IMainList {
 
 const MainList = ({ location, post }: IMainList) => {
   const router = useRouter();
-  const dispatch = useDispatch<AppDispatch>()
+  const dispatch = useDispatch<AppDispatch>();
   const onListPage = useCallback((v:number) => {
     router.push(`/${v}`);
-  },[router]);
+  }, [router]);
+
   // 좋아요
   const onLikehandle = useCallback((e: React.MouseEvent<SVGElement>,id:number) => {
     e.stopPropagation();
     dispatch(like(id));
   }, []);
+
   // 싫어요
   const onUnLikehandle = useCallback((e: React.MouseEvent<SVGElement>, id: number) => {
     e.stopPropagation();
@@ -33,7 +35,7 @@ const MainList = ({ location, post }: IMainList) => {
   return (
     <St.MainList>
       {post?.map((v) => (
-        <li onClick={() => onListPage(v.id)} key={v.id}>
+        <li onClick={() => onListPage(v.id)} key={v.id} role="presentation">
           <St.Image $width={location}>
             <img
               src={

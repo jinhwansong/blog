@@ -43,70 +43,72 @@ interface IMyinfo {
   };
 }
 
-const Myinfo = (props: IMyinfo) => {
-  const onClose = useCallback(
-    () => {
-      props.setPopup({ open: false, name: "" });
-      props.setChange({
-        ...props.change,
-        password: "",
-        passwordError: false,
-        passwordCheck: "",
-        passwordCheckError: false,
-        currentPassword: "",
-        currentPasswordError: false,
-        nickName: "",
-        nickNameError: false,
-      });
-    },
-    []
-  );
-  const dispatch = useDispatch<AppDispatch>()
+const Myinfo = ({
+  title,
+  setPopup,
+  setChange,
+  change,
+  onChange,
+  onChangeCurrentPassword,
+  onChangePasswordCheck,
+}: IMyinfo) => {
+  const onClose = useCallback(() => {
+    setPopup({ open: false, name: "" });
+    setChange({
+      ...change,
+      password: "",
+      passwordError: false,
+      passwordCheck: "",
+      passwordCheckError: false,
+      currentPassword: "",
+      currentPasswordError: false,
+      nickName: "",
+      nickNameError: false,
+    });
+  }, []);
+  const dispatch = useDispatch<AppDispatch>();
   const { cheackNickDone, cheackPasswordDone } = useSelector(
     (state: RootState) => state.user
   );
-  const onButton = useCallback((v:string)=>{
-    if (props.title === "닉네임 변경") return dispatch(checkNick({ nickName: v }));
-    if (props.title === "비밀번호 변경")
-      return dispatch(checkPassword({ password: v }));;
-  },[])
+  const onButton = useCallback((v: string) => {
+    if (title === "닉네임 변경") return dispatch(checkNick({ nickName: v }));
+    if (title === "비밀번호 변경")
+      return dispatch(checkPassword({ password: v }));
+  }, []);
   const onInfo = useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-      if (props.title === "닉네임 변경") {
-        if (!props.change.nickName || !props.change.nickName.trim())
+      if (title === "닉네임 변경") {
+        if (!change.nickName || !change.nickName.trim())
           return alert("닉네임을 작성해주세요");
         if (cheackNickDone === false) return alert("중복체크를 해주세요");
-        dispatch(changeNick({ nickName: props.change.nickName }));
+        dispatch(changeNick({ nickName: change.nickName }));
         dispatch(resetCheackNickDone());
-        alert("닉네임이 변경되었습니다.")
-        props.setPopup({ open: false, name: "" });
+        alert("닉네임이 변경되었습니다.");
+        setPopup({ open: false, name: "" });
       }
-      if (props.title === "비밀번호 변경") {
-        if (
-          !props.change.currentPassword ||
-          !props.change.currentPassword.trim()
-        )
+      if (title === "비밀번호 변경") {
+        if (!change.currentPassword || !change.currentPassword.trim())
           return alert("기존 비밀번호를 작성해주세요");
         if (cheackPasswordDone === false) return alert("중복체크를 해주세요");
-        if (!props.change.password || !props.change.password.trim())
+        if (!change.password || !change.password.trim())
           return alert("비밀번호를 작성해주세요");
-        if (!props.change.passwordCheck || !props.change.passwordCheck.trim())
+        if (!change.passwordCheck || !change.passwordCheck.trim())
           return alert("비밀번호를 다시 한번 입력해주세요.");
-          if (props.change.passwordCheck !== props.change.password)
-            return alert("비밀번호가 일치하지 않습니다.");
-        dispatch(password({ password: props.change.password }));
+        if (change.passwordCheck !== change.password)
+          return alert("비밀번호가 일치하지 않습니다.");
+        dispatch(password({ password: change.password }));
         dispatch(resetCheackPasswordDone());
-        props.setPopup({ open: false, name: "" });
+        setPopup({ open: false, name: "" });
       }
     },
     [
-      props.change.nickName,
+      change.nickName,
       cheackNickDone,
       cheackPasswordDone,
-      props.change.password,
-      props.change.passwordCheck,
-      props.change.currentPassword,
+      change.password,
+      change.passwordCheck,
+      change.currentPassword,
     ]
   );
   return (
@@ -114,44 +116,39 @@ const Myinfo = (props: IMyinfo) => {
       <St.Popup>
         <St.PopupTitle>
           <span></span>
-          <em>{props.title}</em>
+          <em>{title}</em>
           <IoIosClose onClick={onClose} />
         </St.PopupTitle>
         <St.PopupCon onSubmit={onInfo}>
-          {props.title === "닉네임 변경" && (
+          {title === "닉네임 변경" && (
             <Input
               id="nickName"
               placeholder="닉네임을 입력해주세요."
               erorrText="한글 영문을 조합해서 2글자 이상 8글자 미만으로 작성해주세요."
               type="text"
               cheack="info"
-              onChange={props.onChange}
-              value={props.change.nickName}
-              erorr={props.change.nickNameError}
+              onChange={onChange}
+              value={change.nickName}
+              erorr={change.nickNameError}
               able={
-                !(
-                  props.change.nickName.length < 8 &&
-                  2 <= props.change.nickName.length
-                )
+                !(change.nickName.length < 8 && 2 <= change.nickName.length)
               }
-              onButton={() => onButton(props.change.nickName)}
+              onButton={() => onButton(change.nickName)}
             />
           )}
-          {props.title === "비밀번호 변경" && (
+          {title === "비밀번호 변경" && (
             <St.PasswordWrap>
               <div>
                 <Input
                   placeholder="기존 비밀번호를 입력해주세요."
                   type="password"
                   erorrText="올바르지 않은 비밀번호입니다."
-                  onChange={
-                    (e)=>props.onChangeCurrentPassword?.(e)
-                  }
-                  value={props.change.currentPassword}
-                  erorr={!props.change.currentPasswordError}
+                  onChange={(e) => onChangeCurrentPassword?.(e)}
+                  value={change.currentPassword}
+                  erorr={!change.currentPasswordError}
                   cheack="info"
-                  onButton={() => onButton(props.change.currentPassword)}
-                  able={!props.change.currentPasswordError}
+                  onButton={() => onButton(change.currentPassword)}
+                  able={!change.currentPasswordError}
                 />
               </div>
               <div>
@@ -159,9 +156,9 @@ const Myinfo = (props: IMyinfo) => {
                   placeholder="변경할 비밀번호를 입력해주세요."
                   type="password"
                   erorrText="올바르지 않은 비밀번호입니다."
-                  onChange={props.onChange}
-                  value={props.change.password}
-                  erorr={props.change.passwordError}
+                  onChange={onChange}
+                  value={change.password}
+                  erorr={change.passwordError}
                 />
               </div>
               <div>
@@ -169,9 +166,9 @@ const Myinfo = (props: IMyinfo) => {
                   placeholder="비밀번호를 다시 한번 입력해주세요."
                   type="password"
                   erorrText="비밀번호가 서로 일치하지 않습니다."
-                  onChange={(e)=>props.onChangePasswordCheck?.(e)}
-                  value={props.change.passwordCheck}
-                  erorr={props.change.passwordCheckError}
+                  onChange={(e) => onChangePasswordCheck?.(e)}
+                  value={change.passwordCheck}
+                  erorr={change.passwordCheckError}
                 />
               </div>
             </St.PasswordWrap>

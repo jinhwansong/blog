@@ -33,6 +33,7 @@
     "max-len": "off",
     "import/no-unresolved": "off",
     "import/extensions": "off",
-    "quotes": ["off"]
+    "quotes": ["off"],
+    "no-alert": "off"
   }
 }
