@@ -236,7 +236,8 @@ const Editor = ({
               setCategoreOpen({
                 ...categoreOpen,
                 Boolean: !categoreOpen.Boolean,
-              })}>
+              })}
+          >
             {categoreOpen.categore}
             {categoreOpen.Boolean ? <IoIosArrowUp /> : <IoIosArrowDown />}
           </button>
@@ -245,14 +246,15 @@ const Editor = ({
               {name.map((v: Categore) => (
                 <li
                   key={v.id}
+                  role="presentation"
                   onClick={() =>
                     setCategoreOpen({
                       ...categore,
                       categore: v.categore,
                       Boolean: !categoreOpen.Boolean,
                       id: v.id,
-                    })}>
-                  전체 코드 (계속) JavaScript
+                    })}
+                >
                   {v.categore}
                 </li>
               ))}
