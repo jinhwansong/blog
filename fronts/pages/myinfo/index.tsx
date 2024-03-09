@@ -107,8 +107,7 @@ const myinfo = () => {
             </St.MyInfoList>
             <St.MyInfoLists
               onClick={() =>
-                setPopup({ ...popup, names: "닉네임 변경", opens: true })
-              }
+                setPopup({ ...popup, names: "닉네임 변경", opens: true })}
             >
               <p>닉네임</p>
               <span>{me?.nickName}</span>
@@ -116,8 +115,7 @@ const myinfo = () => {
             </St.MyInfoLists>
             <St.MyInfoLists
               onClick={() =>
-                setPopup({ ...popup, names: "비밀번호 변경", opens: true })
-              }
+                setPopup({ ...popup, names: "비밀번호 변경", opens: true })}
             >
               <p>비밀번호 변경</p>
               <span>**************</span>

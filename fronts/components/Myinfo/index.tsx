@@ -76,9 +76,12 @@ const Myinfo: React.FC<IMyinfo> = ({
   );
 
   const onButton = useCallback((v: string) => {
-    if (title === "닉네임 변경") return dispatch(checkNick({ nickName: v }));
-    if (title === "비밀번호 변경")
+    if (title === "닉네임 변경") {
+      return dispatch(checkNick({ nickName: v }));
+    }
+    if (title === "비밀번호 변경") {
       return dispatch(checkPassword({ password: v }));
+    }
   }, []);
 
   const onInfo = useCallback(
@@ -132,7 +135,7 @@ const Myinfo: React.FC<IMyinfo> = ({
     <St.MyInfoPopup>
       <St.Popup>
         <St.PopupTitle>
-          <span></span>
+          <span>a</span>
           <em>{title}</em>
           <IoIosClose onClick={onClose} />
         </St.PopupTitle>
@@ -148,7 +151,7 @@ const Myinfo: React.FC<IMyinfo> = ({
               value={change.nickName}
               error={change.nickNameError}
               able={
-                !(change.nickName.length < 8 && 2 <= change.nickName.length)
+                !(change.nickName.length < 8 &&  change.nickName.length >= 2)
               }
               onButton={() => onButton(change.nickName)}
             />

@@ -51,6 +51,6 @@ export const getServerSideProps:GetServerSideProps =
     return {
       props:{},
     };
-})
+});
 
 export default Home;

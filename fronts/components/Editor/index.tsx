@@ -49,8 +49,9 @@ const Editor = ({
     (e: React.KeyboardEvent<HTMLInputElement>) => {
       if ((e.key === "Enter" || e.key === ",") && !e.nativeEvent.isComposing) {
         e.preventDefault();
-        if (keywords.includes(keyword))
+        if (keywords.includes(keyword)) {
           return alert("이미 추가된 키워드입니다.");
+        }
         const newKeyword = keyword.split(",")[0];
         setKeywords((prev) => [...prev, newKeyword]);
         setKeyword("");
@@ -76,11 +77,13 @@ const Editor = ({
         textAreaRef.current.style.height = `${textAreaRef.current.scrollHeight}px`;
       }
     };
-    if (textAreaRef.current !== null)
+    if (textAreaRef.current !== null) {
       textAreaRef.current?.addEventListener("input", textArea);
+    }
     return () => {
-      if (textAreaRef.current !== null)
+      if (textAreaRef.current !== null) {
         textAreaRef.current?.removeEventListener("input", textArea);
+      }
     };
   }, []);
 
@@ -97,8 +100,9 @@ const Editor = ({
       if (
         cateforeRef.current &&
         !cateforeRef.current.contains(e.target as Node)
-      )
+      ) {
         setCategoreOpen({ ...categoreOpen, Boolean: false });
+      }
     };
     document.addEventListener("mousedown", onCategore);
     return () => {
@@ -176,8 +180,12 @@ const Editor = ({
   const onWrite = useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-      if (!title || !title.trim()){ return alert("제목을 적어주세요");}
-      if (!content || !content.trim()) {return alert("내용을 적어주세요");}
+      if (!title || !title.trim()) {
+        return alert("제목을 적어주세요");
+      }
+      if (!content || !content.trim()) {
+        return alert("내용을 적어주세요");
+      }
 
       if (types === "modify") {
         dispatch(

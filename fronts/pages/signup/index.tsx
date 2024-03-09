@@ -5,7 +5,6 @@ import { GetServerSideProps } from "next";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "redux/store";
-import wrapper from "../../redux/store";
 import {
   resetSignUpDone,
   signUp,
@@ -17,6 +16,7 @@ import { FaCheck } from "react-icons/fa";
 import { useValid } from "hooks";
 import { Button, Input, LayOut } from "components";
 import * as St from "./style";
+import wrapper from "../../redux/store";
 
 const Signup = () => {
   const { signUpDone, me } = useSelector((state: RootState) => state.user);
@@ -98,14 +98,18 @@ const Signup = () => {
         signUps.email.split("@")[1] !== "naver.com" &&
         signUps.email.split("@")[1] !== "daum.net" &&
         signUps.email.split("@")[1] !== "gmail.com"
-      )
+      ) {
         return alert("네이버,다음,구글 이메일만 사용이 가능합니다.");
-      if (!signUps.name || !signUps.name.trim())
+      }
+      if (!signUps.name || !signUps.name.trim()) {
         return alert("이름을 작성해주세요");
-      if (!signUps.nickName || !signUps.nickName.trim())
+      }
+      if (!signUps.nickName || !signUps.nickName.trim()) {
         return alert("닉네임을 작성해주세요");
-      if (!signUps.password || !signUps.password.trim())
+      }
+      if (!signUps.password || !signUps.password.trim()) {
         return alert("비밀번호를 작성해주세요");
+      }
       dispatch(
         signUp({
           email: signUps.email,
@@ -202,7 +206,7 @@ const Signup = () => {
             error={signUps.nickNameError}
             onButton={() => onButton("nickName")}
             able={
-              !(signUps.nickName.length < 8 && 2 <= signUps.nickName.length)
+              !(signUps.nickName.length < 8 && signUps.nickName.length >= 2)
             }
             check="cheack"
             errorText="한글 영문을 조합해서 2글자 이상 8글자

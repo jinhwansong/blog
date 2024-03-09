@@ -32,7 +32,7 @@ const MainAside = () => {
   const onDate = useCallback((name: string, time: number) => {
     setTap({ ...tap, name, time });
     dispatch(recentPost(time));
-  },[tap]);
+  }, [tap]);
 
   const onSearch = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();

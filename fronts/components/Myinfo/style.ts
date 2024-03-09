@@ -34,6 +34,9 @@ export const PopupTitle = styled.p`
     font-size: 3rem;
     cursor: pointer;
   }
+  > span {
+    font-size: 0;
+  }
 `;
 export const PopupCon = styled.form`
   padding: 0px 25px 30px;
