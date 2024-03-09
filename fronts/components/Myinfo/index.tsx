@@ -15,7 +15,7 @@ import * as St from "./style";
 
 interface IMyinfo {
   title: string;
-  setPopup: React.Dispatch<React.SetStateAction<{ name: string; open: boolean }>>;
+  setPopup: React.Dispatch<React.SetStateAction<{ names: string; opens: boolean }>>;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onChangePasswordCheck?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onChangeCurrentPassword?: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -53,7 +53,7 @@ const Myinfo: React.FC<IMyinfo> = ({
   onChangePasswordCheck,
 }) => {
   const onClose = useCallback(() => {
-    setPopup({ open: false, name: "" });
+    setPopup({ opens: false, names: "" });
     setChange({
       ...change,
       password: "",
@@ -89,7 +89,7 @@ const Myinfo: React.FC<IMyinfo> = ({
         dispatch(changeNick({ nickName: change.nickName }));
         dispatch(resetCheackNickDone());
         alert("닉네임이 변경되었습니다.");
-        setPopup({ open: false, name: "" });
+        setPopup({ opens: false, names: "" });
       }
       if (title === "비밀번호 변경") {
         if (!change.currentPassword || !change.currentPassword.trim())
@@ -103,7 +103,7 @@ const Myinfo: React.FC<IMyinfo> = ({
           return alert("비밀번호가 일치하지 않습니다.");
         dispatch(password({ password: change.password }));
         dispatch(resetCheackPasswordDone());
-        setPopup({ open: false, name: "" });
+        setPopup({ opens: false, names: "" });
       }
     },
     [
@@ -129,12 +129,12 @@ const Myinfo: React.FC<IMyinfo> = ({
             <Input
               id="nickName"
               placeholder="닉네임을 입력해주세요."
-              erorrText="한글 영문을 조합해서 2글자 이상 8글자 미만으로 작성해주세요."
+              errorText="한글 영문을 조합해서 2글자 이상 8글자 미만으로 작성해주세요."
               type="text"
-              cheack="info"
+              check="info"
               onChange={onChange}
               value={change.nickName}
-              erorr={change.nickNameError}
+              error={change.nickNameError}
               able={
                 !(change.nickName.length < 8 && 2 <= change.nickName.length)
               }
@@ -147,11 +147,11 @@ const Myinfo: React.FC<IMyinfo> = ({
                 <Input
                   placeholder="기존 비밀번호를 입력해주세요."
                   type="password"
-                  erorrText="올바르지 않은 비밀번호입니다."
+                  errorText="올바르지 않은 비밀번호입니다."
                   onChange={(e) => onChangeCurrentPassword?.(e)}
                   value={change.currentPassword}
-                  erorr={!change.currentPasswordError}
-                  cheack="info"
+                  error={!change.currentPasswordError}
+                  check="info"
                   onButton={() => onButton(change.currentPassword)}
                   able={!change.currentPasswordError}
                 />
@@ -160,20 +160,20 @@ const Myinfo: React.FC<IMyinfo> = ({
                 <Input
                   placeholder="변경할 비밀번호를 입력해주세요."
                   type="password"
-                  erorrText="올바르지 않은 비밀번호입니다."
+                  errorText="올바르지 않은 비밀번호입니다."
                   onChange={onChange}
                   value={change.password}
-                  erorr={change.passwordError}
+                  error={change.passwordError}
                 />
               </div>
               <div>
                 <Input
                   placeholder="비밀번호를 다시 한번 입력해주세요."
                   type="password"
-                  erorrText="비밀번호가 서로 일치하지 않습니다."
+                  errorText="비밀번호가 서로 일치하지 않습니다."
                   onChange={(e) => onChangePasswordCheck?.(e)}
                   value={change.passwordCheck}
-                  erorr={change.passwordCheckError}
+                  error={change.passwordCheckError}
                 />
               </div>
             </St.PasswordWrap>

@@ -18,8 +18,8 @@ const myinfo = ()=>{
     const dispatch = useDispatch<AppDispatch>()
     const { me } = useSelector((state: RootState) => state.user);
     const [popup, setPopup] = useState({
-      name:"",
-      open:false
+      names:"",
+      opens:false
     })
 
     const [change, setChange] = useState({
@@ -105,7 +105,7 @@ const myinfo = ()=>{
               </St.MyInfoList>
               <St.MyInfoLists
                 onClick={() =>
-                  setPopup({ ...popup, name: "닉네임 변경", open: true })
+                  setPopup({ ...popup, names: "닉네임 변경", opens: true })
                 }
               >
                 <p>닉네임</p>
@@ -114,7 +114,7 @@ const myinfo = ()=>{
               </St.MyInfoLists>
               <St.MyInfoLists
                 onClick={() =>
-                  setPopup({ ...popup, name: "비밀번호 변경", open: true })
+                  setPopup({ ...popup, names: "비밀번호 변경", opens: true })
                 }
               >
                 <p>비밀번호 변경</p>
@@ -132,20 +132,20 @@ const myinfo = ()=>{
               </St.MyInfoList>
             </St.MyInfoSec>
           </St.MyInfo>
-          {popup.open && popup.name === "닉네임 변경" && (
+          {popup.opens && popup.names === "닉네임 변경" && (
             <Myinfo
               setChange={setChange}
               change={change}
-              title={popup.name}
+              title={popup.names}
               setPopup={setPopup}
               onChange={onChangeNickName}
             />
           )}
-          {popup.open && popup.name === "비밀번호 변경" && (
+          {popup.opens && popup.names === "비밀번호 변경" && (
             <Myinfo
               setChange={setChange}
               change={change}
-              title={popup.name}
+              title={popup.names}
               setPopup={setPopup}
               onChange={onChangePassword}
               onChangeCurrentPassword={onChangeCurrentPassword}

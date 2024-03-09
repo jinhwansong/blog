@@ -8,10 +8,10 @@ interface IInput {
   placeholder: string;
   id?: string;
   value: string;
-  error: boolean; // Corrected typo from "erorr" to "error"
+  error: boolean;
   errorText: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  check?: string; // Corrected typo from "cheack" to "check"
+  check?: string;
   able?: boolean;
   onButton?: () => void;
 }
@@ -33,7 +33,7 @@ const Input = ({
 
   return (
     <>
-      {check !== "info" && label && <St.Label htmlFor={ id }>{ label }</St.Label>}
+      {check !== "info" && label && <St.Label htmlFor={id}>{label}</St.Label>}
       {check === "check" || check === "info" ? (
         <St.Check>
           <St.Input
@@ -75,11 +75,4 @@ const Input = ({
   );
 };
 
-Input.defaultProps = {
-  label: "",
-  id: "",
-  check: "",
-  able: true,
-  onButton: undefined,
-}; 
 export default Input;

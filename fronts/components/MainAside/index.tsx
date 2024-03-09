@@ -30,16 +30,17 @@ const MainAside = () => {
     router.push(`/categore/${name}`);
   }, []);
   const onDate = useCallback((name: string, time: number) => {
-    setTap({ ...tap, name: name, time: time });
+    setTap({ ...tap, name, time });
     dispatch(recentPost(time));
   }, [tap]);
  
   const onSearch = useCallback((e: React.MouseEvent<HTMLButtonElement>, search: string) => {
     e.stopPropagation();
-    if (!search || !search.trim()) return alert("검색어를 적어주세요");
+    if (!search || !search.trim()) return alert("검색어를 적어주세요");  
     dispatch(searchs({ search, page: 1 }));
     router.push(`/search/${search}`);
     setSearch("");
+    return; 
   }, [router]);
 
   return (
