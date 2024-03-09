@@ -14,9 +14,7 @@ const Categore = () => {
     usePagination(post.count);
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
-    dispatch(
-      categores({ categore: router.query.categore as string, page: currentPage })
-    );
+    dispatch(categores({ categore: router.query.categore as string, page: currentPage}));
   }, [currentPage]);
  return (
    <>

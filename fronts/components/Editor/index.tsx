@@ -1,4 +1,10 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "redux/store";
@@ -272,7 +278,6 @@ const Editor = ({
           formats={formats}
           forwardedRef={quillRef}
         />
-
         <St.ButtonWrap>
           <Button
             bg="f7f7f7"

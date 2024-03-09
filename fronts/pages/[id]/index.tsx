@@ -7,27 +7,24 @@ import { postDetail, deletePost } from "redux/reducers/post";
 import { LayOut, Tag, Content, Button } from "components";
 import * as St from "./style";
 
-const ReadPage  = () => { 
+const ReadPage = () => {
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
-  const { me } = useSelector((state: RootState) => state.user); 
+  const { me } = useSelector((state: RootState) => state.user);
   const { postDetailDone } = useSelector((state: RootState) => state.post);
 
   useEffect(() => {
     dispatch(postDetail(Number(router.query.id)));
   }, [router]);
 
-  const onDelete = useCallback(
-    (v: number | undefined) => {
-      if (window.confirm("게시물을 삭제하시겠습니까?")) {
-        dispatch(deletePost(v));
-        router.replace("/");
-      } else {
-        alert("취소하셨습니다.");
-      }
-    },
-    []
-  );
+  const onDelete = useCallback((v: number | undefined) => {
+    if (window.confirm("게시물을 삭제하시겠습니까?")) {
+      dispatch(deletePost(v));
+      router.replace("/");
+    } else {
+      alert("취소하셨습니다.");
+    }
+  }, []);
 
   return (
     <LayOut>

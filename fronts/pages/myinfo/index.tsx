@@ -1,9 +1,9 @@
-import React, { useCallback, useRef, useState } from "react"
+import React, { useCallback, useRef, useState } from "react";
 import Head from "next/head";
 import { GetServerSideProps } from "next";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
-import {AppDispatch, RootState } from "redux/store";
+import { AppDispatch, RootState } from "redux/store";
 import { myInfo, profile } from "redux/reducers/user";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { useValid } from "hooks";
@@ -157,21 +157,21 @@ const myinfo = () => {
       </LayOut>
     </>
   );
-}
+};
 
-// ssr 
-export const getServerSideProps:GetServerSideProps =
-  wrapper.getServerSideProps((store) => async({ req })=>{
+// ssr
+export const getServerSideProps: GetServerSideProps =
+  wrapper.getServerSideProps((store) => async ({ req }) => {
     // 리퀘스트에서 가만히 있는게 아니라 성공으로 가게 하기 위해서.
-    const cookie = req ? req.headers.cookie: "";
+    const cookie = req ? req.headers.cookie : "";
     axios.defaults.headers.Cookie = "";
-    if(req && cookie){
+    if (req && cookie) {
       axios.defaults.headers.Cookie = cookie;
     }
     await store.dispatch(myInfo());
     return {
-      props:{},
+      props: {},
     };
-});
+  });
 
 export default myinfo;

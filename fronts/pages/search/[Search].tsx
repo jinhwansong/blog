@@ -24,7 +24,7 @@ const Search = () => {
     <>
       <Head>
         <meta charSet="utf-8" />
-        <title>PGI's Blog | 검색</title>
+        <title>PGI Blog | 검색</title>
       </Head>
       <Common
         posts={post.posts}

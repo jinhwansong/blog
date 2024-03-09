@@ -27,7 +27,7 @@ const MainAside = () => {
     (state: RootState) => state.post
   );
   const onCategore = useCallback((name: string) => {
-    dispatch(categores({ categore: name, page: 1 })); 
+    dispatch(categores({ categore: name, page: 1 }));
     router.push(`/categore/${name}`);
   }, []);
 

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import Head from "next/head";
 import { GetServerSideProps } from "next";
 import axios from "axios";
-import {AppDispatch, RootState } from "redux/store";
+import { AppDispatch, RootState } from "redux/store";
 import { useSelector, useDispatch } from "react-redux";
 import { categore, posts, recentPost } from "redux/reducers/post";
 import { usePagination } from "hooks";
@@ -10,10 +10,10 @@ import { Common } from "components";
 import wrapper from "../redux/store";
 
 const Home = () => {
-  const { postsDone: post} = useSelector((state:RootState)=> state.post);
+  const { postsDone: post } = useSelector((state:RootState) => state.post);
   const { currentPage, totalPages, onPrevPage, onNextPage, onPage } =
     usePagination(post.count);
-  const dispatch = useDispatch<AppDispatch>()
+  const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
     dispatch(posts(currentPage));
   }, [currentPage]);
@@ -22,7 +22,7 @@ const Home = () => {
     <>
       <Head>
         <meta charSet="utf-8" />
-        <title>PGI's Blog</title>
+        <title>PGI Blog</title>
       </Head>
       <Common
         posts={post.posts}
@@ -36,12 +36,12 @@ const Home = () => {
   );
 };
 
-// ssr 
+// ssr
 export const getServerSideProps:GetServerSideProps =
-  wrapper.getServerSideProps((store) => async({ req })=>{
+  wrapper.getServerSideProps((store) => async({ req }) => {
     // 리퀘스트에서 가만히 있는게 아니라 성공으로 가게 하기 위해서.
     const cookie = req ? req.headers.cookie : "";
-    axios.defaults.headers.Cookie = ""
+    axios.defaults.headers.Cookie = "";
     if (req && cookie) {
       axios.defaults.headers.Cookie = cookie;
     };
@@ -50,7 +50,7 @@ export const getServerSideProps:GetServerSideProps =
     await store.dispatch(recentPost(7));
     return {
       props:{},
-    }
+    };
 })
 
 export default Home;

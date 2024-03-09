@@ -1,11 +1,11 @@
 import styled from "styled-components";
 
 export const MyInfo = styled.section`
-  width:80rem;
+  width: 80rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap:3rem;
+  gap: 3rem;
 `;
 
 export const MyInfoImg = styled.article`
@@ -14,21 +14,21 @@ export const MyInfoImg = styled.article`
   border: 1px solid ${(props: any) => props.theme.ddd};
   border-radius: 9.5rem;
   overflow: hidden;
-  >input{
+  > input {
     display: none;
   }
 `;
 export const MyInfoSec = styled.article`
   border: 1px solid ${(props: any) => props.theme.ddd};
-  padding:3rem 3rem;
+  padding: 3rem 3rem;
   border-radius: 1rem;
-  width:100%;
+  width: 100%;
 `;
 export const MyInfoTit = styled.strong`
-  font-size:2rem;
-  font-weight:600;
-  color:${(props:any)=>props.theme.black};
-  line-height:1;
+  font-size: 2rem;
+  font-weight: 600;
+  color: ${(props: any) => props.theme.black};
+  line-height: 1;
 `;
 export const MyInfop = styled.p`
   font-size: 1.6rem;

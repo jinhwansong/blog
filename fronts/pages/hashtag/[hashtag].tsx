@@ -9,12 +9,12 @@ import { usePagination } from "hooks";
 
 const hashtag = () => {
   const router = useRouter();
-  const { hashtagDone: post } = useSelector((state:RootState)=> state.post);
+  const { hashtagDone: post } = useSelector((state:RootState) => state.post);
   const { currentPage, totalPages, onPrevPage, onNextPage, onPage } =
     usePagination(post.count);
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
-    dispatch(hashtags({hashtag:router.query.hashtag as string, page: currentPage }));
+    dispatch(hashtags({ hashtag: router.query.hashtag as string, page: currentPage }));
   }, [currentPage]);
 
   return (

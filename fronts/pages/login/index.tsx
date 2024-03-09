@@ -14,8 +14,8 @@ import wrapper from "../../redux/store";
 
 const Login = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { loginDone, me} = useSelector((state:RootState)=> state.user);
-  const router = useRouter()
+  const { loginDone, me } = useSelector((state: RootState) => state.user);
+  const router = useRouter();
   const [inLogin, setInLogin] = useState({
     email: "",
     emailError: false,
@@ -30,13 +30,13 @@ const Login = () => {
   }, [me]);
 
   useEffect(() => {
-    if(loginDone){
-      router.replace("/")
+    if (loginDone) {
+      router.replace("/");
     }
   }, [loginDone]);
   const onLogin = useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {
-      e.preventDefault()
+      e.preventDefault();
       if (inLogin.email.trim() === "") return alert("이메일을 작성해 주세요");
       if (inLogin.password.trim() === "")
         return alert("비밀번호를 작성해 주세요");
@@ -44,77 +44,77 @@ const Login = () => {
     },
     [inLogin.email, inLogin.password]
   );
-    return (
-      <>
-        <Head>
-          <title>내 로그인 | 진환이 블로그</title>
-        </Head>
-        <LayOut>
-          <St.LoginWrap>
-            <St.Form onSubmit={onLogin}>
-              <St.Title>로그인</St.Title>
-              <div>
-                <Input
-                  label="이메일"
-                  id="email"
-                  placeholder="이메일을 입력해주세요."
-                  type="email"
-                  value={inLogin.email}
-                  onChange={onChangeEmail}
-                  error={inLogin.emailError}
-                  errorText="올바른 이메일을 입력해주세요."
-                />
-              </div>
-              <div>
-                <Input
-                  label="비밀번호"
-                  id="password"
-                  placeholder="비밀번호을 입력해주세요."
-                  type="password"
-                  value={inLogin.password}
-                  onChange={onChangePassword}
-                  error={inLogin.passwordError}
-                  errorText="올바르지 않은 비밀번호입니다."
-                />
-              </div>
-              <div>
-                <Button
-                  width="full"
-                  height="5"
-                  font="1.2"
-                  radius="1"
-                  hoverbg="blue"
-                  hovercolor="fff"
-                  color="fff"
-                  bg="blue"
-                  type="submit"
-                >
-                  로그인
-                </Button>
-              </div>
-            </St.Form>
-            <St.Other>
-              <Link href={"/"}>비밀번호 재설정</Link> <p>|</p>
-              <Link href={"/signup"}>회원가입</Link>
-            </St.Other>
-          </St.LoginWrap>
-        </LayOut>
-      </>
-    );
-}
+  return (
+    <>
+      <Head>
+        <title>내 로그인 | 진환이 블로그</title>
+      </Head>
+      <LayOut>
+        <St.LoginWrap>
+          <St.Form onSubmit={onLogin}>
+            <St.Title>로그인</St.Title>
+            <div>
+              <Input
+                label="이메일"
+                id="email"
+                placeholder="이메일을 입력해주세요."
+                type="email"
+                value={inLogin.email}
+                onChange={onChangeEmail}
+                error={inLogin.emailError}
+                errorText="올바른 이메일을 입력해주세요."
+              />
+            </div>
+            <div>
+              <Input
+                label="비밀번호"
+                id="password"
+                placeholder="비밀번호을 입력해주세요."
+                type="password"
+                value={inLogin.password}
+                onChange={onChangePassword}
+                error={inLogin.passwordError}
+                errorText="올바르지 않은 비밀번호입니다."
+              />
+            </div>
+            <div>
+              <Button
+                width="full"
+                height="5"
+                font="1.2"
+                radius="1"
+                hoverbg="blue"
+                hovercolor="fff"
+                color="fff"
+                bg="blue"
+                type="submit"
+              >
+                로그인
+              </Button>
+            </div>
+          </St.Form>
+          <St.Other>
+            <Link href={"/"}>비밀번호 재설정</Link> <p>|</p>
+            <Link href={"/signup"}>회원가입</Link>
+          </St.Other>
+        </St.LoginWrap>
+      </LayOut>
+    </>
+  );
+};
 
-// ssr 
-export const getServerSideProps:GetServerSideProps =
-  wrapper.getServerSideProps((store) => async({ req })=>{
-    const cookie = req ? req.headers.cookie: "";
-    axios.defaults.headers.Cookie = ""
-    if(req && cookie){
+// ssr
+export const getServerSideProps: GetServerSideProps =
+  wrapper.getServerSideProps((store) => async ({ req }) => {
+    const cookie = req ? req.headers.cookie : "";
+    axios.defaults.headers.Cookie = "";
+    if (req && cookie) {
       axios.defaults.headers.Cookie = cookie;
     }
     await store.dispatch(myInfo());
     return {
-      props:{},
-    }
-})
+      props: {},
+    };
+  });
 
 export default Login;
