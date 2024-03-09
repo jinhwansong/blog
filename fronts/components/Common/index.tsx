@@ -18,7 +18,7 @@ const Common = ({
       <MainAside />
       <div>
         <St.Contener>
-          <MainList location="list" post={posts} />
+          <MainList loc="list" post={posts} />
         </St.Contener>
         <Pagination
           count={count}

@@ -3,15 +3,13 @@ import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "redux/store";
 import ReactQuill from "react-quill";
-import { categore, imageUpload, post, postDones, postModify, postModifys } from "redux/reducers/post";
-import { formats, toolbarOptions } from "hooks/useEditor";
-import { Button, LayOut, QuillSSR } from "components";
-import { useInput } from "hooks";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
-import * as St from "./style";
+import { categore, imageUpload, post, postDones, postModify, postModifys } from "redux/reducers/post";
+import { Button, LayOut, QuillSSR } from "components";
+import { formats, toolbarOptions } from "hooks/useEditor";
+import { useInput } from "hooks";
 import { Categore } from "types";
-
-
+import * as St from "./style";
 
 interface IEditor {
   titleModify?: string;
@@ -20,7 +18,6 @@ interface IEditor {
   nameModify?: string;
   types:string
 }
-
 
 const Editor = ({
   titleModify,

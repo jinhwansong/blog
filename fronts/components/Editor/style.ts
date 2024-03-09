@@ -51,6 +51,7 @@ export const TitleInput = styled.textarea`
   color: ${(props: any) => props.theme.black};
   background:none;
 `;
+
 export const Keyword = styled.div`
   border-top: 1px solid ${(props: any) => props.theme.ddd};
   padding-top: 2rem;
@@ -71,7 +72,7 @@ export const Keyword = styled.div`
     width: 30rem;
     background: none;
   }
-`
+`;
 
 export const Categore = styled.div`
   position: relative;
@@ -109,11 +110,10 @@ export const Categore = styled.div`
     color: ${(props: any) => props.theme.blue};
     cursor: pointer;
   }
-`
-
+`;
 
 export const ButtonWrap = styled.div`
   display: flex;
   justify-content: flex-end;
   gap:1rem;
-`
+`;

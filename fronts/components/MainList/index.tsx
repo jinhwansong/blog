@@ -9,11 +9,11 @@ import { ICommon } from "types";
 import * as St from "./style";
 
 interface IMainList {
-  location: string;
+  loc: string;
   post: ICommon[];
 }
 
-const MainList = ({ location, post }: IMainList) => {
+const MainList = ({ loc, post }: IMainList) => {
   const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
   const onListPage = useCallback((v:number) => {
@@ -36,7 +36,7 @@ const MainList = ({ location, post }: IMainList) => {
     <St.MainList>
       {post?.map((v) => (
         <li onClick={() => onListPage(v.id)} key={v.id} role="presentation">
-          <St.Image $width={location}>
+          <St.Image $width={loc}>
             <img
               src={
                 v.src !== ""
@@ -49,12 +49,12 @@ const MainList = ({ location, post }: IMainList) => {
             />
           </St.Image>
           <St.TapText>
-            <St.TapTitle $title={location}>{v.title}</St.TapTitle>
-            {location !== "tap" && (
+            <St.TapTitle $title={loc}>{v.title}</St.TapTitle>
+            {loc !== "tap" && (
               <St.TapDetail dangerouslySetInnerHTML={{ __html: v.content }} />
             )}
             <St.TapSpan>
-              {location !== "tap" && (
+              {loc !== "tap" && (
                 <>
                   <St.Date>{v.nickname}</St.Date>
                   <St.Like>

@@ -24,26 +24,23 @@ const MainAside = () => {
   });
 
   // 카테고리
-  const { categore: name, recentPostDone:post } = useSelector(
-    (state: RootState) => state.post
-  );
+  const { categore: name, recentPostDone: post } = useSelector((state: RootState) => state.post);
   const onCategore = useCallback((name: string) => {
     dispatch(categores({ categore: name, page: 1 }));
     router.push(`/categore/${name}`);
   }, []);
   const onDate = useCallback((name: string, time: number) => {
-      setTap({ ...tap, name: name, time: time });
-      dispatch(recentPost(time));
-    }, [tap]);
+    setTap({ ...tap, name: name, time: time });
+    dispatch(recentPost(time));
+  }, [tap]);
  
   const onSearch = useCallback((e: React.MouseEvent<HTMLButtonElement>, search: string) => {
-      e.stopPropagation();
-      if (!search || !search.trim()) return alert("검색어를 적어주세요");
-      dispatch(searchs({ search, page: 1 }));
-      router.push(`/search/${search}`);
-      setSearch("")
-    }, [router]);
-
+    e.stopPropagation();
+    if (!search || !search.trim()) return alert("검색어를 적어주세요");
+    dispatch(searchs({ search, page: 1 }));
+    router.push(`/search/${search}`);
+    setSearch("");
+  }, [router]);
 
   return (
     <St.Aside>
@@ -107,7 +104,11 @@ const MainAside = () => {
 
         <St.TapWrap>
           {readTap.map((v, index) => (
-            <li key={index} onClick={() => onDate(v.name, v.time)}>
+            <li
+              key={index}
+              onClick={() => onDate(v.name, v.time)}
+              role="presentation"
+            >
               <Button
                 font="1.2"
                 hoverbg={tap.name === v.name ? "blue" : "f7f7f7"}
@@ -122,8 +123,8 @@ const MainAside = () => {
             </li>
           ))}
         </St.TapWrap>
-        {tap.name === "최근 7일" && <MainList location="tap" post={post} />}
-        {tap.name === "최근 1달" && <MainList location="tap" post={post} />}
+        {tap.name === "최근 7일" && <MainList loc="tap" post={post} />}
+        {tap.name === "최근 1달" && <MainList loc="tap" post={post} />}
       </div>
     </St.Aside>
   );

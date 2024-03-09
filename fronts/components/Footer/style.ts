@@ -6,4 +6,4 @@ export const Footer = styled.footer`
   height:6rem;
   line-height:6rem;
   font-size:1.4rem;
-`
+`;
