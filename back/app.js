@@ -7,7 +7,7 @@ const dotenv = require("dotenv")
 const path = require("path")
 const hpp = require("hpp")
 const helmet = require("helmet")
-
+const morgan = require("morgan")
 
 const postRouter = require("./routes/post")
 const postsRouter = require("./routes/posts")
@@ -77,6 +77,6 @@ app.use("/search", searchRouter)
 app.use("/hashtag", hashtagRouter)
 app.use("/categore", categoreRouter)
 
-app.listen(3065, () => {
+app.listen(80, () => {
     console.log("서버 실행중!!")
 })
