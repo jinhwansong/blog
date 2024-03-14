@@ -19,6 +19,7 @@
     "dompurify": "^3.0.8",
     "next": "^14.0.4",
     "next-redux-wrapper": "^8.1.0",
+    "pm2": "^5.3.1",
     "quill-image-compress": "^1.2.30",
     "quill-image-resize-module-react": "^3.0.0",
     "react": "^18.2.0",

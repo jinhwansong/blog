@@ -66,6 +66,11 @@ app.use(session({
         path:"/"
     }
 }))
+
+app.get('/', (req, res) => {
+    res.send('hello express');
+});
+
 app.use(passport.initialize())
 app.use(passport.session())
 
