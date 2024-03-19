@@ -9,7 +9,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { myInfo, login } from "redux/reducers/user";
 import { Input, LayOut, Button } from "components";
 import { useValid } from "hooks";
-import * as St from "./style";
+import * as St from "components/Login/style";
 import wrapper from "../../redux/store";
 
 const Login = () => {

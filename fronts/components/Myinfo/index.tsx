@@ -45,7 +45,7 @@ interface IMyinfo {
   };
 }
 
-const Myinfo: React.FC<IMyinfo> = ({
+const Myinfo = ({
   title,
   setPopup,
   setChange,
@@ -53,7 +53,7 @@ const Myinfo: React.FC<IMyinfo> = ({
   onChange,
   onChangeCurrentPassword,
   onChangePasswordCheck,
-}) => {
+}: IMyinfo) => {
   const onClose = useCallback(() => {
     setPopup({ opens: false, names: "" });
     setChange({

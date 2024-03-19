@@ -42,7 +42,7 @@ if(process.env.NODE_ENV === "production"){
     app.use(morgan("dev"))
 }
 app.use(cors({
-    origin: ["http://localhost:3000", "BlogNomad.com", "http://13.124.165.86"],
+    origin: ["http://localhost:3000", "BlogNomad.com", "http://43.203.181.220"],
     credentials: true,
 }))
 

@@ -15,7 +15,7 @@ import {
 import { FaCheck } from "react-icons/fa";
 import { useValid } from "hooks";
 import { Button, Input, LayOut } from "components";
-import * as St from "./style";
+import * as St from "components/Signup/style";
 import wrapper from "../../redux/store";
 
 const Signup = () => {

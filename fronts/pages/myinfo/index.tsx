@@ -8,8 +8,8 @@ import { myInfo, profile } from "redux/reducers/user";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { useValid } from "hooks";
 import { LayOut, Myinfo } from "components";
+import * as St from "components/Info/style";
 import wrapper from "../../redux/store";
-import * as St from "./style";
 
 const myinfo = () => {
   const dispatch = useDispatch<AppDispatch>();
