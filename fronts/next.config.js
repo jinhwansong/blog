@@ -11,6 +11,12 @@ module.exports = withBundleAnalyzer({
         }],
     },
     compress: true,
+    experimental: {
+        forceSwcTransforms: true,
+    },
+    compiler: {
+        styledComponents: true,
+    },
     webpack(config, {
         webpack
     }) {
